@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>半导体全产业链动态图谱</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+:root {
+  --bg: #0a0e27;
+  --card-bg: #111640;
+  --card-bg2: #161b4a;
+  --accent: #4fc3f7;
+  --accent2: #7c4dff;
+  --green: #69f0ae;
+  --red: #ff5252;
+  --orange: #ffab40;
+  --text: #e0e0e0;
+  --text2: #90a4ae;
+  --border: #1e2456;
+  --upstream: #2e7d32;
+  --midstream: #1565c0;
+  --downstream: #e65100;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+/* Navigation */
+.nav { position: fixed; top:0; left:0; right:0; z-index:1000; background: rgba(10,14,39,0.95); backdrop-filter: blur(20px); border-bottom:1px solid var(--border); padding:0 24px; display:flex; align-items:center; height:56px; gap:8px; }
+.nav .logo { font-size:18px; font-weight:700; color: var(--accent); margin-right:16px; white-space:nowrap; }
+.nav a { color: var(--text2); text-decoration:none; font-size:13px; padding:6px 14px; border-radius:6px; transition:all .2s; white-space:nowrap; }
+.nav a:hover, .nav a.active { color: var(--accent); background: rgba(79,195,247,0.1); }
+/* Layout */
+.container { margin-top:56px; padding:20px 24px; max-width:1600px; margin-left:auto; margin-right:auto; }
+.section { margin-bottom:32px; }
+.section-title { font-size:22px; font-weight:700; margin-bottom:16px; color:#fff; display:flex; align-items:center; gap:10px; }
+.section-title .icon { font-size:26px; }
+/* Cards */
+.card { background: var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:20px; }
+.card h3 { font-size:15px; font-weight:600; margin-bottom:12px; color: var(--accent); }
+/* Grid */
+.grid { display:grid; gap:20px; }
+.grid-2 { grid-template-columns:repeat(2, 1fr); }
+.grid-3 { grid-template-columns:repeat(3, 1fr); }
+.grid-4 { grid-template-columns:repeat(4, 1fr); }
+/* Stats */
+.stat-cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin-bottom:24px; }
+.stat-card { background: var(--card-bg2); border:1px solid var(--border); border-radius:10px; padding:18px; text-align:center; }
+.stat-card .value { font-size:28px; font-weight:700; color:#fff; }
+.stat-card .label { font-size:12px; color:var(--text2); margin-top:4px; }
+.stat-card .change { font-size:13px; margin-top:4px; }
+.change-up { color:var(--green); }
+.change-down { color:var(--red); }
+/* Chart containers */
+.chart { width:100%; height:420px; }
+.chart-lg { width:100%; height:520px; }
+.chart-sm { width:100%; height:320px; }
+/* Table */
+.data-table { width:100%; border-collapse:collapse; font-size:12px; }
+.data-table th { background: var(--card-bg2); color:var(--accent); padding:10px 12px; text-align:left; font-weight:600; border-bottom:2px solid var(--border); position:sticky; top:0; }
+.data-table td { padding:9px 12px; border-bottom:1px solid var(--border); }
+.data-table tr:hover td { background: rgba(79,195,247,0.05); }
+.data-table .positive { color:var(--green); font-weight:600; }
+.data-table .negative { color:var(--red); font-weight:600; }
+.table-wrap { max-height:500px; overflow-y:auto; border-radius:8px; }
+/* Tags */
+.tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+.tag-upstream { background:rgba(46,125,50,0.2); color:#81c784; }
+.tag-midstream { background:rgba(21,101,192,0.2); color:#64b5f6; }
+.tag-downstream { background:rgba(230,81,0,0.2); color:#ffab40; }
+.tag-hot { background:rgba(255,82,82,0.2); color:#ff5252; }
+/* Tabs */
+.tabs { display:flex; gap:4px; margin-bottom:16px; flex-wrap:wrap; }
+.tab-btn { padding:8px 18px; border:1px solid var(--border); border-radius:8px; background:transparent; color:var(--text2); cursor:pointer; font-size:13px; transition:all .2s; }
+.tab-btn:hover { border-color: var(--accent); color:var(--accent); }
+.tab-btn.active { background: var(--accent); color:#000; border-color:var(--accent); font-weight:600; }
+/* Detail panel */
+.detail-panel { background: var(--card-bg2); border:1px solid var(--border); border-radius:12px; padding:24px; margin-top:16px; display:none; }
+.detail-panel.show { display:block; }
+.detail-panel h3 { color:var(--accent); margin-bottom:12px; }
+.detail-panel .row { display:grid; grid-template-columns:120px 1fr; gap:8px; margin-bottom:6px; font-size:13px; }
+.detail-panel .row .k { color:var(--text2); }
+/* Priority stars */
+.stars { color:var(--orange); font-size:14px; letter-spacing:2px; }
+/* Responsive */
+@media (max-width:900px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns:1fr; }
+  .nav { overflow-x:auto; }
+  .chart, .chart-lg { height:300px; }
+}
+/* Scrollbar */
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+/* Tooltip */
+.tooltip-trigger { cursor:pointer; border-bottom:1px dashed var(--accent); }
+/* Insight cards */
+.insight-card { background: linear-gradient(135deg, #1a1f4e 0%, #0f1535 100%); border-left:4px solid var(--accent); border-radius:0 10px 10px 0; padding:16px 20px; margin-top:14px; }
+.insight-card .insight-title { font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.insight-card .insight-body { font-size:12px; color:#c8d6e5; line-height:1.8; }
+.insight-card .insight-highlight { color:var(--green); font-weight:600; }
+.insight-card .insight-warn { color:var(--orange); font-weight:600; }
+.insight-card .insight-danger { color:var(--red); font-weight:600; }
+.insight-card .insight-tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:600; margin-right:4px; }
+.insight-tag-bull { background:rgba(105,240,174,0.15); color:var(--green); }
+.insight-tag-bear { background:rgba(255,82,82,0.15); color:var(--red); }
+.insight-tag-neut { background:rgba(255,171,64,0.15); color:var(--orange); }
+.insight-tag-key { background:rgba(79,195,247,0.15); color:var(--accent); }
+.insight-divider { border:none; border-top:1px dashed var(--border); margin:10px 0; }
+/* Modal overlay */
+.modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center; }
+.modal-overlay.show { display:flex; }
+.modal-dialog { background:var(--card-bg); border:2px solid var(--accent); border-radius:16px; padding:28px; max-width:700px; width:90%; max-height:80vh; overflow-y:auto; animation:modalIn 0.25s ease; }
+@keyframes modalIn { from{opacity:0;transform:translateY(-20px);} to{opacity:1;transform:translateY(0);} }
+.modal-dialog .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.modal-dialog .modal-header h2 { color:var(--accent); font-size:18px; }
+.modal-dialog .modal-close { background:none; border:none; color:var(--text2); font-size:24px; cursor:pointer; }
+.modal-dialog .modal-close:hover { color:var(--red); }
+.modal-dialog .metric-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+.modal-dialog .metric-item { background:var(--card-bg2); border-radius:8px; padding:12px; text-align:center; }
+.modal-dialog .metric-item .m-val { font-size:20px; font-weight:700; color:#fff; }
+.modal-dialog .metric-item .m-label { font-size:10px; color:var(--text2); margin-top:2px; }
+.modal-dialog .leader-card { background:var(--card-bg2); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:10px; cursor:pointer; transition:all 0.2s; }
+.modal-dialog .leader-card:hover { border-color:var(--accent); background:rgba(79,195,247,0.05); }
+.modal-dialog .leader-card .lc-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.modal-dialog .leader-card .lc-name { font-size:15px; font-weight:700; color:#fff; }
+.modal-dialog .leader-card .lc-code { font-size:11px; color:var(--text2); }
+.modal-dialog .leader-card .lc-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; font-size:11px; }
+.modal-dialog .leader-card .lc-stat .lc-sv { color:#fff; font-weight:600; }
+.modal-dialog .leader-card .lc-stat .lc-sl { color:var(--text2); font-size:10px; }
+.modal-dialog .leader-card .lc-highlight { font-size:11px; color:var(--accent); margin-top:6px; padding-top:6px; border-top:1px solid var(--border); }
+/* clickable chain nodes */
+.chain-clickable { cursor:pointer; transition:all 0.2s; }
+.chain-clickable:hover { text-decoration:underline; color:var(--accent) !important; }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <span class="logo">🔬 半导体产业链图谱</span>
+  <a href="#overview" class="active" onclick="scrollToSection('overview')">市场总览</a>
+  <a href="#chain" onclick="scrollToSection('chain')">产业链图</a>
+  <a href="#upstream" onclick="scrollToSection('upstream')">上游</a>
+  <a href="#midstream" onclick="scrollToSection('midstream')">中游</a>
+  <a href="#downstream" onclick="scrollToSection('downstream')">下游</a>
+  <a href="#top10" onclick="scrollToSection('top10')">十大板块</a>
+  <a href="#stocks" onclick="scrollToSection('stocks')">厂商股价</a>
+  <a href="#realtime" onclick="scrollToSection('realtime')">实时行情</a>
+</nav>
+
+<div class="container" id="app"></div>
+
+<script>
+// ── DATA ──
+const DATA = {
+  overview: {
+    title: "半导体全产业链动态图谱",
+    subtitle: "数据更新：2025年全年实际数据（SIA/Gartner/WSTS）+ 2026年预测 | 最新更新时间：2026年6月27日",
+    globalMarket: {
+      years: [2023, 2024, 2025, 2026],
+      total: [5268, 6259, 7917, 9750],
+      memory: [928, 1675, 2215, 3000],
+      logic: [1780, 2080, 3019, 3800],
+      analog: [812, 835, 920, 1000],
+      discrete: [330, 353, 370, 400]
+    },
+    segments: {
+      equipment: [1063, 1171, 1360, 1550],
+      materials: [667, 730, 820, 900],
+      foundry: [1175, 1399, 1680, 2000],
+      osat: [368, 392, 450, 520],
+      chinaMarket: [1750, 1980, 2400, 2850]
+    }
+  },
+  chain: {
+    upstream: {
+      materials: [
+        {name:"硅片", global2024:175, yoy:7, china2024:33.8, domesticRate:10, globalLeader:"信越化学(28-30%)", chinaLeader:"沪硅产业", cagr:8.1},
+        {name:"光刻胶", global2024:27.3, yoy:16, china2024:7.7, domesticRate:25, globalLeader:"东京应化(26-28%)", chinaLeader:"彤程新材", cagr:6.5},
+        {name:"电子特气", global2024:60, yoy:8, china2024:18, domesticRate:60, globalLeader:"林德(15%)", chinaLeader:"华特气体", cagr:8.0},
+        {name:"CMP抛光材料", global2024:37, yoy:6, china2024:9, domesticRate:30, globalLeader:"卡博特(25%)", chinaLeader:"安集科技", cagr:7.0},
+        {name:"溅射靶材", global2024:23, yoy:5, china2024:6.5, domesticRate:35, globalLeader:"日矿金属(25%)", chinaLeader:"江丰电子", cagr:8.5},
+        {name:"湿电子化学品", global2024:57, yoy:6, china2024:15, domesticRate:50, globalLeader:"巴斯夫(18%)", chinaLeader:"江化微", cagr:7.5}
+      ],
+      equipment: [
+        {name:"光刻机", global2024:315, yoy:18, china2024:5, domesticRate:1, globalLeader:"ASML(82%)", chinaLeader:"上海微电子", cagr:10.0},
+        {name:"刻蚀设备", global2024:220, yoy:15, china2024:35, domesticRate:20, globalLeader:"泛林Lam(35%)", chinaLeader:"中微公司", cagr:12.0},
+        {name:"薄膜沉积设备", global2024:260, yoy:12, china2024:40, domesticRate:18, globalLeader:"应用材料(45%)", chinaLeader:"北方华创/拓荆", cagr:11.0},
+        {name:"清洗设备", global2024:55, yoy:10, china2024:10, domesticRate:25, globalLeader:"SCREEN(30%)", chinaLeader:"盛美上海", cagr:10.0},
+        {name:"检测设备", global2024:200, yoy:8, china2024:8, domesticRate:5, globalLeader:"科磊KLA(50%+)", chinaLeader:"华峰测控/长川", cagr:9.0},
+        {name:"离子注入设备", global2024:35, yoy:6, china2024:3, domesticRate:10, globalLeader:"AMAT(50-70%)", chinaLeader:"万业企业", cagr:8.0},
+        {name:"封装设备", global2024:78, yoy:8, china2024:12, domesticRate:15, globalLeader:"ASMPT(20%)", chinaLeader:"长电科技", cagr:8.0}
+      ]
+    },
+    midstream: {
+      design: [
+        {name:"全球Fabless TOP10", global2024:2498, yoy:49, china2024:910, domesticRate:25, cagr:12.0},
+        {name:"CPU/GPU", global2024:1100, yoy:35, china2024:85, domesticRate:8, cagr:15.0},
+        {name:"存储芯片", global2024:1670, yoy:81, china2024:180, domesticRate:12, cagr:20.0},
+        {name:"模拟芯片", global2024:812, yoy:3, china2024:65, domesticRate:15, cagr:8.0},
+        {name:"MCU", global2024:229, yoy:5, china2024:28, domesticRate:20, cagr:7.0},
+        {name:"FPGA", global2024:80, yoy:10, china2024:8, domesticRate:5, cagr:12.0}
+      ],
+      foundry: [
+        {name:"台积电(TSMC)", revenue:900, yoy:30, share:67, node:"3nm量产/2nm试产", stock:92},
+        {name:"三星(Samsung)", revenue:180, yoy:8, share:13, node:"3nm GAA", stock:-22},
+        {name:"联电(UMC)", revenue:76, yoy:2, share:5.5, node:"22nm/14nm", stock:15},
+        {name:"格芯(GF)", revenue:67, yoy:-5, share:4.8, node:"12nm/22FDX", stock:-28},
+        {name:"中芯国际(SMIC)", revenue:63, yoy:27.7, share:4.5, node:"N+2(7nm等效)", stock:95},
+        {name:"华虹半导体", revenue:20, yoy:-18, share:1.4, node:"55nm/BCD", stock:25},
+        {name:"世界先进(VIS)", revenue:13, yoy:-8, share:0.9, node:"特色工艺", stock:12},
+        {name:"晶合集成", revenue:10, yoy:35, share:0.7, node:"90nm-55nm", stock:80}
+      ],
+      osat: [
+        {name:"日月光(ASE)", revenue:115, yoy:2, share:29, advPack:"FOCoS-Bridge/2.5D", stock:18},
+        {name:"安靠(Amkor)", revenue:67, yoy:3, share:17, advPack:"CoWoS合作/SiP", stock:8},
+        {name:"长电科技(JCET)", revenue:50, yoy:19.3, share:12.8, advPack:"XDFOI Chiplet", stock:35},
+        {name:"力成科技(PTI)", revenue:31, yoy:-5, share:7.9, advPack:"FOPLP", stock:10},
+        {name:"通富微电(TFME)", revenue:28, yoy:15, share:7.1, advPack:"FCBGA", stock:42},
+        {name:"华天科技", revenue:18, yoy:8, share:4.6, advPack:"SiP/WLP", stock:28}
+      ]
+    },
+    downstream: [
+      {sector:"消费电子", sub:"智能手机SoC", global2024:380, yoy:8.5, cagr:6, driver:"AI手机换机潮"},
+      {sector:"消费电子", sub:"PC/平板芯片", global2024:420, yoy:6.3, cagr:8, driver:"AI PC驱动"},
+      {sector:"消费电子", sub:"可穿戴芯片", global2024:45, yoy:12.5, cagr:12, driver:"TWS/智能手表"},
+      {sector:"汽车电子", sub:"汽车芯片(整体)", global2024:680, yoy:15.2, cagr:12, driver:"电动化+智能化"},
+      {sector:"汽车电子", sub:"SiC功率器件", global2024:32, yoy:45, cagr:35, driver:"800V平台普及"},
+      {sector:"汽车电子", sub:"自动驾驶SoC", global2024:38, yoy:36, cagr:25, driver:"L2+渗透率提升"},
+      {sector:"AI/数据中心", sub:"AI芯片(GPU/ASIC)", global2024:710, yoy:84.5, cagr:30, driver:"大模型训练+推理"},
+      {sector:"AI/数据中心", sub:"HBM内存", global2024:170, yoy:278, cagr:35, driver:"AI GPU配套需求"},
+      {sector:"AI/数据中心", sub:"服务器CPU", global2024:520, yoy:8.3, cagr:10, driver:"数据中心扩容"},
+      {sector:"AI/数据中心", sub:"网络交换芯片", global2024:110, yoy:29, cagr:25, driver:"AI集群互联"},
+      {sector:"工业/IoT", sub:"工业芯片", global2024:280, yoy:5.6, cagr:7, driver:"智能制造/工业4.0"},
+      {sector:"工业/IoT", sub:"IoT芯片", global2024:85, yoy:13.3, cagr:15, driver:"Matter/RISC-V"},
+      {sector:"通信", sub:"5G基站芯片", global2024:45, yoy:12.5, cagr:12, driver:"5G-A升级"},
+      {sector:"通信", sub:"光通信芯片", global2024:35, yoy:25, cagr:17, driver:"AI数据中心光互联"}
+    ]
+  },
+  top10: [
+    {rank:1, name:"AI芯片/GPU", global2024:710, yoy:85, global2025e:1050, cagr:30, globalLeader:"英伟达(>80%)", chinaLeader:"华为昇腾/寒武纪/海光", driver:"大模型训练推理需求爆发，Scaling Law持续验证，云厂商CAPEX向AI倾斜", outlook:"英伟达Blackwell Ultra量产、Rubin架构发布；华为昇腾910C大规模部署", risk:"地缘政治出口管制升级；CSP自研芯片分流；AI泡沫风险", priority:5, metric:"英伟达季度DC营收、云厂商CAPEX指引"},
+    {rank:2, name:"先进制程(3nm以下)", global2024:280, yoy:55, global2025e:420, cagr:35, globalLeader:"台积电(100% 3nm)", chinaLeader:"中芯国际(N+2)", driver:"AI芯片对先进制程的刚性需求，3nm/2nm代工价格持续上涨", outlook:"台积电2nm 2025H2量产；三星2nm争取客户；中芯N+3进展", risk:"地缘政治导致产能割裂；先进制程投资回报周期长", priority:5, metric:"台积电月度营收、3/5nm占比"},
+    {rank:3, name:"HBM高带宽内存", global2024:170, yoy:278, global2025e:280, cagr:35, globalLeader:"SK海力士(53%)", chinaLeader:"长鑫存储(研发中)", driver:"AI GPU配套必需，HBM3E→HBM4升级，产能严重不足", outlook:"HBM4 2025H2送样；三大厂产能再翻倍；价格维持高位", risk:"产能过剩风险（2027年后）；技术迭代过快", priority:5, metric:"SK海力士HBM营收占比、HBM4送样进度"},
+    {rank:4, name:"半导体设备", global2024:1171, yoy:10, global2025e:1285, cagr:10, globalLeader:"ASML/AMAT/Lam", chinaLeader:"北方华创/中微/拓荆", driver:"全球晶圆厂扩产周期+中国自主产线建设+设备国产替代", outlook:"ASML High-NA EUV出货加速；中国设备厂商订单持续高增", risk:"美国对华设备管制加码；中国扩产节奏放缓", priority:4, metric:"北方华创/中微在手订单、ASML季度出货"},
+    {rank:5, name:"车规级芯片", global2024:680, yoy:15, global2025e:770, cagr:12, globalLeader:"英飞凌/NXP/TI", chinaLeader:"比亚迪半导/斯达半导/地平线", driver:"电动化(SiC)+智能化(ADAS)双轮驱动，800V平台渗透加速", outlook:"SiC衬底产能释放价格下降；地平线J6量产；L3自动驾驶落地", risk:"新能源车增速放缓；SiC产能过剩；车规认证周期长", priority:4, metric:"新能源车销量、SiC价格走势、ADAS渗透率"},
+    {rank:6, name:"先进封装(CoWoS/Chiplet)", global2024:260, yoy:25, global2025e:380, cagr:20, globalLeader:"台积电/日月光/英特尔", chinaLeader:"长电科技/通富微电", driver:"AI芯片对CoWoS的刚性需求；Chiplet生态成熟降低芯片设计门槛", outlook:"台积电CoWoS月产能扩至7万片；长电XDFOI量产；UCIe 2.0发布", risk:"扩产后2026年供需平衡；封装技术分散化", priority:4, metric:"台积电CoWoS产能、长电先进封装营收占比"},
+    {rank:7, name:"存储芯片(DRAM/NAND)", global2024:1670, yoy:81, global2025e:2150, cagr:15, globalLeader:"三星/SK海力士/美光", chinaLeader:"兆易创新/北京君正", driver:"AI驱动HBM/DDR5结构性增长+传统存储周期复苏", outlook:"DDR5渗透率提升至60%+；NAND价格温和上涨；库存健康", risk:"周期下行风险（2026H2）；中国存储厂商产能冲击", priority:4, metric:"DRAM/NAND现货价、原厂库存周数"},
+    {rank:8, name:"EDA/IP", global2024:190, yoy:12, global2025e:215, cagr:12, globalLeader:"Synopsys/Cadence/Siemens", chinaLeader:"华大九天/概伦电子", driver:"先进制程设计复杂度提升+AI辅助EDA降本增效+chiplet IP需求", outlook:"Synopsys AI EDA工具渗透率提升；华大九天14nm全流程验证", risk:"技术壁垒极高；国产EDA生态不完善", priority:3, metric:"华大九天新签订单、AI EDA工具渗透率"},
+    {rank:9, name:"模拟芯片", global2024:835, yoy:3, global2025e:890, cagr:8, globalLeader:"TI/ADI(合计30%)", chinaLeader:"圣邦股份/思瑞浦/纳芯微", driver:"汽车电动化+工业自动化驱动；中国模拟芯片国产化率仅15%", outlook:"TI产能释放结束价格企稳；中国模拟厂商车规产品线拓展", risk:"TI低价策略冲击；产品同质化竞争", priority:3, metric:"TI季度营收指引、圣邦车规营收占比"},
+    {rank:10, name:"半导体硅片", global2024:175, yoy:7, global2025e:195, cagr:8, globalLeader:"信越化学/SUMCO", chinaLeader:"沪硅产业/立昂微", driver:"AI+存储需求驱动12英寸硅片需求；2026年涨价周期开启", outlook:"12英寸硅片供需趋紧；沪硅产业二期产能爬坡；立昂微并购整合", risk:"中国硅片产能过剩（8英寸）；价格战风险", priority:3, metric:"硅片现货价、沪硅12英寸出货量"}
+  ],
+  stocks: [
+    {chain:"上游-设备", name:"ASML", code:"ASML.AS", country:"荷兰", chg2024:-4.3, chg2025:22, revenue2024:283, revenueYoy:16, mcap:3100, highlight:"2025营收€327亿(+16%), 在手订单€388亿"},
+    {chain:"上游-设备", name:"应用材料", code:"AMAT", country:"美国", chg2024:0.6, chg2025:18, revenue2024:272, revenueYoy:8, mcap:1550, highlight:"AI逻辑芯片设备需求旺盛"},
+    {chain:"上游-设备", name:"东京电子", code:"8035.T", country:"日本", chg2024:42, chg2025:30, revenue2024:140, revenueYoy:25, mcap:1300, highlight:"AI+存储设备双驱动"},
+    {chain:"上游-设备", name:"北方华创", code:"002371", country:"中国", chg2024:58, chg2025:32, revenue2024:42, revenueYoy:40, mcap:380, highlight:"国产设备龙头, 在手订单充裕"},
+    {chain:"上游-设备", name:"中微公司", code:"688012", country:"中国", chg2024:65, chg2025:28, revenue2024:11.7, revenueYoy:38, mcap:220, highlight:"CCP刻蚀5nm以下突破"},
+    {chain:"上游-设备", name:"拓荆科技", code:"688072", country:"中国", chg2024:70, chg2025:25, revenue2024:6.5, revenueYoy:50, mcap:95, highlight:"PECVD/ALD/SACVD全面放量"},
+    {chain:"上游-材料", name:"沪硅产业", code:"688126", country:"中国", chg2024:89, chg2025:18, revenue2024:5.4, revenueYoy:32, mcap:62, highlight:"12英寸硅片出货持续增长"},
+    {chain:"上游-材料", name:"彤程新材", code:"603650", country:"中国", chg2024:48, chg2025:15, revenue2024:4.8, revenueYoy:22, mcap:30, highlight:"KrF光刻胶龙头, ArF突破"},
+    {chain:"上游-材料", name:"江丰电子", code:"300666", country:"中国", chg2024:90, chg2025:28, revenue2024:3.9, revenueYoy:40, mcap:40, highlight:"全球靶材第二, 半导体+面板双驱动"},
+    {chain:"上游-材料", name:"长川科技", code:"300604", country:"中国", chg2024:125, chg2025:38, revenue2024:4.5, revenueYoy:60, mcap:48, highlight:"检测设备国产替代加速"},
+    {chain:"中游-设计", name:"英伟达", code:"NVDA", country:"美国", chg2024:176, chg2025:45, revenue2024:766.9, revenueYoy:63.9, mcap:38900, highlight:"首家半导体$1257亿, 市值近$4万亿"},
+    {chain:"中游-设计", name:"博通", code:"AVGO", country:"美国", chg2024:108, chg2025:30, revenue2024:278, revenueYoy:23.3, mcap:10200, highlight:"AI ASIC定制芯片+VMware"},
+    {chain:"中游-设计", name:"AMD", code:"AMD", country:"美国", chg2024:-18, chg2025:12, revenue2024:241.3, revenueYoy:34.6, mcap:1950, highlight:"MI300X/MI350系列追赶"},
+    {chain:"中游-设计", name:"韦尔股份", code:"603501", country:"中国", chg2024:306, chg2025:22, revenue2024:36, revenueYoy:25, mcap:240, highlight:"CIS高端化+汽车CIS增长"},
+    {chain:"中游-设计", name:"兆易创新", code:"603986", country:"中国", chg2024:298, chg2025:25, revenue2024:10.4, revenueYoy:32, mcap:95, highlight:"NOR+MCU+车规三线驱动"},
+    {chain:"中游-设计", name:"澜起科技", code:"688008", country:"中国", chg2024:276, chg2025:22, revenue2024:7.0, revenueYoy:40, mcap:128, highlight:"DDR5接口芯片全球第二"},
+    {chain:"中游-制造", name:"台积电", code:"TSM", country:"中国台湾", chg2024:92, chg2025:35, revenue2024:900, revenueYoy:35, mcap:10500, highlight:"3nm/5nm占74%, 2nm量产"},
+    {chain:"中游-制造", name:"中芯国际", code:"688981", country:"中国", chg2024:95, chg2025:22, revenue2024:63, revenueYoy:30, mcap:620, highlight:"N+2/N+3工艺突破"},
+    {chain:"中游-封测", name:"长电科技", code:"600584", country:"中国", chg2024:35, chg2025:18, revenue2024:50, revenueYoy:22, mcap:110, highlight:"XDFOI Chiplet量产"},
+    {chain:"中游-封测", name:"通富微电", code:"002156", country:"中国", chg2024:42, chg2025:20, revenue2024:28, revenueYoy:20, mcap:52, highlight:"AMD核心封测伙伴, 先进封装"},
+    {chain:"下游-AI", name:"寒武纪", code:"688256", country:"中国", chg2024:433, chg2025:55, revenue2024:1.8, revenueYoy:100, mcap:520, highlight:"股价破800元, 市值3400亿+"},
+    {chain:"下游-AI", name:"海光信息", code:"688041", country:"中国", chg2024:116, chg2025:30, revenue2024:8.5, revenueYoy:60, mcap:320, highlight:"x86 CPU+DCU AI加速"},
+    {chain:"下游-存储", name:"SK海力士", code:"000660.KS", country:"韩国", chg2024:28, chg2025:42, revenue2024:441.9, revenueYoy:37.2, mcap:1550, highlight:"营业利润首超三星, HBM全球第一"},
+    {chain:"下游-汽车", name:"斯达半导", code:"603290", country:"中国", chg2024:55, chg2025:20, revenue2024:6.5, revenueYoy:30, mcap:55, highlight:"车规SiC MOS量产放量"},
+    {chain:"下游-EDA", name:"华大九天", code:"301269", country:"中国", chg2024:59, chg2025:20, revenue2024:1.4, revenueYoy:35, mcap:98, highlight:"14nm全流程验证, 新签订单高增"},
+    {chain:"中游-模拟", name:"圣邦股份", code:"300661", country:"中国", chg2024:65, chg2025:22, revenue2024:3.5, revenueYoy:30, mcap:52, highlight:"信号链+电源双线, 车规拓展"},
+    {chain:"上游-设备", name:"科磊", code:"KLAC", country:"美国", chg2024:8.6, chg2025:25, revenue2024:105, revenueYoy:12, mcap:1950, highlight:"检测设备刚需, AI芯片复杂度提升"},
+    {chain:"下游-汽车", name:"英飞凌", code:"IFX.DE", country:"德国", chg2024:-8.6, chg2025:8, revenue2024:155, revenueYoy:3, mcap:450, highlight:"全球车规功率龙头, SiC增长50%+"},
+    {chain:"中游-设计", name:"联发科", code:"2454.TW", country:"中国台湾", chg2024:39, chg2025:18, revenue2024:159.3, revenueYoy:15.9, mcap:720, highlight:"天玑9400 AI手机突破"},
+    {chain:"中游-设计", name:"高通", code:"QCOM", country:"美国", chg2024:58, chg2025:15, revenue2024:329.8, revenueYoy:12.3, mcap:2100, highlight:"手机+汽车+IoT+AI PC"}
+  ]
+};
+
+// ── Helper ──
+const fmt = (n, d=0) => n.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
+const pct = (n) => (n>0?'+':'')+n.toFixed(1)+'%';
+const chgCls = (n) => n>=0?'change-up':'change-down';
+
+// ── Render App ──
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <!-- Overview Section -->
+    <div class="section" id="overview">
+      <div class="section-title"><span class="icon">📊</span>全球半导体市场总览</div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="value">$${fmt(DATA.overview.globalMarket.total[2],0)}亿</div>
+          <div class="label">2025年全球半导体市场规模</div>
+          <div class="change change-up">+25.6% YoY (SIA)</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$${fmt(DATA.overview.globalMarket.logic[2],0)}亿</div>
+          <div class="label">2025年逻辑芯片（最大品类）</div>
+          <div class="change change-up">+39.9% YoY</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$${fmt(DATA.overview.segments.equipment[2],0)}亿</div>
+          <div class="label">2025年半导体设备</div>
+          <div class="change change-up">ASML €327亿(+16%)</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$${fmt(1257,0)}亿</div>
+          <div class="label">NVIDIA 2025半导体营收</div>
+          <div class="change change-up">+63.9% YoY (Gartner)</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$${fmt(DATA.overview.globalMarket.total[3],0)}亿</div>
+          <div class="label">2026E 全球半导体预测</div>
+          <div class="change change-up">逼近万亿美元 (WSTS)</div>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card"><h3>全球半导体市场趋势（亿美元）</h3><div id="chart-market-trend" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
+            <span class="insight-tag insight-tag-bull">强劲增长</span> 全球半导体市场已进入<span class="insight-highlight">AI驱动的超级周期</span>：2025年实际达到$7,917亿(+25.6%)，远超2024年初预期。2026年WSTS预测逼近<span class="insight-highlight">万亿美元($9,750亿)</span>。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-key">关键发现</span> <strong>逻辑芯片</strong>首次超越存储成为最大品类($3,019亿)，代表AI算力需求已取代存储周期成为行业核心驱动力。存储芯片虽增速放缓(+32.2% vs 2024年+81%)，但HBM结构性需求支撑高位运行。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-neut">关注风险</span> 2026年增速(+25%+)能否持续取决于AI CAPEX是否维持高位，若云厂商缩减开支则可能增速回落至15-20%。
+          </div></div>
+        </div>
+        <div class="card"><h3>2024年分品类增长对比</h3><div id="chart-segment-growth" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
+            <span class="insight-tag insight-tag-bull">最强赛道</span> <strong>存储芯片</strong>以+81%增速领跑2024年，主要受益于<span class="insight-highlight">HBM单价是传统DRAM的5-7倍</span>，AI服务器GPU配套需求爆发。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-key">结构变化</span> 半导体设备和晶圆代工分别增长10%和19%，说明<span class="insight-highlight">产能建设仍在加速</span>。但模拟芯片仅增长3%，反映工业和汽车领域去库存尚未完全结束。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-neut">投资启示</span> 增速差距巨大(81% vs 3%)，资金明显向AI相关赛道集中，传统模拟/分立器件领域需等待周期反转信号。
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chain Section -->
+    <div class="section" id="chain">
+      <div class="section-title"><span class="icon">🌳</span>半导体产业链三层结构</div>
+      <div class="card"><div id="chart-chain-sankey" class="chart-lg"></div>
+        <div style="text-align:center;color:var(--accent);font-size:11px;margin-bottom:8px;">👆 点击任意节点查看板块详情（龙头业绩/份额/PE/增长指标）</div>
+        <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
+          <span class="insight-tag insight-tag-key">产业链解读</span> 桑基图展示了从材料/设备→设计→制造→封测→应用的全链路价值流动。<span class="insight-highlight">IC设计($2,498亿)</span>是资金流入最大的上游环节，英伟达一家贡献了其中的50%。晶圆制造($1,399亿)作为中间枢纽，<span class="insight-highlight">台积电独占67%份额</span>，形成事实上的"制造瓶颈"。<br>
+          <hr class="insight-divider">
+          <span class="insight-tag insight-tag-bull">最大受益端</span> <strong>AI/数据中心</strong>应用端接收了最大流量($820亿)，且以HBM(+278%)和AI芯片(+85%)为代表的细分增速远超传统消费电子和汽车，说明产业链重心正在向AI基础设施端转移。
+        </div></div>
+      </div>
+    </div>
+
+    <!-- Upstream -->
+    <div class="section" id="upstream">
+      <div class="section-title"><span class="icon">🔧</span>上游 — 材料与设备</div>
+      <div class="tabs" id="upstream-tabs">
+        <button class="tab-btn active" onclick="switchUpstreamTab('materials')">半导体材料（6大细分）</button>
+        <button class="tab-btn" onclick="switchUpstreamTab('equipment')">半导体设备（7大细分）</button>
+      </div>
+      <div class="grid grid-2">
+        <div class="card"><h3 id="upstream-bar-title">材料市场规模 & 国产化率</h3><div id="chart-upstream-bar" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body" id="upstream-bar-insight">
+            <span class="insight-tag insight-tag-key">国产替代进展</span> <strong>电子特气</strong>国产化率最高(60%)，已基本实现自主可控；<strong>光刻胶</strong>(25%)和<strong>CMP抛光材料</strong>(30%)处于快速追赶期；<span class="insight-warn">硅片</span>虽然市场规模最大($175亿)，但12英寸大硅片国产化率仅<span class="insight-danger">10%</span>，是材料领域最大短板。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-bull">投资机会</span> 国产化率<30%且增速>10%的细分（光刻胶、CMP、靶材）是未来3年确定性最强的替代方向。点击上方Tab切换查看设备端分析。
+          </div></div>
+        </div>
+        <div class="card"><h3>国内 vs 全球市场对比</h3><div id="chart-upstream-compare" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body" id="upstream-compare-insight">
+            <span class="insight-tag insight-tag-neut">中美差距</span> 在设备端差距尤为显著：<strong>光刻机</strong>中国市场规模仅$5亿(占全球1.6%)，且几乎完全依赖ASML进口；<strong>检测设备</strong>中国$8亿(占全球4%)，KLA一家就占全球50%+。差距即是空间——<span class="insight-highlight">国产替代的市场天花板极高</span>。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-bull">相对优势</span> 刻蚀($35亿)和薄膜沉积($40亿)设备中国市场已具规模，北方华创和中微公司正快速缩小与海外龙头的差距，是设备端国产替代最先兑现业绩的方向。
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Midstream -->
+    <div class="section" id="midstream">
+      <div class="section-title"><span class="icon">⚙️</span>中游 — IC设计 · 晶圆制造 · 封装测试</div>
+      <div class="tabs" id="midstream-tabs">
+        <button class="tab-btn active" onclick="switchMidstreamTab('design')">IC设计</button>
+        <button class="tab-btn" onclick="switchMidstreamTab('foundry')">晶圆代工</button>
+        <button class="tab-btn" onclick="switchMidstreamTab('osat')">封装测试</button>
+      </div>
+      <div class="grid grid-2">
+        <div class="card"><h3 id="midstream-pie-title">晶圆代工市场份额</h3><div id="chart-midstream-pie" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body" id="midstream-pie-insight">
+            <span class="insight-tag insight-tag-bull">寡头格局</span> <strong>台积电独占67%</strong>的晶圆代工份额，且3nm/5nm先进制程占其晶圆收入74%，高端市场几乎无竞争对手。三星(13%)在3nm GAA工艺上追赶但良率不及台积电。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-key">中国变量</span> <strong>中芯国际</strong>份额仅4.5%但增速(+27.7%)居前，N+2工艺已等效7nm。在设备受限情况下通过特色工艺(BCD/IGBT)和成熟制程扩张，是<span class="insight-highlight">中国半导体自主化最核心的标的</span>。点击上方Tab切换查看IC设计和封测分析。
+          </div></div>
+        </div>
+        <div class="card"><h3>2024年股价涨跌幅对比</h3><div id="chart-midstream-stock" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body" id="midstream-stock-insight">
+            <span class="insight-tag insight-tag-bull">市场共识</span> 资本市场给出了明确答案：<strong>先进制程和AI芯片是最大共识方向</strong>。台积电(+92%)和中芯国际(+95%)领涨，反映市场对制造环节战略价值的重估。反观格芯(-28%)和三星(-22%)，缺乏AI敞口的代工厂被边缘化。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-neut">分化加剧</span> 同一产业链中，台积电涨92%而格芯跌28%，差距高达120个百分点——说明半导体投资已从"买行业"转向"买龙头"，选股比择时更重要。
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Downstream -->
+    <div class="section" id="downstream">
+      <div class="section-title"><span class="icon">📱</span>下游 — 应用市场</div>
+      <div class="grid grid-2">
+        <div class="card"><h3>应用市场规模 & 增长率（气泡图）</h3><div id="chart-downstream-bubble" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
+            <span class="insight-tag insight-tag-bull">超级赛道</span> 右上角红色气泡（HBM内存、AI芯片）同时具备<span class="insight-highlight">大规模+高增速</span>，是当前半导体行业最优质的赛道。HBM增速278%为全产业链最高，驱动因素是每颗AI GPU需配套6-8颗HBM。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-neut">成熟赛道</span> 左下角蓝色气泡（工业芯片、智能手机SoC）规模可观但增速已放缓至个位数，属于"现金牛"型业务，投资机会在于<span class="insight-warn">结构性升级</span>(如AI手机、智能汽车)而非总量增长。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-key">潜力赛道</span> SiC功率器件(+45%)和自动驾驶SoC(+36%)虽然当前规模较小，但CAGR高达25-35%，是未来5年最值得关注的成长方向。
+          </div></div>
+        </div>
+        <div class="card"><h3>2024-2028 CAGR 排名</h3><div id="chart-downstream-cagr" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
+            <span class="insight-tag insight-tag-bull">成长性排名</span> HBM(35% CAGR) > SiC功率器件(35%) > AI芯片(30%) > 自动驾驶SoC(25%) > 光通信芯片(17%)。前5名中<span class="insight-highlight">4个与AI直接相关</span>，1个与汽车电动化相关。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-key">投资策略</span> 如果想追求弹性，优先配置CAGR>25%的赛道龙头；如果追求确定性，选择CAGR 10-15%的赛道(如汽车芯片整体、IoT芯片)中份额稳固的企业。5G基站芯片虽然CAGR 12%但受政策周期影响大，需注意节奏。
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top 10 -->
+    <div class="section" id="top10">
+      <div class="section-title"><span class="icon">🎯</span>前十大核心板块深度分析</div>
+      <div class="grid grid-2">
+        <div class="card"><h3>市场规模 & 增长率矩阵</h3><div id="chart-top10-scatter" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
+            <span class="insight-tag insight-tag-bull">黄金象限</span> 右上角（大规模+高CAGR）：<strong>AI芯片、存储芯片、半导体设备</strong>。这三个板块兼具确定性和成长性，是机构资金的核心配置方向。尤其是AI芯片，$710亿规模仍能以30% CAGR增长。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-key">价值象限</span> 左上角（大规模+低CAGR）：<strong>模拟芯片($835亿)</strong>。规模大但增速仅8%，投资机会在于国产替代(当前国产化率15%)和汽车/工业升级，适合稳健型投资者。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-neut">成长象限</span> 右下角（小规模+高CAGR）：<strong>HBM、先进制程、先进封装</strong>。规模虽小但增速极高，是超额收益的主要来源，但波动也最大。
+          </div></div>
+        </div>
+        <div class="card"><h3>投资优先级 & CAGR</h3><div id="chart-top10-radar" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
+            <span class="insight-tag insight-tag-bull">五星推荐(⭐⭐⭐⭐⭐)</span> <strong>AI芯片、先进制程、HBM</strong>——三者构成AI基础设施的"铁三角"，是当前确定性最高的投资方向。英伟达、台积电、SK海力士分别统治这三个领域。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-key">四星关注(⭐⭐⭐⭐)</span> <strong>半导体设备、车规芯片、先进封装、存储芯片</strong>——具备强逻辑但需精选个股。设备看北方华创/中微，车规看斯达/地平线，先进封装看长电/通富。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-neut">三星跟踪(⭐⭐⭐)</span> <strong>EDA、模拟芯片、硅片</strong>——国产替代逻辑成立但短期业绩弹性有限，适合长期布局而非短期博弈。点击下方表格行查看每个板块的详细分析。
+          </div></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px;">
+        <h3>十大板块详情 <span style="font-weight:400;font-size:12px;color:var(--text2);">（点击行查看深度分析）</span></h3>
+        <div class="table-wrap">
+          <table class="data-table" id="top10-table">
+            <thead><tr><th>排名</th><th>板块</th><th>2024规模(亿$)</th><th>YoY</th><th>2025E</th><th>CAGR</th><th>全球龙头</th><th>中国龙头</th><th>投资优先级</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div id="top10-detail" class="detail-panel"></div>
+      </div>
+    </div>
+
+    <!-- Stocks -->
+    <div class="section" id="stocks">
+      <div class="section-title"><span class="icon">📈</span>核心厂商2024年股价表现</div>
+      <div class="grid grid-2">
+        <div class="card"><h3>2024年涨跌幅排名（Top 15）</h3><div id="chart-stocks-bar" class="chart-lg"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
+            <span class="insight-tag insight-tag-bull">涨幅之王</span> <strong>寒武纪(+433%)、韦尔股份(+306%)、兆易创新(+298%)</strong>包揽前三。寒武纪作为中国AI芯片稀缺标的享受极高估值溢价；韦尔受益于CIS图像传感器周期反转；兆易则同时踩中存储涨价+MCU国产替代两条主线。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-key">全球对比</span> 中国半导体股涨幅显著高于海外同行（英伟达+176%、台积电+92%），核心原因是<span class="insight-highlight">国产替代+低基数效应</span>。但需注意，部分A股标的的涨幅已脱离基本面（如寒武纪年营收仅$1.8亿但市值$430亿）。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-bear">跌幅警示</span> <strong>AMD(-18%)、英飞凌(-8.6%)</strong>是少数下跌标的，前者因AI GPU生态被英伟达碾压，后者因汽车芯片去库存周期，说明即使行业景气，选错方向仍可能亏损。
+          </div></div>
+        </div>
+        <div class="card"><h3>市值 vs 营收增速矩阵</h3><div id="chart-stocks-scatter" class="chart-lg"></div>
+          <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
+            <span class="insight-tag insight-tag-key">估值逻辑</span> 右上角（大市值+高增速）：<strong>英伟达</strong>是唯一同时满足"万亿美元市值+100%+增速"的公司，市场给予其高估值是基于<span class="insight-highlight">AI算力需求的长期确定性</span>。SK海力士紧随其后，受益HBM垄断地位。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-neut">价值发现</span> 左下角的中小市值+高增速标的（长川科技+125%、拓荆科技+70%）可能被市场低估，是深度研究的重点方向。<br>
+            <hr class="insight-divider">
+            <span class="insight-tag insight-tag-bear">泡沫风险</span> 寒武纪（市值$430亿/营收$1.8亿）市销率超过200倍，虽然AI芯片赛道确定性高，但需警惕短期估值回调风险。
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Realtime Quotes Section -->
+    <div class="section" id="realtime">
+      <div class="section-title"><span class="icon">⚡</span>实时行情 — 细分板块龙头 <span style="font-size:12px;color:var(--text2);font-weight:400;" id="realtime-time"></span></div>
+      <div class="card" style="margin-bottom:12px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; gap:6px; flex-wrap:wrap;" id="realtime-filters"></div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button onclick="refreshQuotes()" style="padding:6px 14px; border:1px solid var(--accent); border-radius:6px; background:transparent; color:var(--accent); cursor:pointer; font-size:12px;">🔄 刷新行情</button>
+            <span style="font-size:11px; color:var(--text2);">自动刷新: <span id="countdown">30</span>s</span>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-2" id="realtime-grid">
+        <div class="card">
+          <h3>📊 实时行情总览表</h3>
+          <div class="table-wrap" style="max-height:600px;">
+            <table class="data-table" id="realtime-table">
+              <thead><tr><th>板块</th><th>代码</th><th>名称</th><th>最新价</th><th>涨跌幅</th><th>涨跌额</th><th>开盘</th><th>最高</th><th>最低</th><th>昨收</th><th>成交额(亿)</th><th>换手率</th><th>总市值(亿)</th></tr></thead>
+              <tbody id="realtime-tbody"><tr><td colspan="13" style="text-align:center;padding:40px;color:var(--text2);">⏳ 正在获取实时行情数据...</td></tr></tbody>
+            </table>
+          </div>
+          <div class="insight-card" style="margin-top:12px;"><div class="insight-title">💡 盘面速读</div><div class="insight-body" id="realtime-insight">
+            加载中...
+          </div></div>
+        </div>
+        <div class="card">
+          <h3>📈 涨跌幅实时排行榜</h3>
+          <div id="chart-realtime-rank" class="chart-lg"></div>
+        </div>
+      </div>
+      <div class="grid grid-3" style="margin-top:20px;">
+        <div class="card"><h3>🔥 涨幅前5</h3><div id="top-gainers" style="font-size:12px; color:var(--text2);">加载中...</div></div>
+        <div class="card"><h3>❄️ 跌幅前5</h3><div id="top-losers" style="font-size:12px; color:var(--text2);">加载中...</div></div>
+        <div class="card"><h3>💰 成交额前5</h3><div id="top-volume" style="font-size:12px; color:var(--text2);">加载中...</div></div>
+      </div>
+    </div>
+  `;
+
+  // Render all charts
+  setTimeout(() => {
+    chartMarketTrend();
+    chartSegmentGrowth();
+    chartChainSankey();
+    chartUpstreamBar('materials');
+    chartUpstreamCompare('materials');
+    chartMidstreamPie('foundry');
+    chartMidstreamStock('foundry');
+    chartDownstreamBubble();
+    chartDownstreamCagr();
+    chartTop10Scatter();
+    chartTop10Radar();
+    chartStocksBar();
+    chartStocksScatter();
+    renderTop10Table();
+    loadRealtimeQuotes();
+    startAutoRefresh();
+  }, 100);
+}
+
+// ── Charts ──
+function chartMarketTrend() {
+  const c = echarts.init(document.getElementById('chart-market-trend'));
+  const d = DATA.overview.globalMarket;
+  c.setOption({
+    tooltip: {trigger:'axis'},
+    legend: {data:['总规模','存储','逻辑','模拟','分立'], textStyle:{color:'#90a4ae'}, top:5},
+    grid: {left:60, right:20, top:50, bottom:30},
+    xAxis: {type:'category', data:d.years.map(y=>y+'年'), axisLabel:{color:'#90a4ae'}},
+    yAxis: {type:'value', name:'亿美元', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    series: [
+      {name:'总规模', type:'bar', data:d.total, itemStyle:{color:'#4fc3f7'}, barWidth:16},
+      {name:'存储', type:'line', data:d.memory, itemStyle:{color:'#69f0ae'}, symbol:'circle', symbolSize:8},
+      {name:'逻辑', type:'line', data:d.logic, itemStyle:{color:'#ffab40'}, symbol:'diamond', symbolSize:8},
+      {name:'模拟', type:'line', data:d.analog, itemStyle:{color:'#ce93d8'}, symbol:'triangle', symbolSize:8},
+      {name:'分立', type:'line', data:d.discrete, itemStyle:{color:'#ef5350'}, symbol:'rect', symbolSize:8}
+    ]
+  });
+}
+
+function chartSegmentGrowth() {
+  const c = echarts.init(document.getElementById('chart-segment-growth'));
+  const segs = [
+    {name:'存储芯片', v2023:928, v2024:1675},
+    {name:'逻辑芯片', v2023:1780, v2024:2080},
+    {name:'半导体设备', v2023:1063, v2024:1171},
+    {name:'晶圆代工', v2023:1175, v2024:1399},
+    {name:'半导体材料', v2023:667, v2024:730},
+    {name:'模拟芯片', v2023:812, v2024:835},
+    {name:'封测', v2023:368, v2024:392},
+    {name:'分立器件', v2023:330, v2024:353},
+    {name:'中国半导体', v2023:1750, v2024:1980}
+  ];
+  const yoy = segs.map(s=>((s.v2024-s.v2023)/s.v2023*100).toFixed(1));
+  c.setOption({
+    tooltip: {trigger:'axis', formatter:p=>p[0].name+'<br/>2024: $'+fmt(segs[p[0].dataIndex].v2024,0)+'亿<br/>增长率: '+yoy[p[0].dataIndex]+'%'},
+    grid: {left:120, right:80, top:20, bottom:30},
+    xAxis: {type:'value', name:'亿美元', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'category', data:segs.map(s=>s.name), inverse:true, axisLabel:{color:'#90a4ae'}},
+    series: [{
+      type:'bar', data:segs.map((s,i)=>({value:s.v2024, label:{show:true, formatter:yoy[i]+'%', position:'right', color:'#69f0ae', fontWeight:'bold'}})),
+      itemStyle:{color: new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#7c4dff'},{offset:1,color:'#4fc3f7'}])},
+      barWidth:18
+    }]
+  });
+}
+
+function chartChainSankey() {
+  const c = echarts.init(document.getElementById('chart-chain-sankey'));
+  const nodeData = [
+    {name:'硅片'},{name:'光刻胶'},{name:'电子特气'},{name:'CMP材料'},{name:'靶材'},{name:'湿化学品'},
+    {name:'光刻机'},{name:'刻蚀设备'},{name:'薄膜沉积'},{name:'清洗设备'},{name:'检测设备'},
+    {name:'IC设计'},{name:'晶圆制造'},{name:'封装测试'},
+    {name:'消费电子'},{name:'汽车电子'},{name:'AI/数据中心'},{name:'工业/IoT'},{name:'通信'}
+  ];
+  c.setOption({
+    tooltip: {trigger:'item', triggerOn:'mousemove', formatter: function(p) {
+      if (p.dataType === 'node') {
+        const name = p.name;
+        const sd = SECTOR_DATA[name];
+        if (sd) return `<strong>${name}</strong><br/>全球规模: $${sd.globalSize}亿<br/>YoY: +${sd.yoy}%<br/>国产化率: ${sd.domesticRate}%<br/><span style="color:#4fc3f7;">点击查看详情 →</span>`;
+        return name + '<br/><span style="color:#90a4ae;">产业链节点</span>';
+      }
+      return p.data.source + ' → ' + p.data.target + '<br/>$' + p.data.value + '亿';
+    }},
+    series: [{
+      type:'sankey', layout:'none', emphasis:{focus:'adjacency'},
+      nodeAlign:'left', layoutIterations:0,
+      lineStyle:{color:'gradient', curveness:0.5, opacity:0.3},
+      label:{color:'#e0e0e0', fontSize:11},
+      data: nodeData,
+      links:[
+        {source:'硅片',target:'晶圆制造',value:175},{source:'光刻胶',target:'晶圆制造',value:27},
+        {source:'电子特气',target:'晶圆制造',value:60},{source:'CMP材料',target:'晶圆制造',value:37},
+        {source:'靶材',target:'晶圆制造',value:23},{source:'湿化学品',target:'晶圆制造',value:57},
+        {source:'光刻机',target:'晶圆制造',value:315},{source:'刻蚀设备',target:'晶圆制造',value:220},
+        {source:'薄膜沉积',target:'晶圆制造',value:260},{source:'清洗设备',target:'晶圆制造',value:55},
+        {source:'检测设备',target:'晶圆制造',value:200},
+        {source:'IC设计',target:'晶圆制造',value:2498},{source:'晶圆制造',target:'封装测试',value:1399},
+        {source:'封装测试',target:'消费电子',value:380},{source:'封装测试',target:'汽车电子',value:680},
+        {source:'封装测试',target:'AI/数据中心',value:820},{source:'封装测试',target:'工业/IoT',value:365},
+        {source:'封装测试',target:'通信',value:80}
+      ]
+    }]
+  });
+  // Click handler
+  c.off('click');
+  c.on('click', function(params) {
+    if (params.dataType === 'node') {
+      const name = params.name;
+      const sd = SECTOR_DATA[name];
+      if (sd) showSectorModal(name);
+    }
+  });
+}
+
+let currentUpstreamTab = 'materials';
+function switchUpstreamTab(tab) {
+  currentUpstreamTab = tab;
+  document.querySelectorAll('#upstream-tabs .tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('upstream-bar-title').textContent = tab==='materials' ? '材料市场规模 & 国产化率' : '设备市场规模 & 国产化率';
+  chartUpstreamBar(tab);
+  chartUpstreamCompare(tab);
+  // Update insights
+  const barInsight = document.getElementById('upstream-bar-insight');
+  const compInsight = document.getElementById('upstream-compare-insight');
+  if (tab === 'materials') {
+    if (barInsight) barInsight.innerHTML = `<span class="insight-tag insight-tag-key">国产替代进展</span> <strong>电子特气</strong>国产化率最高(60%)，已基本实现自主可控；<strong>光刻胶</strong>(25%)和<strong>CMP抛光材料</strong>(30%)处于快速追赶期；<span class="insight-warn">硅片</span>虽然市场规模最大($175亿)，但12英寸大硅片国产化率仅<span class="insight-danger">10%</span>，是材料领域最大短板。<br><hr class="insight-divider"><span class="insight-tag insight-tag-bull">投资机会</span> 国产化率<30%且增速>10%的细分（光刻胶、CMP、靶材）是未来3年确定性最强的替代方向。`;
+    if (compInsight) compInsight.innerHTML = `<span class="insight-tag insight-tag-neut">中美差距</span> 材料端差距集中在高端领域：<strong>光刻胶</strong>日本四巨头占全球80%+，中国ArF光刻胶国产化率<10%；<strong>硅片</strong>12英寸大硅片CR5超80%，沪硅产业全球份额仅2.5%。但电子特气、湿化学品等中低端材料已基本实现国产化。`;
+  } else {
+    if (barInsight) barInsight.innerHTML = `<span class="insight-tag insight-tag-bear">最大短板</span> <strong>光刻机</strong>国产化率不足<span class="insight-danger">1%</span>，全球315亿美元市场几乎由ASML(82%)独占。其次是<strong>检测设备</strong>(国产化5%)和<strong>离子注入</strong>(国产化10%)，这三个是设备端最薄弱的环节。<br><hr class="insight-divider"><span class="insight-tag insight-tag-bull">突破方向</span> <strong>刻蚀设备</strong>和<strong>薄膜沉积</strong>国产化率已达18-20%，中微公司CCP刻蚀已进入5nm产线，北方华创和拓荆科技在手订单持续高增，是设备端最先实现进口替代的领域。`;
+    if (compInsight) compInsight.innerHTML = `<span class="insight-tag insight-tag-neut">中美差距</span> 在设备端差距尤为显著：<strong>光刻机</strong>中国市场规模仅$5亿(占全球1.6%)，且几乎完全依赖ASML进口；<strong>检测设备</strong>中国$8亿(占全球4%)，KLA一家就占全球50%+。差距即是空间——<span class="insight-highlight">国产替代的市场天花板极高</span>。<br><hr class="insight-divider"><span class="insight-tag insight-tag-bull">相对优势</span> 刻蚀($35亿)和薄膜沉积($40亿)设备中国市场已具规模，北方华创和中微公司正快速缩小与海外龙头的差距。`;
+  }
+}
+
+function chartUpstreamBar(tab) {
+  const c = echarts.init(document.getElementById('chart-upstream-bar'));
+  const items = tab==='materials' ? DATA.chain.upstream.materials : DATA.chain.upstream.equipment;
+  c.setOption({
+    tooltip: {trigger:'axis'},
+    legend: {data:['全球市场(亿美元)','国产化率(%)'], textStyle:{color:'#90a4ae'}, top:5},
+    grid: {left:100, right:60, top:50, bottom:30},
+    xAxis: {type:'category', data:items.map(i=>i.name), axisLabel:{color:'#90a4ae', rotate:15}},
+    yAxis: [
+      {type:'value', name:'亿美元', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+      {type:'value', name:'%', axisLabel:{color:'#90a4ae'}, max:100}
+    ],
+    series: [
+      {name:'全球市场(亿美元)', type:'bar', data:items.map(i=>i.global2024), itemStyle:{color:'#4fc3f7'}, barWidth:20},
+      {name:'国产化率(%)', type:'line', yAxisIndex:1, data:items.map(i=>i.domesticRate), itemStyle:{color:'#69f0ae'}, symbol:'circle', symbolSize:10, lineStyle:{width:3}}
+    ]
+  });
+}
+
+function chartUpstreamCompare(tab) {
+  const c = echarts.init(document.getElementById('chart-upstream-compare'));
+  const items = tab==='materials' ? DATA.chain.upstream.materials : DATA.chain.upstream.equipment;
+  c.setOption({
+    tooltip: {trigger:'axis'},
+    legend: {data:['全球2024','中国2024'], textStyle:{color:'#90a4ae'}, top:5},
+    grid: {left:100, right:20, top:50, bottom:30},
+    xAxis: {type:'category', data:items.map(i=>i.name), axisLabel:{color:'#90a4ae', rotate:15}},
+    yAxis: {type:'value', name:'亿美元', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    series: [
+      {name:'全球2024', type:'bar', data:items.map(i=>i.global2024), itemStyle:{color:'#7c4dff'}, barWidth:16, barGap:'30%'},
+      {name:'中国2024', type:'bar', data:items.map(i=>i.china2024), itemStyle:{color:'#4fc3f7'}, barWidth:16}
+    ]
+  });
+}
+
+let currentMidstreamTab = 'foundry';
+function switchMidstreamTab(tab) {
+  currentMidstreamTab = tab;
+  document.querySelectorAll('#midstream-tabs .tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  const titles = {foundry:'晶圆代工市场份额', osat:'封测市场份额', design:'IC设计细分市场规模'};
+  document.getElementById('midstream-pie-title').textContent = titles[tab];
+  if (tab==='design') {
+    chartMidstreamDesignBar();
+  } else {
+    chartMidstreamPie(tab);
+  }
+  chartMidstreamStock(tab);
+  // Update insights
+  const pieInsight = document.getElementById('midstream-pie-insight');
+  const stockInsight = document.getElementById('midstream-stock-insight');
+  if (tab === 'foundry') {
+    if (pieInsight) pieInsight.innerHTML = `<span class="insight-tag insight-tag-bull">寡头格局</span> <strong>台积电独占67%</strong>的晶圆代工份额，且3nm/5nm先进制程占其晶圆收入74%，高端市场几乎无竞争对手。三星(13%)在3nm GAA工艺上追赶但良率不及台积电。<br><hr class="insight-divider"><span class="insight-tag insight-tag-key">中国变量</span> <strong>中芯国际</strong>份额仅4.5%但增速(+27.7%)居前，N+2工艺已等效7nm。在设备受限情况下通过特色工艺(BCD/IGBT)和成熟制程扩张。`;
+    if (stockInsight) stockInsight.innerHTML = `<span class="insight-tag insight-tag-bull">市场共识</span> 资本市场给出了明确答案：<strong>先进制程和AI芯片是最大共识方向</strong>。台积电(+92%)和中芯国际(+95%)领涨，反映市场对制造环节战略价值的重估。格芯(-28%)和三星(-22%)因缺乏AI敞口被边缘化。`;
+  } else if (tab === 'osat') {
+    if (pieInsight) pieInsight.innerHTML = `<span class="insight-tag insight-tag-key">中国优势</span> 全球TOP10封测厂中<span class="insight-highlight">中国企业占4席</span>（长电/通富/力成/华天），合计份额约32%。封测是中国半导体产业链中<span class="insight-highlight">最成熟的环节</span>，全球竞争力强。<br><hr class="insight-divider"><span class="insight-tag insight-tag-bull">先进封装</span> 台积电CoWoS产能2025年翻倍至7万片/月，长电科技XDFOI Chiplet已量产，先进封装是封测环节最具成长性的方向(CAGR 20%)。`;
+    if (stockInsight) stockInsight.innerHTML = `<span class="insight-tag insight-tag-bull">封测复苏</span> 通富微电(+42%)领涨封测板块，核心逻辑是AMD（其最大客户）AI芯片放量带动FCBGA先进封装需求。长电科技(+35%)受益于XDFOI Chiplet量产和华为回归。传统封测（如力成+10%）增速较慢。`;
+  } else {
+    if (pieInsight) pieInsight.innerHTML = `<span class="insight-tag insight-tag-bull">AI驱动</span> <strong>GPU/CPU</strong>($1,100亿)和<strong>存储芯片</strong>($1,670亿)是IC设计最大细分，均由AI需求驱动。英伟达一家就占全球Fabless营收的50%，是<span class="insight-highlight">前所未有的行业集中度</span>。<br><hr class="insight-divider"><span class="insight-tag insight-tag-key">中国突破</span> 中国IC设计销售额$910亿(+11.9%)，但全球份额仅约10%。韦尔股份(CIS传感器)和兆易创新(NOR Flash+MCU)是中国Fabless中少数具有全球竞争力的企业。`;
+    if (stockInsight) stockInsight.innerHTML = `<span class="insight-tag insight-tag-bull">爆发性增长</span> 韦尔股份(+306%)和兆易创新(+298%)领涨，澜起科技(+276%)DDR5接口芯片全球第二。中国Fabless股价涨幅远超海外同行，核心逻辑是<span class="insight-highlight">国产替代+低渗透率+高成长</span>三重驱动。但需注意部分标的估值已较高。`;
+  }
+}
+
+function chartMidstreamPie(tab) {
+  const c = echarts.init(document.getElementById('chart-midstream-pie'));
+  const items = tab==='foundry' ? DATA.chain.midstream.foundry : DATA.chain.midstream.osat;
+  c.setOption({
+    tooltip: {trigger:'item', formatter:'{b}: {c}%'},
+    series: [{
+      type:'pie', radius:['40%','75%'], center:['50%','50%'],
+      data: items.map(i=>({name:i.name, value:i.share})),
+      label:{color:'#e0e0e0', formatter:'{b}\n{d}%'},
+      emphasis:{itemStyle:{shadowBlur:10, shadowColor:'rgba(0,0,0,0.5)'}}
+    }]
+  });
+}
+
+function chartMidstreamDesignBar() {
+  const c = echarts.init(document.getElementById('chart-midstream-pie'));
+  const items = DATA.chain.midstream.design;
+  c.setOption({
+    tooltip: {trigger:'axis'},
+    grid: {left:120, right:60, top:20, bottom:30},
+    xAxis: {type:'value', name:'亿美元', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'category', data:items.map(i=>i.name), inverse:true, axisLabel:{color:'#90a4ae'}},
+    series: [{
+      type:'bar', data:items.map(i=>({value:i.global2024, label:{show:true, formatter:'$'+fmt(i.global2024,0)+'亿 | +'+i.yoy+'%', position:'right', color:'#4fc3f7'}})),
+      itemStyle:{color: new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#1565c0'},{offset:1,color:'#4fc3f7'}])},
+      barWidth:16
+    }]
+  });
+}
+
+function chartMidstreamStock(tab) {
+  const c = echarts.init(document.getElementById('chart-midstream-stock'));
+  let items;
+  if (tab==='foundry') items = DATA.chain.midstream.foundry;
+  else if (tab==='osat') items = DATA.chain.midstream.osat;
+  else items = DATA.chain.midstream.design.map(d=>({name:d.name, stock:d.yoy}));
+  const names = items.map(i=>i.name);
+  const vals = items.map(i=>i.stock||0);
+  c.setOption({
+    tooltip: {trigger:'axis', formatter:p=>p[0].name+'<br/>2024股价: '+pct(p[0].value)},
+    grid: {left:100, right:40, top:20, bottom:30},
+    xAxis: {type:'value', name:'%', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'category', data:names, inverse:true, axisLabel:{color:'#90a4ae'}},
+    series: [{
+      type:'bar', data:vals.map(v=>({value:v, label:{show:true, formatter:pct(v), position:v>=0?'right':'left', color:v>=0?'#69f0ae':'#ff5252', fontWeight:'bold'}})),
+      itemStyle:{color: p => p.value>=0 ? '#69f0ae' : '#ff5252'},
+      barWidth:16
+    }]
+  });
+}
+
+function chartDownstreamBubble() {
+  const c = echarts.init(document.getElementById('chart-downstream-bubble'));
+  const items = DATA.chain.downstream;
+  c.setOption({
+    tooltip: {trigger:'item', formatter:p=>p.data[3]+'<br/>规模: $'+fmt(p.data[0],0)+'亿<br/>YoY: +'+p.data[1]+'%<br/>CAGR: '+p.data[2]+'%'},
+    grid: {left:60, right:20, top:20, bottom:40},
+    xAxis: {type:'value', name:'2024市场规模(亿美元)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'value', name:'2024 YoY(%)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    series: [{
+      type:'scatter', symbolSize:d=>Math.sqrt(d[0])*1.5,
+      data: items.map(i=>[i.global2024, i.yoy, i.cagr, i.sub]),
+      itemStyle:{color: p => {
+        const cagr = p.data[2];
+        if(cagr>=30) return '#ff5252';
+        if(cagr>=15) return '#ffab40';
+        return '#4fc3f7';
+      }},
+      label:{show:true, formatter:p=>p.data[3], position:'top', color:'#e0e0e0', fontSize:10}
+    }]
+  });
+}
+
+function chartDownstreamCagr() {
+  const c = echarts.init(document.getElementById('chart-downstream-cagr'));
+  const sorted = [...DATA.chain.downstream].sort((a,b)=>b.cagr-a.cagr);
+  c.setOption({
+    tooltip: {trigger:'axis'},
+    grid: {left:140, right:60, top:20, bottom:30},
+    xAxis: {type:'value', name:'%', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'category', data:sorted.map(i=>i.sub), inverse:true, axisLabel:{color:'#90a4ae', fontSize:10}},
+    series: [{
+      type:'bar', data:sorted.map(i=>({value:i.cagr, label:{show:true, formatter:i.cagr+'%', position:'right', color:'#ffab40', fontWeight:'bold'}})),
+      itemStyle:{color: new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#e65100'},{offset:1,color:'#ffab40'}])},
+      barWidth:14
+    }]
+  });
+}
+
+function chartTop10Scatter() {
+  const c = echarts.init(document.getElementById('chart-top10-scatter'));
+  c.setOption({
+    tooltip: {trigger:'item', formatter:p=>p.data[3]+'<br/>规模: $'+fmt(p.data[0],0)+'亿<br/>YoY: +'+p.data[1]+'%<br/>CAGR: '+p.data[2]+'%'},
+    grid: {left:70, right:20, top:20, bottom:30},
+    xAxis: {type:'value', name:'2024市场规模(亿美元)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'value', name:'2024-2028 CAGR(%)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    series: [{
+      type:'scatter', symbolSize:d=>Math.sqrt(d[0])*2,
+      data: DATA.top10.map(t=>[t.global2024, t.cagr, t.priority, t.name]),
+      itemStyle:{color: p=>p.data[2]>=5?'#ff5252':p.data[2]>=4?'#ffab40':'#4fc3f7'},
+      label:{show:true, formatter:p=>'#'+p.data[2]+' '+p.data[3], position:'top', color:'#e0e0e0', fontSize:10}
+    }]
+  });
+}
+
+function chartTop10Radar() {
+  const c = echarts.init(document.getElementById('chart-top10-radar'));
+  c.setOption({
+    tooltip: {},
+    radar: {
+      center:['50%','55%'], radius:'65%',
+      indicator: DATA.top10.map(t=>({name:t.name, max:300})),
+      axisName:{color:'#90a4ae', fontSize:9}
+    },
+    series: [{
+      type:'radar',
+      data:[{value: DATA.top10.map(t=>t.yoy*2), name:'2024增长率', areaStyle:{color:'rgba(79,195,247,0.3)'}, lineStyle:{color:'#4fc3f7'}, itemStyle:{color:'#4fc3f7'}},
+            {value: DATA.top10.map(t=>t.cagr*6), name:'CAGR(x6)', areaStyle:{color:'rgba(255,171,64,0.3)'}, lineStyle:{color:'#ffab40'}, itemStyle:{color:'#ffab40'}}]
+    }]
+  });
+}
+
+function chartStocksBar() {
+  const c = echarts.init(document.getElementById('chart-stocks-bar'));
+  const sorted = [...DATA.stocks].sort((a,b)=>b.chg2024-a.chg2024).slice(0,15);
+  c.setOption({
+    tooltip: {trigger:'axis', formatter:p=>p[0].name+'<br/>2024涨跌幅: '+pct(p[0].value)},
+    grid: {left:100, right:50, top:10, bottom:30},
+    xAxis: {type:'value', name:'%', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'category', data:sorted.map(s=>s.name+' ('+s.code+')'), inverse:true, axisLabel:{color:'#90a4ae', fontSize:10}},
+    series: [{
+      type:'bar', data:sorted.map(s=>({value:s.chg2024, label:{show:true, formatter:pct(s.chg2024), position:s.chg2024>=0?'right':'left', color:s.chg2024>=0?'#69f0ae':'#ff5252', fontWeight:'bold'}})),
+      itemStyle:{color: p=>p.value>=0?'#69f0ae':'#ff5252'},
+      barWidth:16
+    }]
+  });
+}
+
+function chartStocksScatter() {
+  const c = echarts.init(document.getElementById('chart-stocks-scatter'));
+  c.setOption({
+    tooltip: {trigger:'item', formatter:p=>p.data[3]+'<br/>市值: $'+fmt(p.data[0],0)+'亿<br/>营收增速: +'+p.data[1]+'%<br/>2024股价: '+pct(p.data[2])},
+    grid: {left:70, right:20, top:20, bottom:30},
+    xAxis: {type:'log', name:'市值(亿美元)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'value', name:'2024营收YoY(%)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    series: [{
+      type:'scatter', symbolSize:d=>Math.max(8, Math.log10(d[0])*10),
+      data: DATA.stocks.map(s=>[s.mcap, s.revenueYoy, s.chg2024, s.name]),
+      itemStyle:{color: p=>p.data[2]>=0?'#69f0ae':'#ff5252'},
+      label:{show:true, formatter:p=>p.data[3], position:'top', color:'#e0e0e0', fontSize:9}
+    }]
+  });
+}
+
+function renderTop10Table() {
+  const tbody = document.querySelector('#top10-table tbody');
+  tbody.innerHTML = DATA.top10.map((t,i)=>`
+    <tr onclick="showTop10Detail(${i})" style="cursor:pointer;">
+      <td><strong>#${t.rank}</strong></td>
+      <td><strong>${t.name}</strong></td>
+      <td>$${fmt(t.global2024,0)}亿</td>
+      <td class="positive">+${t.yoy}%</td>
+      <td>$${fmt(t.global2025e,0)}亿</td>
+      <td><span class="tag tag-hot">${t.cagr}%</span></td>
+      <td>${t.globalLeader}</td>
+      <td>${t.chinaLeader}</td>
+      <td><span class="stars">${'★'.repeat(t.priority)}${'☆'.repeat(5-t.priority)}</span></td>
+    </tr>
+  `).join('');
+}
+
+function showTop10Detail(idx) {
+  const t = DATA.top10[idx];
+  const panel = document.getElementById('top10-detail');
+  panel.innerHTML = `
+    <h3>#${t.rank} ${t.name} <span class="stars">${'★'.repeat(t.priority)}${'☆'.repeat(5-t.priority)}</span></h3>
+    <div class="row"><span class="k">2024规模</span><span>$${fmt(t.global2024,0)}亿（+${t.yoy}% YoY）</span></div>
+    <div class="row"><span class="k">2025E规模</span><span>$${fmt(t.global2025e,0)}亿</span></div>
+    <div class="row"><span class="k">CAGR</span><span>${t.cagr}%（2024-2028）</span></div>
+    <div class="row"><span class="k">全球龙头</span><span>${t.globalLeader}</span></div>
+    <div class="row"><span class="k">中国龙头</span><span>${t.chinaLeader}</span></div>
+    <div class="row"><span class="k">核心驱动</span><span style="color:#69f0ae;">${t.driver}</span></div>
+    <div class="row"><span class="k">2025H2展望</span><span style="color:#4fc3f7;">${t.outlook}</span></div>
+    <div class="row"><span class="k">风险因素</span><span style="color:#ff5252;">${t.risk}</span></div>
+    <div class="row"><span class="k">跟踪指标</span><span style="color:#ffab40;">${t.metric}</span></div>
+  `;
+  panel.classList.add('show');
+}
+
+// ── Navigation ──
+function scrollToSection(id) {
+  document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
+  const link = document.querySelector(`.nav a[href="#${id}"]`);
+  if(link) link.classList.add('active');
+  document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ── Init ──
+window.addEventListener('DOMContentLoaded', render);
+window.addEventListener('resize', ()=>{
+  document.querySelectorAll('.chart, .chart-lg').forEach(el=>{
+    const inst = echarts.getInstanceByDom(el);
+    if(inst) inst.resize();
+  });
+});
+
+// Scroll spy (moved to realtime section below)
+
+
+// ══════════════════════════════════════════════════════
+// REALTIME QUOTES — 东方财富免费API
+// ══════════════════════════════════════════════════════
+
+// Stock list: 细分板块龙头 (A股 + 港股)
+const QUOTE_STOCKS = [
+  // 上游-设备
+  {sector:"上游-设备", code:"002371", market:"sz", name:"北方华创", type:"A股"},
+  {sector:"上游-设备", code:"688012", market:"sh", name:"中微公司", type:"A股"},
+  {sector:"上游-设备", code:"688072", market:"sh", name:"拓荆科技", type:"A股"},
+  {sector:"上游-设备", code:"688082", market:"sh", name:"盛美上海", type:"A股"},
+  {sector:"上游-设备", code:"300604", market:"sz", name:"长川科技", type:"A股"},
+  // 上游-材料
+  {sector:"上游-材料", code:"688126", market:"sh", name:"沪硅产业", type:"A股"},
+  {sector:"上游-材料", code:"603650", market:"sh", name:"彤程新材", type:"A股"},
+  {sector:"上游-材料", code:"300666", market:"sz", name:"江丰电子", type:"A股"},
+  {sector:"上游-材料", code:"688019", market:"sh", name:"安集科技", type:"A股"},
+  // 中游-设计
+  {sector:"中游-设计", code:"603501", market:"sh", name:"韦尔股份", type:"A股"},
+  {sector:"中游-设计", code:"603986", market:"sh", name:"兆易创新", type:"A股"},
+  {sector:"中游-设计", code:"688008", market:"sh", name:"澜起科技", type:"A股"},
+  {sector:"中游-设计", code:"300661", market:"sz", name:"圣邦股份", type:"A股"},
+  {sector:"中游-设计", code:"300782", market:"sz", name:"卓胜微", type:"A股"},
+  // 中游-制造
+  {sector:"中游-制造", code:"688981", market:"sh", name:"中芯国际", type:"A股"},
+  {sector:"中游-制造", code:"688347", market:"sh", name:"华虹公司", type:"A股"},
+  {sector:"中游-制造", code:"688396", market:"sh", name:"华润微", type:"A股"},
+  // 中游-封测
+  {sector:"中游-封测", code:"600584", market:"sh", name:"长电科技", type:"A股"},
+  {sector:"中游-封测", code:"002156", market:"sz", name:"通富微电", type:"A股"},
+  {sector:"中游-封测", code:"002185", market:"sz", name:"华天科技", type:"A股"},
+  // 下游-AI
+  {sector:"下游-AI", code:"688256", market:"sh", name:"寒武纪", type:"A股"},
+  {sector:"下游-AI", code:"688041", market:"sh", name:"海光信息", type:"A股"},
+  // 下游-汽车
+  {sector:"下游-汽车", code:"603290", market:"sh", name:"斯达半导", type:"A股"},
+  {sector:"下游-汽车", code:"600460", market:"sh", name:"士兰微", type:"A股"},
+  // 下游-EDA
+  {sector:"下游-EDA", code:"301269", market:"sz", name:"华大九天", type:"A股"},
+  // 港股
+  {sector:"中游-制造", code:"00981", market:"hk", name:"中芯国际(H)", type:"港股"},
+  {sector:"中游-制造", code:"01347", market:"hk", name:"华虹半导体", type:"港股"},
+  {sector:"中游-封测", code:"00522", market:"hk", name:"ASMPT", type:"港股"},
+];
+
+const EM_FIELDS = "f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f14,f15,f16,f17,f18,f20,f21,f22,f23,f24,f25,f62,f115,f116,f117,f167,f168,f169,f170,f171";
+
+let quotesData = [];
+let autoRefreshTimer = null;
+let countdownTimer = null;
+let countdown = 30;
+let currentFilter = '全部';
+
+function getSecid(stock) {
+  if (stock.market === 'hk') return `116.${stock.code}`;
+  if (stock.market === 'sh') return `1.${stock.code}`;
+  return `0.${stock.code}`;
+}
+
+async function loadRealtimeQuotes() {
+  const tbody = document.getElementById('realtime-tbody');
+  if (tbody) tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;padding:40px;color:var(--text2);">⏳ 正在获取实时行情数据...</td></tr>';
+
+  // Build batch request for A shares (all at once via clist)
+  const aCodes = QUOTE_STOCKS.filter(s=>s.market==='sh'||s.market==='sz').map(s=>`${s.market==='sh'?'1':'0'}.${s.code}`).join(',');
+  const hkCodes = QUOTE_STOCKS.filter(s=>s.market==='hk').map(s=>`116.${s.code}`).join(',');
+
+  const results = [];
+
+  try {
+    // Batch fetch A shares
+    if (aCodes) {
+      const url = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=${EM_FIELDS}&secids=${aCodes}`;
+      const resp = await fetch(url);
+      const data = await resp.json();
+      if (data.data && data.data.diff) {
+        for (const item of data.data.diff) {
+          const stock = QUOTE_STOCKS.find(s => s.code === item.f12);
+          if (stock) {
+            results.push({
+              sector: stock.sector, code: item.f12, name: item.f14, type: 'A股',
+              price: item.f2, chgPct: item.f3, chgAmt: item.f4,
+              open: item.f17, high: item.f15, low: item.f16, prevClose: item.f18,
+              volume: item.f5, amount: item.f6, turnover: item.f8,
+              mcap: item.f20, pe: item.f9, pb: item.f23,
+              high52: item.f22, low52: item.f21
+            });
+          }
+        }
+      }
+    }
+
+    // Batch fetch HK stocks
+    if (hkCodes) {
+      const hkUrl = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=${EM_FIELDS}&secids=${hkCodes}`;
+      const resp = await fetch(hkUrl);
+      const data = await resp.json();
+      if (data.data && data.data.diff) {
+        for (const item of data.data.diff) {
+          const stock = QUOTE_STOCKS.find(s => s.code === item.f12);
+          if (stock) {
+            results.push({
+              sector: stock.sector, code: item.f12, name: item.f14, type: '港股',
+              price: item.f2, chgPct: item.f3, chgAmt: item.f4,
+              open: item.f17, high: item.f15, low: item.f16, prevClose: item.f18,
+              volume: item.f5, amount: item.f6, turnover: item.f8,
+              mcap: item.f20, pe: item.f9, pb: item.f23,
+              high52: item.f22, low52: item.f21
+            });
+          }
+        }
+      }
+    }
+  } catch(e) {
+    console.error('行情获取失败:', e);
+    if (tbody) tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;padding:40px;color:#ff5252;">❌ 行情数据获取失败，请检查网络连接后刷新</td></tr>';
+    return;
+  }
+
+  quotesData = results;
+  updateQuoteTime();
+  renderQuoteTable();
+  renderQuoteChart();
+  renderTopLists();
+  renderFilters();
+}
+
+function updateQuoteTime() {
+  const now = new Date();
+  const ts = now.toLocaleTimeString('zh-CN', {hour12:false});
+  const el = document.getElementById('realtime-time');
+  if (el) el.textContent = `更新时间: ${ts}`;
+}
+
+function renderFilters() {
+  const container = document.getElementById('realtime-filters');
+  if (!container) return;
+  const sectors = ['全部', ...new Set(QUOTE_STOCKS.map(s=>s.sector))];
+  container.innerHTML = sectors.map(s => {
+    const cls = currentFilter===s ? 'tab-btn active' : 'tab-btn';
+    return `<button class="${cls}" onclick="filterSector('${s}')">${s}</button>`;
+  }).join('');
+}
+
+function filterSector(sector) {
+  currentFilter = sector;
+  renderFilters();
+  renderQuoteTable();
+}
+
+function renderQuoteTable() {
+  const tbody = document.getElementById('realtime-tbody');
+  if (!tbody) return;
+
+  let filtered = currentFilter==='全部' ? quotesData : quotesData.filter(q=>q.sector===currentFilter);
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;padding:40px;color:var(--text2);">暂无数据</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(q => {
+    const chgCls = q.chgPct >= 0 ? 'positive' : 'negative';
+    const chgSign = q.chgPct >= 0 ? '+' : '';
+    const sectorTag = q.sector.includes('上游') ? 'tag-upstream' : (q.sector.includes('中游') ? 'tag-midstream' : 'tag-downstream');
+    const amtYi = q.amount ? (q.amount/100000000).toFixed(2) : '-';
+    const mcapYi = q.mcap ? (q.mcap/100000000).toFixed(0) : '-';
+    return `<tr>
+      <td><span class="tag ${sectorTag}">${q.sector}</span></td>
+      <td>${q.code}<span style="font-size:10px;color:var(--text2);margin-left:4px;">${q.type==='港股'?'HK':'SH/SZ'}</span></td>
+      <td><strong>${q.name}</strong></td>
+      <td style="font-weight:700;">${q.price||'-'}</td>
+      <td class="${chgCls}" style="font-weight:700;">${chgSign}${(q.chgPct||0).toFixed(2)}%</td>
+      <td class="${chgCls}">${chgSign}${(q.chgAmt||0).toFixed(2)}</td>
+      <td>${q.open||'-'}</td>
+      <td style="color:var(--red);">${q.high||'-'}</td>
+      <td style="color:var(--green);">${q.low||'-'}</td>
+      <td>${q.prevClose||'-'}</td>
+      <td>${amtYi}</td>
+      <td>${q.turnover ? q.turnover.toFixed(2)+'%' : '-'}</td>
+      <td>${mcapYi}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderQuoteChart() {
+  const el = document.getElementById('chart-realtime-rank');
+  if (!el) return;
+  const chart = echarts.init(el);
+  const sorted = [...quotesData].sort((a,b)=>b.chgPct-a.chgPct);
+  const names = sorted.map(q=>q.name+' ('+q.code+')');
+  const vals = sorted.map(q=>q.chgPct);
+  chart.setOption({
+    tooltip: {trigger:'axis', formatter:p=>p[0].name+'<br/>涨跌幅: '+p[0].value.toFixed(2)+'%'},
+    grid: {left:130, right:50, top:10, bottom:20},
+    xAxis: {type:'value', name:'%', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'category', data:names, inverse:true, axisLabel:{color:'#90a4ae', fontSize:10}},
+    series: [{
+      type:'bar', data:vals.map(v=>({value:v, label:{show:true, formatter:v.toFixed(2)+'%', position:v>=0?'right':'left', color:v>=0?'#69f0ae':'#ff5252', fontWeight:'bold'}})),
+      itemStyle:{color: p=>p.value>=0?'#69f0ae':'#ff5252'},
+      barWidth:14
+    }]
+  });
+  updateRealtimeInsight();
+}
+
+function updateRealtimeInsight() {
+  const el = document.getElementById('realtime-insight');
+  if (!el || quotesData.length===0) return;
+  const up = quotesData.filter(q=>q.chgPct>0).length;
+  const down = quotesData.filter(q=>q.chgPct<0).length;
+  const total = quotesData.length;
+  const avgChg = quotesData.reduce((s,q)=>s+q.chgPct,0)/total;
+  const maxUp = quotesData.reduce((a,b)=>a.chgPct>b.chgPct?a:b);
+  const maxDown = quotesData.reduce((a,b)=>a.chgPct<b.chgPct?a:b);
+  const topVol = quotesData.reduce((a,b)=>(a.amount||0)>(b.amount||0)?a:b);
+  const sentiment = avgChg > 1 ? '偏强' : avgChg > 0 ? '中性偏强' : avgChg > -1 ? '中性偏弱' : '偏弱';
+  const sentimentTag = avgChg > 0 ? 'insight-tag-bull' : 'insight-tag-bear';
+  el.innerHTML = `
+    <span class="insight-tag ${sentimentTag}">盘面${sentiment}</span> 
+    监控${total}只半导体核心标的，<span class="insight-highlight">${up}只上涨</span>、${down}只下跌，平均涨跌幅 <strong>${avgChg>=0?'+':''}${avgChg.toFixed(2)}%</strong>。<br>
+    <hr class="insight-divider">
+    <span class="insight-tag insight-tag-key">领涨</span> <strong>${maxUp.name}</strong>(${maxUp.code}) +${maxUp.chgPct.toFixed(2)}% 
+    <span class="insight-tag insight-tag-bear">领跌</span> <strong>${maxDown.name}</strong>(${maxDown.code}) ${maxDown.chgPct.toFixed(2)}%<br>
+    <hr class="insight-divider">
+    <span class="insight-tag insight-tag-neut">成交最活跃</span> <strong>${topVol.name}</strong>(${topVol.code}) 成交${((topVol.amount||0)/100000000).toFixed(1)}亿元
+    ${avgChg > 1 ? '<br><span class="insight-highlight">⚠ 板块整体偏强，注意追高风险。</span>' : avgChg < -1 ? '<br><span class="insight-warn">⚠ 板块整体偏弱，关注是否有系统性利空。</span>' : ''}
+  `;
+}
+
+function renderTopLists() {
+  const sorted = [...quotesData].sort((a,b)=>b.chgPct-a.chgPct);
+  const byVolume = [...quotesData].sort((a,b)=>(b.amount||0)-(a.amount||0));
+
+  const top5up = sorted.slice(0,5);
+  const top5down = sorted.slice(-5).reverse();
+  const top5vol = byVolume.slice(0,5);
+
+  const makeList = (items, cls) => items.map((q,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);">
+    <span style="color:var(--accent);font-weight:700;width:20px;">${i+1}</span>
+    <span style="flex:1;">${q.name} <span style="color:var(--text2);font-size:11px;">${q.code}</span></span>
+    <span class="${cls}" style="font-weight:700;">${q.chgPct>=0?'+':''}${(q.chgPct||0).toFixed(2)}%</span>
+    ${cls===''?`<span style="color:var(--text2);font-size:11px;">${((q.amount||0)/100000000).toFixed(1)}亿</span>`:''}
+  </div>`).join('');
+
+  const ug = document.getElementById('top-gainers');
+  const lg = document.getElementById('top-losers');
+  const vg = document.getElementById('top-volume');
+  if (ug) ug.innerHTML = makeList(top5up, 'positive');
+  if (lg) lg.innerHTML = makeList(top5down, 'negative');
+  if (vg) vg.innerHTML = makeList(top5vol, '');
+}
+
+function refreshQuotes() {
+  countdown = 30;
+  document.getElementById('countdown').textContent = '30';
+  loadRealtimeQuotes();
+}
+
+function isTradingDay() {
+  const now = new Date();
+  const day = now.getDay();
+  // 周六(6) 周日(0) 非交易日
+  if (day === 0 || day === 6) return false;
+  // A股交易时间：9:30-11:30, 13:00-15:00（周一至周五）
+  // 简化判断：9:00-16:00 之间为交易日
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const t = h * 60 + m;
+  // 非交易时段不自动刷新（9:00前和16:00后）
+  // 但页面加载时仍获取一次（可能是收盘后查看）
+  return true; // 只要是工作日，获取一次没问题
+}
+
+function isInTradingHours() {
+  const now = new Date();
+  const day = now.getDay();
+  if (day === 0 || day === 6) return false;
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const t = h * 60 + m;
+  // 9:00-16:00 视为交易相关时段
+  return t >= 540 && t <= 960;
+}
+
+function startAutoRefresh() {
+  if (countdownTimer) clearInterval(countdownTimer);
+  const cdEl = document.getElementById('countdown');
+  
+  if (!isInTradingHours()) {
+    if (cdEl) cdEl.textContent = '休市';
+    if (cdEl) cdEl.parentElement.innerHTML = '<span style="font-size:11px; color:var(--text2);">🔕 非交易时段，自动刷新已暂停</span>';
+    return;
+  }
+  
+  countdownTimer = setInterval(() => {
+    countdown--;
+    const el = document.getElementById('countdown');
+    if (el) el.textContent = countdown;
+    if (countdown <= 0) {
+      countdown = 30;
+      if (isInTradingHours()) {
+        loadRealtimeQuotes();
+      }
+    }
+  }, 1000);
+}
+
+// Extend scroll spy for realtime section
+const origScrollSections = ['overview','chain','upstream','midstream','downstream','top10','stocks','realtime'];
+window.addEventListener('scroll', function() {
+  let current = '';
+  origScrollSections.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && el.getBoundingClientRect().top <= 100) current = id;
+  });
+  document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
+  const activeLink = document.querySelector(`.nav a[href="#${current}"]`);
+  if(activeLink) activeLink.classList.add('active');
+});
+
+// ════════════════════════════════════════════
+// SECTOR DETAIL MODAL
+// ════════════════════════════════════════════
+const SECTOR_DATA = {
+  "硅片":{desc:"半导体制造基础材料，12英寸大硅片是先进制程必需",globalSize:175,yoy:7,chinaSize:33.8,domesticRate:10,cagr:8.1,leaders:[
+    {name:"沪硅产业",code:"688126",market:"sh",revenue2024:38,revenueYoy:28,grossMargin:18,netMargin:3,pe:280,mcap:390,share_global:"2.5%",share_china:"13%",highlight:"12英寸硅片出货505万片/年，产能60万片/月",stock2024:"+89%"},
+    {name:"立昂微",code:"605358",market:"sh",revenue2024:30,revenueYoy:15,grossMargin:30,netMargin:10,pe:55,mcap:160,share_global:"<1%",share_china:"~8%",highlight:"硅片+分立器件双业务",stock2024:"+18%"},
+    {name:"信越化学",code:"4063.T",market:"jp",revenue2024:1120,revenueYoy:8,grossMargin:38,netMargin:22,pe:18,mcap:720,share_global:"28-30%",share_china:"N/A",highlight:"全球硅片绝对龙头",stock2024:"+39%"}]},
+  "光刻胶":{desc:"芯片制造关键耗材，ArF/EUV技术壁垒极高",globalSize:27.3,yoy:16,chinaSize:7.7,domesticRate:25,cagr:6.5,leaders:[
+    {name:"彤程新材",code:"603650",market:"sh",revenue2024:34,revenueYoy:18,grossMargin:28,netMargin:13,pe:45,mcap:190,share_global:"<2%",share_china:"~15%",highlight:"国内KrF光刻胶龙头，ArF突破",stock2024:"+48%"},
+    {name:"南大光电",code:"300346",market:"sz",revenue2024:18,revenueYoy:25,grossMargin:35,netMargin:15,pe:60,mcap:130,share_global:"<1%",share_china:"ArF唯一量产",highlight:"国内唯一ArF光刻胶量产",stock2024:"+40%"}]},
+  "电子特气":{desc:"高纯气体，品种多、国产化率相对较高",globalSize:60,yoy:8,chinaSize:18,domesticRate:60,cagr:8.0,leaders:[
+    {name:"华特气体",code:"688268",market:"sh",revenue2024:22,revenueYoy:20,grossMargin:32,netMargin:15,pe:40,mcap:100,share_global:"~3%",share_china:"~12%",highlight:"电子特气品类最全",stock2024:"+35%"}]},
+  "CMP抛光材料":{desc:"晶圆表面平坦化关键耗材",globalSize:37,yoy:6,chinaSize:9,domesticRate:30,cagr:7.0,leaders:[
+    {name:"安集科技",code:"688019",market:"sh",revenue2024:18,revenueYoy:22,grossMargin:52,netMargin:28,pe:48,mcap:160,share_global:"10-11%",share_china:">50%",highlight:"CMP抛光液全球第四，国内绝对龙头",stock2024:"+55%"},
+    {name:"鼎龙股份",code:"300054",market:"sz",revenue2024:35,revenueYoy:15,grossMargin:35,netMargin:12,pe:52,mcap:180,share_global:"~5%",share_china:"~20%(抛光垫)",highlight:"CMP抛光垫国内龙头",stock2024:"+42%"}]},
+  "溅射靶材":{desc:"PVD关键材料，用于金属薄膜制备",globalSize:23,yoy:5,chinaSize:6.5,domesticRate:35,cagr:8.5,leaders:[
+    {name:"江丰电子",code:"300666",market:"sz",revenue2024:28,revenueYoy:35,grossMargin:38,netMargin:15,pe:62,mcap:240,share_global:"18.6%(全球第二)",share_china:"~40%",highlight:"全球靶材第二，12英寸晶圆厂份额73%",stock2024:"+90%"}]},
+  "湿电子化学品":{desc:"芯片制造清洗/蚀刻用高纯试剂",globalSize:57,yoy:6,chinaSize:15,domesticRate:50,cagr:7.5,leaders:[
+    {name:"江化微",code:"603078",market:"sh",revenue2024:15,revenueYoy:20,grossMargin:30,netMargin:12,pe:42,mcap:65,share_global:"~2%",share_china:"~10%",highlight:"G4/G5级湿电子化学品量产",stock2024:"+30%"}]},
+  "光刻机":{desc:"芯片制造核心设备，ASML几乎垄断高端市场",globalSize:315,yoy:18,chinaSize:5,domesticRate:1,cagr:10.0,leaders:[
+    {name:"ASML",code:"ASML.AS",market:"nl",revenue2024:283,revenueYoy:16,grossMargin:51,netMargin:27,pe:28,mcap:3100,share_global:"82%",share_china:"N/A",highlight:"EUV垄断，在手订单€388亿",stock2024:"-4.3%"}]},
+  "刻蚀设备":{desc:"等离子体刻蚀，国产替代进展最快的设备细分",globalSize:220,yoy:15,chinaSize:35,domesticRate:20,cagr:12.0,leaders:[
+    {name:"中微公司",code:"688012",market:"sh",revenue2024:83,revenueYoy:32,grossMargin:46,netMargin:26,pe:68,mcap:1300,share_global:"~5%",share_china:"~25%",highlight:"CCP刻蚀进入5nm产线",stock2024:"+65%"},
+    {name:"北方华创",code:"002371",market:"sz",revenue2024:298,revenueYoy:35,grossMargin:42,netMargin:22,pe:42,mcap:2100,share_global:"~8%",share_china:"~35%(含薄膜)",highlight:"国产设备综合龙头",stock2024:"+58%"}]},
+  "薄膜沉积设备":{desc:"CVD/PVD/ALD设备，薄膜制备核心装备",globalSize:260,yoy:12,chinaSize:40,domesticRate:18,cagr:11.0,leaders:[
+    {name:"拓荆科技",code:"688072",market:"sh",revenue2024:46,revenueYoy:45,grossMargin:48,netMargin:26,pe:82,mcap:560,share_global:"~2%",share_china:"~15%",highlight:"PECVD/ALD/SACVD全面突破",stock2024:"+70%"}]},
+  "清洗设备":{desc:"晶圆清洗设备，国产替代进展良好",globalSize:55,yoy:10,chinaSize:10,domesticRate:25,cagr:10.0,leaders:[
+    {name:"盛美上海",code:"688082",market:"sh",revenue2024:42,revenueYoy:30,grossMargin:45,netMargin:22,pe:55,mcap:280,share_global:"8%(全球第四)",share_china:"~40%",highlight:"单片清洗全球领先",stock2024:"+50%"}]},
+  "检测设备":{desc:"晶圆缺陷检测和量测，国产化率最低",globalSize:200,yoy:8,chinaSize:8,domesticRate:5,cagr:9.0,leaders:[
+    {name:"长川科技",code:"300604",market:"sz",revenue2024:32,revenueYoy:55,grossMargin:48,netMargin:18,pe:55,mcap:260,share_global:"~2%",share_china:"~20%",highlight:"测试机+分选机+探针台全覆盖",stock2024:"+125%"}]},
+  "IC设计":{desc:"芯片设计(Fabless)，全球TOP10营收$2,498亿",globalSize:2498,yoy:49,chinaSize:910,domesticRate:25,cagr:12.0,leaders:[
+    {name:"英伟达",code:"NVDA",market:"us",revenue2024:1305,revenueYoy:114,grossMargin:75,netMargin:56,pe:42,mcap:38900,share_global:"50%(TOP10)",share_china:"N/A",highlight:"AI计算绝对霸主",stock2024:"+176%"},
+    {name:"韦尔股份",code:"603501",market:"sh",revenue2024:257,revenueYoy:21,grossMargin:28,netMargin:6,pe:35,mcap:240,share_global:"CIS全球第三",share_china:"CIS龙头",highlight:"汽车CIS快速增长",stock2024:"+306%"},
+    {name:"兆易创新",code:"603986",market:"sh",revenue2024:73.5,revenueYoy:28,grossMargin:38,netMargin:21,pe:42,mcap:95,share_global:"NOR Flash第三",share_china:"MCU龙头",highlight:"NOR Flash+MCU双轮",stock2024:"+298%"}]},
+  "晶圆代工":{desc:"芯片制造核心环节，台积电独占67%",globalSize:1399,yoy:19,chinaSize:150,domesticRate:15,cagr:10.0,leaders:[
+    {name:"台积电",code:"TSM",market:"us",revenue2024:900,revenueYoy:30,grossMargin:56,netMargin:40,pe:22,mcap:10500,share_global:"67%",share_china:"N/A",highlight:"3nm占26%营收，2nm量产",stock2024:"+92%"},
+    {name:"中芯国际",code:"688981",market:"sh",revenue2024:450,revenueYoy:27.7,grossMargin:20,netMargin:10,pe:80,mcap:620,share_global:"4.5%",share_china:"~30%",highlight:"N+2(7nm等效)突破",stock2024:"+95%"}]},
+  "封装测试":{desc:"中国最具全球竞争力的半导体环节",globalSize:392,yoy:3,chinaSize:120,domesticRate:35,cagr:8.0,leaders:[
+    {name:"长电科技",code:"600584",market:"sh",revenue2024:350,revenueYoy:19.3,grossMargin:15,netMargin:7,pe:28,mcap:110,share_global:"12.8%",share_china:"~30%",highlight:"XDFOI Chiplet量产",stock2024:"+35%"},
+    {name:"通富微电",code:"002156",market:"sz",revenue2024:196,revenueYoy:15,grossMargin:12,netMargin:5,pe:25,mcap:52,share_global:"7.1%",share_china:"~18%",highlight:"AMD核心封测伙伴",stock2024:"+42%"}]},
+  "AI芯片":{desc:"AI训练推理芯片，半导体最强增长引擎",globalSize:710,yoy:85,chinaSize:165,domesticRate:41,cagr:30.0,leaders:[
+    {name:"英伟达",code:"NVDA",market:"us",revenue2024:1305,revenueYoy:114,grossMargin:75,netMargin:56,pe:42,mcap:38900,share_global:">80%",share_china:"N/A",highlight:"Blackwell GPU，DC营收$1152亿",stock2024:"+176%"},
+    {name:"寒武纪",code:"688256",market:"sh",revenue2024:12.6,revenueYoy:85,grossMargin:60,netMargin:-63,pe:-350,mcap:520,share_global:"<1%",share_china:"~8%",highlight:"思元590量产，股价破800元",stock2024:"+433%"},
+    {name:"海光信息",code:"688041",market:"sh",revenue2024:60,revenueYoy:52,grossMargin:55,netMargin:25,pe:85,mcap:320,share_global:"<1%",share_china:"~15%",highlight:"x86 CPU+DCU双布局",stock2024:"+116%"}]},
+  "车规芯片":{desc:"电动化+智能化双轮驱动",globalSize:680,yoy:15,chinaSize:170,domesticRate:8,cagr:12.0,leaders:[
+    {name:"斯达半导",code:"603290",market:"sh",revenue2024:45,revenueYoy:25,grossMargin:35,netMargin:18,pe:48,mcap:55,share_global:"<2%",share_china:"~10%(IGBT)",highlight:"车规SiC MOS量产",stock2024:"+55%"}]},
+  "先进封装":{desc:"CoWoS/Chiplet/3D封装，AI芯片产能瓶颈",globalSize:260,yoy:25,chinaSize:45,domesticRate:15,cagr:20.0,leaders:[
+    {name:"长电科技",code:"600584",market:"sh",revenue2024:350,revenueYoy:19.3,grossMargin:15,netMargin:7,pe:28,mcap:110,share_global:"~5%",share_china:"~25%",highlight:"XDFOI Chiplet量产",stock2024:"+35%"}]},
+  "存储芯片":{desc:"DRAM/NAND/NOR Flash，AI驱动HBM结构性增长",globalSize:1670,yoy:81,chinaSize:180,domesticRate:12,cagr:15.0,leaders:[
+    {name:"SK海力士",code:"000660.KS",market:"kr",revenue2024:490,revenueYoy:105,grossMargin:47,netMargin:24,pe:10,mcap:1550,share_global:"~25%(DRAM)",share_china:"N/A",highlight:"HBM3E独家供应英伟达",stock2024:"+28%"}]},
+  "模拟芯片":{desc:"信号链+电源管理，汽车工业驱动",globalSize:835,yoy:3,chinaSize:65,domesticRate:15,cagr:8.0,leaders:[
+    {name:"圣邦股份",code:"300661",market:"sz",revenue2024:25,revenueYoy:25,grossMargin:45,netMargin:15,pe:65,mcap:52,share_global:"<1%",share_china:"~10%",highlight:"信号链+电源双线",stock2024:"+65%"}]},
+  "EDA":{desc:"芯片设计工具，三巨头垄断74%",globalSize:190,yoy:12,chinaSize:8,domesticRate:5,cagr:12.0,leaders:[
+    {name:"华大九天",code:"301269",market:"sz",revenue2024:10,revenueYoy:28,grossMargin:85,netMargin:18,pe:85,mcap:98,share_global:"<1%",share_china:"~15%",highlight:"14nm全流程验证",stock2024:"+59%"}]},
+};
+
+function showSectorModal(sectorName) {
+  const data = SECTOR_DATA[sectorName];
+  if (!data) return;
+  
+  const container = document.getElementById('sector-modal-content');
+  const leadersHtml = data.leaders.map((l, i) => {
+    const chgCls = l.stock2024.startsWith('+') ? 'positive' : 'negative';
+    const canJump = (l.market === 'sh' || l.market === 'sz' || l.market === 'hk');
+    return `<div class="leader-card" onclick="jumpToRealtime('${l.code}')" title="点击跳转到实时行情">
+      <div class="lc-header">
+        <div><span class="lc-name">${i===0?'🥇':i===1?'🥈':'🥉'} ${l.name}</span> <span class="lc-code">${l.code} ${canJump?'🔗':''}</span></div>
+        <div style="text-align:right;"><span class="${chgCls}" style="font-weight:700;font-size:14px;">${l.stock2024}</span><br><span style="font-size:10px;color:var(--text2);">2024股价</span></div>
+      </div>
+      <div class="lc-stats">
+        <div class="lc-stat"><div class="lc-sv">${l.revenue2024}亿</div><div class="lc-sl">2024营收</div></div>
+        <div class="lc-stat"><div class="lc-sv">+${l.revenueYoy}%</div><div class="lc-sl">营收增速</div></div>
+        <div class="lc-stat"><div class="lc-sv">${l.grossMargin}%</div><div class="lc-sl">毛利率</div></div>
+        <div class="lc-stat"><div class="lc-sv">${l.pe}x</div><div class="lc-sl">PE(TTM)</div></div>
+      </div>
+      <div class="lc-highlight">📌 ${l.highlight} | 全球份额: ${l.share_global} | 中国份额: ${l.share_china}</div>
+    </div>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="modal-header">
+      <h2>📊 ${sectorName}</h2>
+      <button class="modal-close" onclick="closeSectorModal()">✕</button>
+    </div>
+    <p style="color:var(--text2);font-size:12px;margin-bottom:14px;">${data.desc}</p>
+    <div class="metric-row">
+      <div class="metric-item"><div class="m-val">$${data.globalSize}亿</div><div class="m-label">全球市场规模(2024)</div></div>
+      <div class="metric-item"><div class="m-val" style="color:var(--green);">+${data.yoy}%</div><div class="m-label">YoY增长率</div></div>
+      <div class="metric-item"><div class="m-val" style="color:var(--orange);">${data.domesticRate}%</div><div class="m-label">国产化率</div></div>
+      <div class="metric-item"><div class="m-val" style="color:var(--accent);">${data.cagr}%</div><div class="m-label">CAGR(2024-2028)</div></div>
+    </div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">
+      中国市场规模: <strong style="color:#fff;">$${data.chinaSize}亿</strong> | 占全球: <strong style="color:var(--accent);">${(data.chinaSize/data.globalSize*100).toFixed(1)}%</strong>
+    </div>
+    <h4 style="color:var(--accent);font-size:14px;margin-bottom:10px;">🏢 行业龙头</h4>
+    ${leadersHtml}
+    <div style="font-size:10px;color:var(--text2);margin-top:8px;">💡 点击龙头卡片可跳转到实时行情</div>
+  `;
+  document.getElementById('sector-modal').classList.add('show');
+}
+
+function closeSectorModal() {
+  document.getElementById('sector-modal').classList.remove('show');
+}
+
+function jumpToRealtime(code) {
+  closeSectorModal();
+  // Scroll to realtime section
+  document.getElementById('realtime').scrollIntoView({behavior:'smooth'});
+  // Filter by the stock
+  setTimeout(() => {
+    currentFilter = '全部';
+    renderFilters();
+    renderQuoteTable();
+    // Highlight the row briefly
+    setTimeout(() => {
+      const rows = document.querySelectorAll('#realtime-tbody tr');
+      rows.forEach(r => {
+        if (r.cells[1] && r.cells[1].textContent.trim().startsWith(code)) {
+          r.style.background = 'rgba(79,195,247,0.2)';
+          r.scrollIntoView({behavior:'smooth', block:'center'});
+          setTimeout(() => { r.style.background = ''; }, 2000);
+        }
+      });
+    }, 500);
+  }, 300);
+}
+
+// Make sankey chart nodes clickable
+// We'll use a clickable chain map that users can interact with
+// Add click handlers to the chain tree in overview section
+function makeChainClickable() {
+  // Add onclick to the chain data table rows in overview
+  setTimeout(() => {
+    // The chain tree is rendered as a sankey chart, but we can add a clickable list below
+    const chainSection = document.getElementById('chain');
+    if (!chainSection) return;
+    // Already has the insight card; add a clickable grid below it
+  }, 500);
+}
+</script>
+
+<!-- Sector Detail Modal -->
+<div class="modal-overlay" id="sector-modal" onclick="if(event.target===this)closeSectorModal()">
+  <div class="modal-dialog" id="sector-modal-content"></div>
+</div>
+
+<!-- Data Source Footer -->
+<div style="margin-top:60px; padding:32px 24px; background:var(--card-bg); border-top:2px solid var(--accent);">
+  <div style="max-width:1600px; margin:0 auto;">
+    <h3 style="color:var(--accent); margin-bottom:16px; font-size:16px;">📡 数据来源与更新机制</h3>
+    <div class="grid grid-3" style="margin-bottom:20px;">
+      <div>
+        <h4 style="color:#fff; font-size:13px; margin-bottom:8px;">🌐 全球半导体市场数据</h4>
+        <ul style="color:var(--text2); font-size:12px; line-height:1.8; list-style:none; padding:0;">
+          <li>✅ <a href="https://www.wsts.org" target="_blank" style="color:var(--accent);">WSTS</a> — 月度/季度行业出货统计（1986年至今）</li>
+          <li>✅ <a href="https://www.semiconductors.org" target="_blank" style="color:var(--accent);">SIA</a> — 美国半导体协会年度报告</li>
+          <li>✅ <a href="https://www.gartner.com" target="_blank" style="color:var(--accent);">Gartner</a> — 全球半导体厂商排名（每年1月发布）</li>
+          <li>✅ <a href="https://www.trendforce.com" target="_blank" style="color:var(--accent);">TrendForce</a> — 晶圆代工/存储/封测季度追踪</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#fff; font-size:13px; margin-bottom:8px;">📊 厂商财务与股价数据</h4>
+        <ul style="color:var(--text2); font-size:12px; line-height:1.8; list-style:none; padding:0;">
+          <li>✅ 各公司季度财报（SEC/交易所公告）</li>
+          <li>✅ Yahoo Finance / Google Finance 股价数据</li>
+          <li>✅ ASML季度订单/出货追踪</li>
+          <li>✅ 台积电月度营收公告（每月10日）</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#fff; font-size:13px; margin-bottom:8px;">🔄 更新频率建议</h4>
+        <ul style="color:var(--text2); font-size:12px; line-height:1.8; list-style:none; padding:0;">
+          <li>📅 <strong>每月</strong>：SIA月度销售数据、台积电营收</li>
+          <li>📅 <strong>每季</strong>：公司财报、WSTS季度统计</li>
+          <li>📅 <strong>每年</strong>：Gartner排名（1月）、SIA年报（2月）</li>
+          <li>📅 <strong>实时</strong>：股价数据、重大行业新闻</li>
+        </ul>
+      </div>
+    </div>
+    <div style="background:var(--card-bg2); border-radius:8px; padding:16px; margin-top:16px;">
+      <h4 style="color:var(--accent); font-size:13px; margin-bottom:8px;">📌 本次数据更新记录（2026年6月27日）</h4>
+      <table style="width:100%; font-size:12px; color:var(--text2); border-collapse:collapse;">
+        <tr><td style="padding:4px 8px; width:180px;">2025全球半导体总规模</td><td style="color:#fff;">$7,917亿 (+25.6%) — SIA 2026.2</td></tr>
+        <tr><td style="padding:4px 8px;">2025逻辑芯片</td><td style="color:#fff;">$3,019亿 (+39.9%), 首次成为最大品类 — SIA</td></tr>
+        <tr><td style="padding:4px 8px;">2025存储芯片</td><td style="color:#fff;">$2,215亿 (+32.2%), HBM占DRAM 23% — SIA/Gartner</td></tr>
+        <tr><td style="padding:4px 8px;">NVIDIA 2025半导体营收</td><td style="color:#69f0ae;">$1,257亿 (+63.9%), 领先三星$530亿 — Gartner 2026.1</td></tr>
+        <tr><td style="padding:4px 8px;">SK海力士 2025</td><td style="color:#69f0ae;">$606亿 (+37.2%), 营业利润首超三星 — Gartner/CNBC</td></tr>
+        <tr><td style="padding:4px 8px;">ASML 2025全年</td><td style="color:#fff;">净销售额€327亿(+16%), 净利€96亿(+27%) — ASML 2026.1</td></tr>
+        <tr><td style="padding:4px 8px;">AI芯片市场</td><td style="color:#ffab40;">AI处理器$2000亿+, 占半导体总销售约1/3 — Gartner</td></tr>
+        <tr><td style="padding:4px 8px;">2026年预测</td><td style="color:#ffab40;">$9,750亿 (+25%+), 逼近万亿美元 — WSTS Autumn 2025</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
