@@ -1,0 +1,85 @@
+{
+  "timestamp": "2026-06-27T12:08:20.166914+08:00",
+  "date": "2026-06-27",
+  "time": "12:08:20",
+  "total": 8,
+  "errors": [
+    {
+      "code": "DJI",
+      "name": "道琼斯",
+      "error": "API未返回数据"
+    }
+  ],
+  "indices": [
+    {
+      "code": "000300",
+      "name": "沪深300",
+      "price": 4868.22,
+      "change_pct": -3.03,
+      "change_amt": -151.88,
+      "region": "中国",
+      "type": "大盘"
+    },
+    {
+      "code": "000688",
+      "name": "科创50",
+      "price": 2032.28,
+      "change_pct": -1.65,
+      "change_amt": -34.05,
+      "region": "中国",
+      "type": "科技"
+    },
+    {
+      "code": "000001",
+      "name": "上证指数",
+      "price": 4027.26,
+      "change_pct": -2.26,
+      "change_amt": -93.02,
+      "region": "中国",
+      "type": "大盘"
+    },
+    {
+      "code": "399001",
+      "name": "深证成指",
+      "price": 15782.22,
+      "change_pct": -3.44,
+      "change_amt": -561.86,
+      "region": "中国",
+      "type": "大盘"
+    },
+    {
+      "code": "399006",
+      "name": "创业板指",
+      "price": 4194.21,
+      "change_pct": -4.07,
+      "change_amt": -177.78,
+      "region": "中国",
+      "type": "成长"
+    },
+    {
+      "code": "SPX",
+      "name": "标普500",
+      "price": 7354.02,
+      "change_pct": -0.05,
+      "change_amt": -3.47,
+      "region": "美国",
+      "type": "大盘"
+    },
+    {
+      "code": "NDX",
+      "name": "纳斯达克",
+      "price": 25297.62,
+      "change_pct": -0.24,
+      "change_amt": -60.98,
+      "region": "美国",
+      "type": "科技"
+    },
+    {
+      "code": "SOX",
+      "name": "费城半导体指数",
+      "region": "美国",
+      "type": "半导体",
+      "note": "东方财富API暂不支持SOX指数，当前为缓存值。可通过Yahoo Finance手动更新。"
+    }
+  ]
+}
