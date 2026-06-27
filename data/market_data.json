@@ -102,147 +102,134 @@
         {
           "name": "硅片",
           "global2024": 175,
-          "yoy": 11,
-          "china2024": 38,
-          "domesticRate": 12,
+          "yoy": 7,
+          "china2024": 33.8,
+          "domesticRate": 10,
           "globalLeader": "信越化学(28-30%)",
           "chinaLeader": "沪硅产业",
-          "cagr": 8.5,
-          "global2025e": 195
+          "cagr": 8.1
         },
         {
           "name": "光刻胶(半导体)",
           "global2024": 27.3,
-          "yoy": 18,
-          "china2024": 9.2,
-          "domesticRate": 28,
+          "yoy": 16,
+          "china2024": 7.7,
+          "domesticRate": 25,
           "globalLeader": "东京应化(26-28%)",
           "chinaLeader": "彤程新材",
-          "cagr": 7.5,
-          "global2025e": 32
+          "cagr": 6.5
         },
         {
           "name": "电子特气",
           "global2024": 60,
-          "yoy": 9,
-          "china2024": 20,
-          "domesticRate": 62,
+          "yoy": 8,
+          "china2024": 18,
+          "domesticRate": 60,
           "globalLeader": "林德(15%)",
           "chinaLeader": "华特气体",
-          "cagr": 8.5,
-          "global2025e": 65
+          "cagr": 8.0
         },
         {
           "name": "CMP抛光材料",
           "global2024": 37,
-          "yoy": 8,
-          "china2024": 10,
-          "domesticRate": 33,
+          "yoy": 6,
+          "china2024": 9,
+          "domesticRate": 30,
           "globalLeader": "卡博特(25%)",
           "chinaLeader": "安集科技",
-          "cagr": 8.0,
-          "global2025e": 40
+          "cagr": 7.0
         },
         {
           "name": "溅射靶材",
           "global2024": 23,
-          "yoy": 7,
-          "china2024": 7.2,
-          "domesticRate": 38,
+          "yoy": 5,
+          "china2024": 6.5,
+          "domesticRate": 35,
           "globalLeader": "日矿金属(25%)",
           "chinaLeader": "江丰电子",
-          "cagr": 9.0,
-          "global2025e": 25
+          "cagr": 8.5
         },
         {
           "name": "湿电子化学品",
           "global2024": 57,
-          "yoy": 7,
-          "china2024": 16,
-          "domesticRate": 52,
+          "yoy": 6,
+          "china2024": 15,
+          "domesticRate": 50,
           "globalLeader": "巴斯夫(18%)",
           "chinaLeader": "江化微",
-          "cagr": 8.0,
-          "global2025e": 61
+          "cagr": 7.5
         }
       ],
       "equipment": [
         {
           "name": "光刻机",
           "global2024": 315,
-          "yoy": 22,
-          "china2024": 8,
-          "domesticRate": 1.5,
+          "yoy": 18,
+          "china2024": 5,
+          "domesticRate": 1,
           "globalLeader": "ASML(82%)",
           "chinaLeader": "上海微电子",
-          "cagr": 12.0,
-          "global2025e": 385
+          "cagr": 10.0
         },
         {
           "name": "刻蚀设备",
           "global2024": 220,
-          "yoy": 20,
-          "china2024": 42,
-          "domesticRate": 23,
+          "yoy": 15,
+          "china2024": 35,
+          "domesticRate": 20,
           "globalLeader": "泛林Lam(35%)",
           "chinaLeader": "中微公司",
-          "cagr": 14.0,
-          "global2025e": 265
+          "cagr": 12.0
         },
         {
           "name": "薄膜沉积设备",
           "global2024": 260,
-          "yoy": 18,
-          "china2024": 48,
-          "domesticRate": 20,
+          "yoy": 12,
+          "china2024": 40,
+          "domesticRate": 18,
           "globalLeader": "应用材料AMAT(45%)",
           "chinaLeader": "北方华创/拓荆",
-          "cagr": 13.0,
-          "global2025e": 310
+          "cagr": 11.0
         },
         {
           "name": "清洗设备",
           "global2024": 55,
-          "yoy": 14,
-          "china2024": 12,
-          "domesticRate": 28,
+          "yoy": 10,
+          "china2024": 10,
+          "domesticRate": 25,
           "globalLeader": "SCREEN(30%)",
           "chinaLeader": "盛美上海",
-          "cagr": 12.0,
-          "global2025e": 63
+          "cagr": 10.0
         },
         {
           "name": "检测设备",
           "global2024": 200,
-          "yoy": 12,
-          "china2024": 10,
-          "domesticRate": 7,
+          "yoy": 8,
+          "china2024": 8,
+          "domesticRate": 5,
           "globalLeader": "科磊KLA(50%+)",
           "chinaLeader": "华峰测控/长川",
-          "cagr": 11.0,
-          "global2025e": 225
+          "cagr": 9.0
         },
         {
           "name": "离子注入设备",
           "global2024": 35,
-          "yoy": 8,
-          "china2024": 3.5,
-          "domesticRate": 12,
+          "yoy": 6,
+          "china2024": 3,
+          "domesticRate": 10,
           "globalLeader": "AMAT(50-70%)",
           "chinaLeader": "万业企业",
-          "cagr": 9.0,
-          "global2025e": 38
+          "cagr": 8.0
         },
         {
           "name": "封装设备",
           "global2024": 78,
-          "yoy": 10,
-          "china2024": 14,
-          "domesticRate": 17,
+          "yoy": 8,
+          "china2024": 12,
+          "domesticRate": 15,
           "globalLeader": "ASMPT(20%)",
           "chinaLeader": "长电科技",
-          "cagr": 9.0,
-          "global2025e": 86
+          "cagr": 8.0
         }
       ]
     },
@@ -250,61 +237,61 @@
       "design": [
         {
           "name": "全球Fabless TOP10",
-          "global2024": 3500,
-          "yoy": 40,
-          "china2024": 1050,
-          "domesticRate": 28,
-          "cagr": 15.0
+          "global2024": 2498,
+          "yoy": 49,
+          "china2024": 910,
+          "domesticRate": 25,
+          "cagr": 12.0
         },
         {
           "name": "CPU/GPU",
-          "global2024": 1800,
-          "yoy": 64,
-          "china2024": 120,
-          "domesticRate": 10,
-          "cagr": 25.0
+          "global2024": 1100,
+          "yoy": 35,
+          "china2024": 85,
+          "domesticRate": 8,
+          "cagr": 15.0
         },
         {
           "name": "存储芯片",
-          "global2024": 2215,
-          "yoy": 32,
-          "china2024": 220,
-          "domesticRate": 14,
-          "cagr": 22.0
+          "global2024": 1670,
+          "yoy": 81,
+          "china2024": 180,
+          "domesticRate": 12,
+          "cagr": 20.0
         },
         {
           "name": "模拟芯片",
-          "global2024": 920,
-          "yoy": 10,
-          "china2024": 75,
-          "domesticRate": 17,
-          "cagr": 9.0
-        },
-        {
-          "name": "MCU",
-          "global2024": 250,
-          "yoy": 9,
-          "china2024": 32,
-          "domesticRate": 22,
+          "global2024": 812,
+          "yoy": 3,
+          "china2024": 65,
+          "domesticRate": 15,
           "cagr": 8.0
         },
         {
+          "name": "MCU",
+          "global2024": 229,
+          "yoy": 5,
+          "china2024": 28,
+          "domesticRate": 20,
+          "cagr": 7.0
+        },
+        {
           "name": "FPGA",
-          "global2024": 95,
-          "yoy": 19,
-          "china2024": 10,
-          "domesticRate": 6,
-          "cagr": 14.0
+          "global2024": 80,
+          "yoy": 10,
+          "china2024": 8,
+          "domesticRate": 5,
+          "cagr": 12.0
         }
       ],
       "foundry": [
         {
           "name": "台积电(TSMC)",
-          "revenue": 1100,
-          "yoy": 35,
-          "share": 65,
+          "revenue": 900,
+          "yoy": 30,
+          "share": 67,
           "node": "3nm量产/2nm试产",
-          "stock": 42
+          "stock": 92
         },
         {
           "name": "三星(Samsung)",
@@ -332,11 +319,11 @@
         },
         {
           "name": "中芯国际(SMIC)",
-          "revenue": 75,
-          "yoy": 25,
-          "share": 4.8,
+          "revenue": 63,
+          "yoy": 27.7,
+          "share": 4.5,
           "node": "N+2(7nm等效)",
-          "stock": 28
+          "stock": 95
         },
         {
           "name": "华虹半导体",
@@ -533,10 +520,10 @@
     {
       "rank": 1,
       "name": "AI芯片/GPU",
-      "global2024": 1100,
-      "yoy": 55,
-      "global2025e": 1800,
-      "cagr": 35,
+      "global2024": 710,
+      "yoy": 85,
+      "global2025e": 1050,
+      "cagr": 30,
       "globalLeader": "英伟达(>80%)",
       "chinaLeader": "华为昇腾/寒武纪/海光",
       "driver": "大模型训练推理需求爆发，Scaling Law持续验证，云厂商CAPEX向AI倾斜",
@@ -563,10 +550,10 @@
     {
       "rank": 3,
       "name": "HBM高带宽内存",
-      "global2024": 300,
-      "yoy": 200,
-      "global2025e": 500,
-      "cagr": 40,
+      "global2024": 170,
+      "yoy": 300,
+      "global2025e": 300,
+      "cagr": 35,
       "globalLeader": "SK海力士(53%)",
       "chinaLeader": "长鑫存储(研发中)",
       "driver": "AI GPU配套必需，HBM3E→HBM4升级，产能严重不足",
@@ -578,10 +565,10 @@
     {
       "rank": 4,
       "name": "半导体设备",
-      "global2024": 1170,
-      "yoy": 23.5,
-      "global2025e": 1522,
-      "cagr": 14,
+      "global2024": 1171,
+      "yoy": 16,
+      "global2025e": 1360,
+      "cagr": 10,
       "globalLeader": "ASML/AMAT/Lam",
       "chinaLeader": "北方华创/中微/拓荆",
       "driver": "全球晶圆厂扩产周期+中国自主产线建设+设备国产替代",
@@ -593,10 +580,10 @@
     {
       "rank": 5,
       "name": "车规级芯片",
-      "global2024": 750,
-      "yoy": 18,
-      "global2025e": 880,
-      "cagr": 14,
+      "global2024": 680,
+      "yoy": 15,
+      "global2025e": 770,
+      "cagr": 12,
       "globalLeader": "英飞凌/NXP/TI",
       "chinaLeader": "比亚迪半导/斯达半导/地平线",
       "driver": "电动化(SiC)+智能化(ADAS)双轮驱动，800V平台渗透加速",
@@ -608,10 +595,10 @@
     {
       "rank": 6,
       "name": "先进封装(CoWoS/Chiplet)",
-      "global2024": 350,
-      "yoy": 35,
-      "global2025e": 500,
-      "cagr": 25,
+      "global2024": 260,
+      "yoy": 46,
+      "global2025e": 380,
+      "cagr": 20,
       "globalLeader": "台积电/日月光/英特尔",
       "chinaLeader": "长电科技/通富微电",
       "driver": "AI芯片对CoWoS的刚性需求；Chiplet生态成熟降低芯片设计门槛",
@@ -623,10 +610,10 @@
     {
       "rank": 7,
       "name": "存储芯片(DRAM/NAND)",
-      "global2024": 2215,
+      "global2024": 1670,
       "yoy": 32,
-      "global2025e": 3500,
-      "cagr": 25,
+      "global2025e": 2215,
+      "cagr": 15,
       "globalLeader": "三星/SK海力士/美光",
       "chinaLeader": "兆易创新/北京君正",
       "driver": "AI驱动HBM/DDR5结构性增长+传统存储周期复苏",
