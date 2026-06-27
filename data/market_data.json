@@ -1,43 +1,49 @@
 {
   "overview": {
     "title": "半导体全产业链动态图谱",
-    "subtitle": "数据截至：2026年6月 | 来源：WSTS, SIA, TrendForce, Counterpoint, Omdia, 公司财报",
+    "subtitle": "数据更新：2025全年实际+2026年WSTS春季预测 | 2026年6月27日",
     "globalMarket": {
       "years": [
         2023,
         2024,
         2025,
-        2026
+        2026,
+        2027
       ],
       "total": [
         5268,
         6259,
-        6972,
-        7630
+        7956,
+        15100,
+        19000
       ],
       "memory": [
         928,
         1675,
-        2150,
-        2450
+        2215,
+        8000,
+        10560
       ],
       "logic": [
         1780,
         2080,
-        2320,
-        2550
+        3019,
+        4136,
+        5250
       ],
       "analog": [
         812,
         835,
-        890,
-        950
+        920,
+        1012,
+        1113
       ],
       "discrete": [
         330,
         353,
-        380,
-        410
+        370,
+        400,
+        432
       ],
       "opto": [
         445,
@@ -56,32 +62,37 @@
       "equipment": [
         1063,
         1171,
-        1285,
-        1400
+        1360,
+        1650,
+        1900
       ],
       "materials": [
         667,
         730,
-        790,
-        850
+        820,
+        950,
+        1080
       ],
       "foundry": [
         1175,
         1399,
-        1580,
-        1750
+        1680,
+        2200,
+        2800
       ],
       "osat": [
         368,
         392,
-        420,
-        455
+        450,
+        580,
+        700
       ],
       "chinaMarket": [
         1750,
         1980,
-        2200,
-        2420
+        2400,
+        3200,
+        4000
       ]
     }
   },
@@ -540,8 +551,8 @@
       "rank": 3,
       "name": "HBM高带宽内存",
       "global2024": 170,
-      "yoy": 278,
-      "global2025e": 280,
+      "yoy": 300,
+      "global2025e": 300,
       "cagr": 35,
       "globalLeader": "SK海力士(53%)",
       "chinaLeader": "长鑫存储(研发中)",
@@ -555,8 +566,8 @@
       "rank": 4,
       "name": "半导体设备",
       "global2024": 1171,
-      "yoy": 10,
-      "global2025e": 1285,
+      "yoy": 16,
+      "global2025e": 1360,
       "cagr": 10,
       "globalLeader": "ASML/AMAT/Lam",
       "chinaLeader": "北方华创/中微/拓荆",
@@ -585,7 +596,7 @@
       "rank": 6,
       "name": "先进封装(CoWoS/Chiplet)",
       "global2024": 260,
-      "yoy": 25,
+      "yoy": 46,
       "global2025e": 380,
       "cagr": 20,
       "globalLeader": "台积电/日月光/英特尔",
@@ -600,8 +611,8 @@
       "rank": 7,
       "name": "存储芯片(DRAM/NAND)",
       "global2024": 1670,
-      "yoy": 81,
-      "global2025e": 2150,
+      "yoy": 32,
+      "global2025e": 2215,
       "cagr": 15,
       "globalLeader": "三星/SK海力士/美光",
       "chinaLeader": "兆易创新/北京君正",
@@ -615,7 +626,7 @@
       "rank": 8,
       "name": "EDA/IP",
       "global2024": 190,
-      "yoy": 12,
+      "yoy": 13,
       "global2025e": 215,
       "cagr": 12,
       "globalLeader": "Synopsys/Cadence/Siemens",
@@ -630,8 +641,8 @@
       "rank": 9,
       "name": "模拟芯片",
       "global2024": 835,
-      "yoy": 3,
-      "global2025e": 890,
+      "yoy": 10,
+      "global2025e": 920,
       "cagr": 8,
       "globalLeader": "TI/ADI(合计30%)",
       "chinaLeader": "圣邦股份/思瑞浦/纳芯微",
@@ -645,7 +656,7 @@
       "rank": 10,
       "name": "半导体硅片",
       "global2024": 175,
-      "yoy": 7,
+      "yoy": 11,
       "global2025e": 195,
       "cagr": 8,
       "globalLeader": "信越化学/SUMCO",
@@ -659,5 +670,14 @@
   ],
   "updated": "2026-06-27",
   "last_updated": "2026-06-27T20:38:22.340660+08:00",
-  "update_note": "自动更新时间戳 (2026-06-27 20:38:22)。WSTS/SIA行业数据需手动从官方PDF/网页更新，每年发布2-3次。"
+  "update_note": "自动更新时间戳 (2026-06-27 20:38:22)。WSTS/SIA行业数据需手动从官方PDF/网页更新，每年发布2-3次。",
+  "wsts_2026_spring": {
+    "2025_actual": "$7,956亿 (+26.2%)",
+    "2026_forecast": "$1.51万亿 (+90%)",
+    "2027_forecast": "$1.9万亿 (+27%)",
+    "memory_2026": "+250%, 达到$8000亿+",
+    "logic_2026": "+37%",
+    "key_driver": "AI基础设施+云计算投资+HBM需求爆发",
+    "source": "WSTS Spring 2026 Forecast (2026.6.2)"
+  }
 }
