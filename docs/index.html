@@ -434,6 +434,15 @@ async function render() {
         <div class="card"><h3>❄️ 跌幅前5</h3><div id="top-losers" style="font-size:12px; color:var(--text2);">加载中...</div></div>
         <div class="card"><h3>💰 成交额前5</h3><div id="top-volume" style="font-size:12px; color:var(--text2);">加载中...</div></div>
       </div>
+      <div class="card" style="margin-top:20px;">
+        <h3>📈 多周期K线图 <span style="font-weight:400;font-size:12px;color:var(--text2);" id="kline-stock-name">— 点击实时行情表格中的股票查看</span></h3>
+        <div class="tabs" style="margin-bottom:12px;">
+          <button class="tab-btn active" onclick="switchKlinePeriod('day')">日K</button>
+          <button class="tab-btn" onclick="switchKlinePeriod('week')">周K</button>
+          <button class="tab-btn" onclick="switchKlinePeriod('month')">月K</button>
+        </div>
+        <div id="chart-kline" class="chart-lg"></div>
+      </div>
     </div>
   `;
 
@@ -1059,6 +1068,102 @@ function renderTopLists() {
   if (lg) lg.innerHTML = makeList(top5down, 'negative');
   if (vg) vg.innerHTML = makeList(top5vol, '');
 }
+
+// ════════════════════════════════════════════
+// MULTI-PERIOD KLINE CHART (日/周/月K)
+// ════════════════════════════════════════════
+let klineStock = null;
+let klinePeriod = 'day';
+let klineChart = null;
+
+function switchKlinePeriod(period) {
+  klinePeriod = period;
+  document.querySelectorAll('#chart-kline').forEach(el => {
+    // Update active tab
+  });
+  // Update tab buttons
+  const btns = document.querySelectorAll('#realtime .tabs:last-of-type .tab-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  if (event && event.target) event.target.classList.add('active');
+  if (klineStock) loadKlineChart(klineStock);
+}
+
+function showKlineForStock(code, name) {
+  klineStock = {code, name};
+  document.getElementById('kline-stock-name').textContent = `— ${name} (${code})`;
+  loadKlineChart(klineStock);
+  // Scroll to kline
+  document.getElementById('chart-kline').scrollIntoView({behavior:'smooth'});
+}
+
+async function loadKlineChart(stock) {
+  const el = document.getElementById('chart-kline');
+  if (!el) return;
+  if (!klineChart) klineChart = echarts.init(el);
+  
+  const periodMap = {day:'101', week:'102', month:'103'};
+  const klt = periodMap[klinePeriod] || '101';
+  const marketMap = {sh:'1', sz:'0', hk:'116'};
+  const mkt = marketMap[stock.market] || (stock.code.startsWith('6')?'1':'0');
+  const secid = `${mkt}.${stock.code}`;
+  
+  try {
+    const url = `https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=${secid}&klt=${klt}&fqt=1&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57&lmt=120`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    
+    if (!data.data || !data.data.klines) {
+      klineChart.setOption({
+        title: {text: '暂无K线数据', left:'center', top:'center', textStyle:{color:'#90a4ae', fontSize:14}}
+      });
+      return;
+    }
+    
+    const dates = [], values = [], volumes = [];
+    data.data.klines.forEach(line => {
+      const parts = line.split(',');
+      dates.push(parts[0]);
+      values.push([parseFloat(parts[1]), parseFloat(parts[2]), parseFloat(parts[3]), parseFloat(parts[4])]);
+      volumes.push([parseFloat(parts[5]), parts[0]]);
+    });
+    
+    klineChart.setOption({
+      tooltip: {trigger:'axis', axisPointer:{type:'cross'}},
+      grid: [{left:60, right:20, top:20, height:'60%'}, {left:60, right:20, top:'78%', height:'15%'}],
+      xAxis: [{type:'category', data:dates, axisLabel:{color:'#90a4ae', fontSize:9}, gridIndex:0},
+              {type:'category', data:dates, axisLabel:{show:false}, gridIndex:1}],
+      yAxis: [{type:'value', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}, gridIndex:0},
+              {type:'value', axisLabel:{color:'#90a4ae', fontSize:9}, splitLine:{lineStyle:{color:'#1e2456'}}, gridIndex:1}],
+      series: [
+        {type:'candlestick', data:values, itemStyle:{color:'#ef5350', color0:'#69f0ae', borderColor:'#ef5350', borderColor0:'#69f0ae'}, xAxisIndex:0, yAxisIndex:0},
+        {type:'bar', data:volumes.map(v=>v[0]), itemStyle:{color: p=>values[p.dataIndex]?.[3]>=values[p.dataIndex]?.[0]?'#ef5350':'#69f0ae'}, xAxisIndex:1, yAxisIndex:1}
+      ]
+    });
+  } catch(e) {
+    console.error('K线加载失败:', e);
+  }
+}
+
+// Hook into renderQuoteTable to make rows clickable for K-line
+const origRenderQuoteTable = renderQuoteTable;
+renderQuoteTable = function() {
+  origRenderQuoteTable();
+  // Add click handlers to table rows
+  setTimeout(() => {
+    document.querySelectorAll('#realtime-tbody tr').forEach(row => {
+      row.style.cursor = 'pointer';
+      row.title = '点击查看K线图';
+      row.onclick = function() {
+        const code = row.cells[1]?.textContent?.trim();
+        const name = row.cells[2]?.textContent?.trim();
+        if (code && name && quotesData.length > 0) {
+          const stock = quotesData.find(q => q.code === code);
+          if (stock) showKlineForStock(stock);
+        }
+      };
+    });
+  }, 200);
+};
 
 function refreshQuotes() {
   countdown = 30;
