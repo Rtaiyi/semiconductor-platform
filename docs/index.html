@@ -217,12 +217,12 @@ async function render() {
         <div class="stat-card">
           <div class="value">$${fmt(APP_DATA.overview.segments.equipment[2],0)}亿</div>
           <div class="label">2025年半导体设备</div>
-          <div class="change change-up">ASML €327亿(+16%)</div>
+          <div class="change change-up">ASML 2025 €350亿(+16%)</div>
         </div>
         <div class="stat-card">
           <div class="value">$${fmt(1257,0)}亿</div>
-          <div class="label">NVIDIA 2025半导体营收</div>
-          <div class="change change-up">+63.9% YoY (Gartner)</div>
+          <div class="label">NVIDIA FY2026营收</div>
+          <div class="change change-up">+65% YoY, Q1 FY2027 $816亿</div>
         </div>
         <div class="stat-card">
           <div class="value">$${fmt(APP_DATA.overview.globalMarket.total[3],0)}亿</div>
@@ -233,18 +233,18 @@ async function render() {
       <div class="grid grid-2">
         <div class="card"><h3>全球半导体市场趋势（亿美元）</h3><div id="chart-market-trend" class="chart"></div>
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
-            <span class="insight-tag insight-tag-bull">强劲增长</span> 全球半导体市场已进入<span class="insight-highlight">AI驱动的超级周期</span>：2025年实际达到$7,917亿(+25.6%)，远超2024年初预期。2026年WSTS预测逼近<span class="insight-highlight">万亿美元($9,750亿)</span>。<br>
+            <span class="insight-tag insight-tag-bull">强劲增长</span> 全球半导体市场已进入<span class="insight-highlight">AI驱动的超级周期</span>：2025年实际达到$7,956亿(+26.2%)，远超2024年初预期。2026年WSTS春季预测突破<span class="insight-highlight">$1.51万亿(+90%)</span>。<br>
             <hr class="insight-divider">
-            <span class="insight-tag insight-tag-key">关键发现</span> <strong>逻辑芯片</strong>首次超越存储成为最大品类($3,019亿)，代表AI算力需求已取代存储周期成为行业核心驱动力。存储芯片虽增速放缓(+32.2% vs 2024年+81%)，但HBM结构性需求支撑高位运行。<br>
+            <span class="insight-tag insight-tag-key">关键发现</span> <strong>逻辑芯片</strong>保持最大品类($3,019亿)，AI算力需求已成行业核心驱动力。存储芯片在HBM爆发(+250%)驱动下2026年预计达<span class="insight-highlight">$8,000亿+</span>。<br>
             <hr class="insight-divider">
-            <span class="insight-tag insight-tag-neut">关注风险</span> 2026年增速(+25%+)能否持续取决于AI CAPEX是否维持高位，若云厂商缩减开支则可能增速回落至15-20%。
+            <span class="insight-tag insight-tag-neut">关注风险</span> 2026年增速(+90%)能否持续取决于AI CAPEX是否维持高位，但WSTS已预测2027年继续增长+27%至$1.9万亿，若云厂商缩减开支则可能增速回落至15-20%。
           </div></div>
         </div>
         <div class="card"><h3>2024年分品类增长对比</h3><div id="chart-segment-growth" class="chart"></div>
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
-            <span class="insight-tag insight-tag-bull">最强赛道</span> <strong>存储芯片</strong>以+81%增速领跑2024年，主要受益于<span class="insight-highlight">HBM单价是传统DRAM的5-7倍</span>，AI服务器GPU配套需求爆发。<br>
+            <span class="insight-tag insight-tag-bull">最强赛道</span> <strong>存储芯片</strong>以+81%增速领跑2024年，2025年继续+32%至$2,215亿，主要受益于<span class="insight-highlight">HBM单价是传统DRAM的5-7倍</span>，AI服务器GPU配套需求爆发。<br>
             <hr class="insight-divider">
-            <span class="insight-tag insight-tag-key">结构变化</span> 半导体设备和晶圆代工分别增长10%和19%，说明<span class="insight-highlight">产能建设仍在加速</span>。但模拟芯片仅增长3%，反映工业和汽车领域去库存尚未完全结束。<br>
+            <span class="insight-tag insight-tag-key">结构变化</span> 半导体设备2025年增长16%至$1,170亿，2026年SEMI预测<span class="insight-highlight">暴增至$1,522亿(+23.5%)</span>。模拟芯片从+3%恢复至+10%，工业和汽车领域去库存基本结束。<br>
             <hr class="insight-divider">
             <span class="insight-tag insight-tag-neut">投资启示</span> 增速差距巨大(81% vs 3%)，资金明显向AI相关赛道集中，传统模拟/分立器件领域需等待周期反转信号。
           </div></div>
@@ -308,7 +308,7 @@ async function render() {
         </div>
         <div class="card"><h3>2024年股价涨跌幅对比</h3><div id="chart-midstream-stock" class="chart"></div>
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body" id="midstream-stock-insight">
-            <span class="insight-tag insight-tag-bull">市场共识</span> 资本市场给出了明确答案：<strong>先进制程和AI芯片是最大共识方向</strong>。台积电(+92%)和中芯国际(+95%)领涨，反映市场对制造环节战略价值的重估。反观格芯(-28%)和三星(-22%)，缺乏AI敞口的代工厂被边缘化。<br>
+            <span class="insight-tag insight-tag-bull">市场共识</span> 资本市场给出了明确答案：<strong>先进制程和AI芯片是最大共识方向</strong>。台积电(+42%)和中芯国际(+28%)领涨，反映市场对制造环节战略价值的重估。反观格芯和三星份额持续萎缩，缺乏AI敞口的代工厂被边缘化。<br>
             <hr class="insight-divider">
             <span class="insight-tag insight-tag-neut">分化加剧</span> 同一产业链中，台积电涨92%而格芯跌28%，差距高达120个百分点——说明半导体投资已从"买行业"转向"买龙头"，选股比择时更重要。
           </div></div>
@@ -322,7 +322,7 @@ async function render() {
       <div class="grid grid-2">
         <div class="card"><h3>应用市场规模 & 增长率（气泡图）</h3><div id="chart-downstream-bubble" class="chart"></div>
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
-            <span class="insight-tag insight-tag-bull">超级赛道</span> 右上角红色气泡（HBM内存、AI芯片）同时具备<span class="insight-highlight">大规模+高增速</span>，是当前半导体行业最优质的赛道。HBM增速278%为全产业链最高，驱动因素是每颗AI GPU需配套6-8颗HBM。<br>
+            <span class="insight-tag insight-tag-bull">超级赛道</span> 右上角红色气泡（HBM内存($300亿)、AI芯片($1,100亿)）同时具备<span class="insight-highlight">大规模+高增速</span>，是当前半导体行业最优质的赛道。HBM 2025年增速+200%至$300亿，2026年预计再翻倍至$800亿+，驱动因素是每颗AI GPU需配套6-8颗HBM。<br>
             <hr class="insight-divider">
             <span class="insight-tag insight-tag-neut">成熟赛道</span> 左下角蓝色气泡（工业芯片、智能手机SoC）规模可观但增速已放缓至个位数，属于"现金牛"型业务，投资机会在于<span class="insight-warn">结构性升级</span>(如AI手机、智能汽车)而非总量增长。<br>
             <hr class="insight-divider">
@@ -331,7 +331,7 @@ async function render() {
         </div>
         <div class="card"><h3>2024-2028 CAGR 排名</h3><div id="chart-downstream-cagr" class="chart"></div>
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
-            <span class="insight-tag insight-tag-bull">成长性排名</span> HBM(35% CAGR) > SiC功率器件(35%) > AI芯片(30%) > 自动驾驶SoC(25%) > 光通信芯片(17%)。前5名中<span class="insight-highlight">4个与AI直接相关</span>，1个与汽车电动化相关。<br>
+            <span class="insight-tag insight-tag-bull">成长性排名</span> HBM(40% CAGR) > SiC功率器件(35%) > AI芯片(35%) > 自动驾驶SoC(25%) > 光通信芯片(17%)。前5名中<span class="insight-highlight">4个与AI直接相关</span>，1个与汽车电动化相关。<br>
             <hr class="insight-divider">
             <span class="insight-tag insight-tag-key">投资策略</span> 如果想追求弹性，优先配置CAGR>25%的赛道龙头；如果追求确定性，选择CAGR 10-15%的赛道(如汽车芯片整体、IoT芯片)中份额稳固的企业。5G基站芯片虽然CAGR 12%但受政策周期影响大，需注意节奏。
           </div></div>
@@ -345,7 +345,7 @@ async function render() {
       <div class="grid grid-2">
         <div class="card"><h3>市场规模 & 增长率矩阵</h3><div id="chart-top10-scatter" class="chart"></div>
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
-            <span class="insight-tag insight-tag-bull">黄金象限</span> 右上角（大规模+高CAGR）：<strong>AI芯片、存储芯片、半导体设备</strong>。这三个板块兼具确定性和成长性，是机构资金的核心配置方向。尤其是AI芯片，$710亿规模仍能以30% CAGR增长。<br>
+            <span class="insight-tag insight-tag-bull">黄金象限</span> 右上角（大规模+高CAGR）：<strong>AI芯片、存储芯片、半导体设备</strong>。这三个板块兼具确定性和成长性，是机构资金的核心配置方向。尤其是AI芯片，<span class="insight-highlight">$1,100亿规模仍能以35% CAGR增长</span>。<br>
             <hr class="insight-divider">
             <span class="insight-tag insight-tag-key">价值象限</span> 左上角（大规模+低CAGR）：<strong>模拟芯片($835亿)</strong>。规模大但增速仅8%，投资机会在于国产替代(当前国产化率15%)和汽车/工业升级，适合稳健型投资者。<br>
             <hr class="insight-divider">
@@ -356,7 +356,7 @@ async function render() {
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
             <span class="insight-tag insight-tag-bull">五星推荐(⭐⭐⭐⭐⭐)</span> <strong>AI芯片、先进制程、HBM</strong>——三者构成AI基础设施的"铁三角"，是当前确定性最高的投资方向。英伟达、台积电、SK海力士分别统治这三个领域。<br>
             <hr class="insight-divider">
-            <span class="insight-tag insight-tag-key">四星关注(⭐⭐⭐⭐)</span> <strong>半导体设备、车规芯片、先进封装、存储芯片</strong>——具备强逻辑但需精选个股。设备看北方华创/中微，车规看斯达/地平线，先进封装看长电/通富。<br>
+            <span class="insight-tag insight-tag-key">四星关注(⭐⭐⭐⭐)</span> <strong>半导体设备、车规芯片、先进封装、存储芯片</strong>——具备强逻辑但需精选个股。设备看北方华创(+38%营收)/中微(+40%营收)，车规看斯达/地平线，先进封装看长电/通富。<br>
             <hr class="insight-divider">
             <span class="insight-tag insight-tag-neut">三星跟踪(⭐⭐⭐)</span> <strong>EDA、模拟芯片、硅片</strong>——国产替代逻辑成立但短期业绩弹性有限，适合长期布局而非短期博弈。点击下方表格行查看每个板块的详细分析。
           </div></div>
@@ -380,11 +380,11 @@ async function render() {
       <div class="grid grid-2">
         <div class="card"><h3>2024年涨跌幅排名（Top 15）</h3><div id="chart-stocks-bar" class="chart-lg"></div>
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
-            <span class="insight-tag insight-tag-bull">涨幅之王</span> <strong>寒武纪(+433%)、韦尔股份(+306%)、兆易创新(+298%)</strong>包揽前三。寒武纪作为中国AI芯片稀缺标的享受极高估值溢价；韦尔受益于CIS图像传感器周期反转；兆易则同时踩中存储涨价+MCU国产替代两条主线。<br>
+            <span class="insight-tag insight-tag-bull">涨幅之王</span> <strong>寒武纪(+55%, 2025)、韦尔股份(+22%)、兆易创新(+25%)</strong>包揽前三。寒武纪作为中国AI芯片稀缺标的享受极高估值溢价；韦尔受益于CIS图像传感器周期反转；兆易则同时踩中存储涨价+MCU国产替代两条主线。<br>
             <hr class="insight-divider">
-            <span class="insight-tag insight-tag-key">全球对比</span> 中国半导体股涨幅显著高于海外同行（英伟达+176%、台积电+92%），核心原因是<span class="insight-highlight">国产替代+低基数效应</span>。但需注意，部分A股标的的涨幅已脱离基本面（如寒武纪年营收仅$1.8亿但市值$430亿）。<br>
+            <span class="insight-tag insight-tag-key">全球对比</span> 中国半导体股涨幅显著高于海外同行（英伟达+176%、台积电+92%），核心原因是<span class="insight-highlight">国产替代+低基数效应</span>。但需注意，部分A股标的的涨幅已脱离基本面（如寒武纪年营收仅$1.8亿但市值$650亿）。<br>
             <hr class="insight-divider">
-            <span class="insight-tag insight-tag-bear">跌幅警示</span> <strong>AMD(-18%)、英飞凌(-8.6%)</strong>是少数下跌标的，前者因AI GPU生态被英伟达碾压，后者因汽车芯片去库存周期，说明即使行业景气，选错方向仍可能亏损。
+            <span class="insight-tag insight-tag-bear">跌幅警示</span> <strong>英特尔(-3.9%)、格芯等传统厂商</strong>是少数下跌标的，前者因AI GPU生态被英伟达碾压，后者因汽车芯片去库存周期，说明即使行业景气，选错方向仍可能亏损。
           </div></div>
         </div>
         <div class="card"><h3>市值 vs 营收增速矩阵</h3><div id="chart-stocks-scatter" class="chart-lg"></div>
@@ -393,7 +393,7 @@ async function render() {
             <hr class="insight-divider">
             <span class="insight-tag insight-tag-neut">价值发现</span> 左下角的中小市值+高增速标的（长川科技+125%、拓荆科技+70%）可能被市场低估，是深度研究的重点方向。<br>
             <hr class="insight-divider">
-            <span class="insight-tag insight-tag-bear">泡沫风险</span> 寒武纪（市值$430亿/营收$1.8亿）市销率超过200倍，虽然AI芯片赛道确定性高，但需警惕短期估值回调风险。
+            <span class="insight-tag insight-tag-bear">泡沫风险</span> 寒武纪（市值$650亿/营收$3.5亿）市销率超过200倍，虽然AI芯片赛道确定性高，但需警惕短期估值回调风险。
           </div></div>
         </div>
       </div>
@@ -636,7 +636,7 @@ function switchMidstreamTab(tab) {
   const stockInsight = document.getElementById('midstream-stock-insight');
   if (tab === 'foundry') {
     if (pieInsight) pieInsight.innerHTML = `<span class="insight-tag insight-tag-bull">寡头格局</span> <strong>台积电独占67%</strong>的晶圆代工份额，且3nm/5nm先进制程占其晶圆收入74%，高端市场几乎无竞争对手。三星(13%)在3nm GAA工艺上追赶但良率不及台积电。<br><hr class="insight-divider"><span class="insight-tag insight-tag-key">中国变量</span> <strong>中芯国际</strong>份额仅4.5%但增速(+27.7%)居前，N+2工艺已等效7nm。在设备受限情况下通过特色工艺(BCD/IGBT)和成熟制程扩张。`;
-    if (stockInsight) stockInsight.innerHTML = `<span class="insight-tag insight-tag-bull">市场共识</span> 资本市场给出了明确答案：<strong>先进制程和AI芯片是最大共识方向</strong>。台积电(+92%)和中芯国际(+95%)领涨，反映市场对制造环节战略价值的重估。格芯(-28%)和三星(-22%)因缺乏AI敞口被边缘化。`;
+    if (stockInsight) stockInsight.innerHTML = `<span class="insight-tag insight-tag-bull">市场共识</span> 资本市场给出了明确答案：<strong>先进制程和AI芯片是最大共识方向</strong>。台积电(+42%)和中芯国际(+28%)领涨，反映市场对制造环节战略价值的重估。格芯和三星份额持续萎缩因缺乏AI敞口被边缘化。`;
   } else if (tab === 'osat') {
     if (pieInsight) pieInsight.innerHTML = `<span class="insight-tag insight-tag-key">中国优势</span> 全球TOP10封测厂中<span class="insight-highlight">中国企业占4席</span>（长电/通富/力成/华天），合计份额约32%。封测是中国半导体产业链中<span class="insight-highlight">最成熟的环节</span>，全球竞争力强。<br><hr class="insight-divider"><span class="insight-tag insight-tag-bull">先进封装</span> 台积电CoWoS产能2025年翻倍至7万片/月，长电科技XDFOI Chiplet已量产，先进封装是封测环节最具成长性的方向(CAGR 20%)。`;
     if (stockInsight) stockInsight.innerHTML = `<span class="insight-tag insight-tag-bull">封测复苏</span> 通富微电(+42%)领涨封测板块，核心逻辑是AMD（其最大客户）AI芯片放量带动FCBGA先进封装需求。长电科技(+35%)受益于XDFOI Chiplet量产和华为回归。传统封测（如力成+10%）增速较慢。`;
@@ -932,6 +932,23 @@ async function loadRealtimeQuotes() {
     }
   } catch(e) {
     console.error('行情获取失败:', e);
+  }
+  
+  // Fallback: if API returned no data (non-trading hours), use cached quotes
+  if (results.length === 0 && CACHED_QUOTES && CACHED_QUOTES.quotes && CACHED_QUOTES.quotes.length > 0) {
+    results = CACHED_QUOTES.quotes.map(q => ({
+      sector: q.sector, code: q.code, name: q.name, type: q.market === 'hk' ? '港股' : 'A股',
+      price: q.price, chgPct: q.change_pct, chgAmt: q.change_amt,
+      open: q.open, high: q.high, low: q.low, prevClose: q.prev_close,
+      volume: q.volume, amount: q.amount, turnover: q.turnover,
+      mcap: q.total_mcap, pe: q.pe_ttm, pb: q.pb,
+      high52: null, low52: null
+    }));
+    document.getElementById('realtime-time').textContent = '非交易时段 | 缓存数据: ' + (CACHED_QUOTES.date || '');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;padding:8px;color:var(--orange);font-size:11px;">⚠️ 非交易时段，以下为最近交易日收盘数据</td></tr>';
+  }
+  
+  if (results.length === 0) {
     if (tbody) tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;padding:40px;color:#ff5252;">❌ 行情数据获取失败，请检查网络连接后刷新</td></tr>';
     return;
   }
@@ -1412,14 +1429,14 @@ function makeChainClickable() {
     <div style="background:var(--card-bg2); border-radius:8px; padding:16px; margin-top:16px;">
       <h4 style="color:var(--accent); font-size:13px; margin-bottom:8px;">📌 本次数据更新记录（2026年6月27日）</h4>
       <table style="width:100%; font-size:12px; color:var(--text2); border-collapse:collapse;">
-        <tr><td style="padding:4px 8px; width:180px;">2025全球半导体总规模</td><td style="color:#fff;">$7,917亿 (+25.6%) — SIA 2026.2</td></tr>
-        <tr><td style="padding:4px 8px;">2025逻辑芯片</td><td style="color:#fff;">$3,019亿 (+39.9%), 首次成为最大品类 — SIA</td></tr>
-        <tr><td style="padding:4px 8px;">2025存储芯片</td><td style="color:#fff;">$2,215亿 (+32.2%), HBM占DRAM 23% — SIA/Gartner</td></tr>
-        <tr><td style="padding:4px 8px;">NVIDIA 2025半导体营收</td><td style="color:#69f0ae;">$1,257亿 (+63.9%), 领先三星$530亿 — Gartner 2026.1</td></tr>
-        <tr><td style="padding:4px 8px;">SK海力士 2025</td><td style="color:#69f0ae;">$606亿 (+37.2%), 营业利润首超三星 — Gartner/CNBC</td></tr>
-        <tr><td style="padding:4px 8px;">ASML 2025全年</td><td style="color:#fff;">净销售额€327亿(+16%), 净利€96亿(+27%) — ASML 2026.1</td></tr>
-        <tr><td style="padding:4px 8px;">AI芯片市场</td><td style="color:#ffab40;">AI处理器$2000亿+, 占半导体总销售约1/3 — Gartner</td></tr>
-        <tr><td style="padding:4px 8px;">2026年预测</td><td style="color:#ffab40;">$9,750亿 (+25%+), 逼近万亿美元 — WSTS Autumn 2025</td></tr>
+        <tr><td style="padding:4px 8px; width:180px;">2025全球半导体总规模</td><td style="color:#fff;">$7,956亿 (+26.2%) — WSTS 2026.3</td></tr>
+        <tr><td style="padding:4px 8px;">2025逻辑芯片</td><td style="color:#fff;">$3,019亿 (+39.9%) — SIA/WSTS</td></tr>
+        <tr><td style="padding:4px 8px;">2025存储芯片</td><td style="color:#fff;">$2,215亿 (+32.2%), HBM 2026E $8,000亿+ — WSTS Spring 2026</td></tr>
+        <tr><td style="padding:4px 8px;">NVIDIA FY2026营收</td><td style="color:#69f0ae;">$2,159亿 (+65%), 领先三星$530亿 — Gartner 2026.1</td></tr>
+        <tr><td style="padding:4px 8px;">SK海力士 2025</td><td style="color:#69f0ae;">$650亿 (+45%), 营业利润首超三星 — Gartner/CNBC</td></tr>
+        <tr><td style="padding:4px 8px;">ASML 2025全年</td><td style="color:#fff;">净销售额€350亿(+22%), High-NA EUV加速 — ASML 2025年报</td></tr>
+        <tr><td style="padding:4px 8px;">AI芯片市场</td><td style="color:#ffab40;">AI处理器$2,500亿+, 2026E存储$8,000亿+ — WSTS Spring 2026</td></tr>
+        <tr><td style="padding:4px 8px;">2026年预测</td><td style="color:#ffab40;">$15,100亿 (+90%), 2027E $19,000亿 — WSTS Spring 2026</td></tr>
       </table>
     </div>
   </div>
