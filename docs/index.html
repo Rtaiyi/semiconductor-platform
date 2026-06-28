@@ -1953,7 +1953,6 @@ function chartARevenueVsMcap() {
   }
   const d = A_STOCK_DATA.revenueVsMcap;
   const qs = d.quarters;
-  const chart = echarts.init(el);
   chart.setOption({
     tooltip: {trigger:'axis', axisPointer:{type:'cross'}},
     legend: {data:['总市值(季末)','单季营收','单季净利润'], textStyle:{color:'#90a4ae'}, top:5},
@@ -1998,7 +1997,6 @@ function chartMarketPE() {
   const upperBand = new Array(dates.length).fill(d.mean10Y + d.stdDev);
   const lowerBand = new Array(dates.length).fill(d.mean10Y - d.stdDev);
 
-  const chart = echarts.init(el);
   chart.setOption({
     tooltip: {trigger:'axis', formatter:p=>{
       const pe = p.find(s=>s.seriesName==='PE(TTM)');
@@ -2039,7 +2037,6 @@ function chartIndexPE() {
     return;
   }
   const d = A_STOCK_DATA.indexPE;
-  const chart = echarts.init(el);
   chart.setOption({
     tooltip: {trigger:'axis', formatter:p=>{
       const item = d[p[0].dataIndex];
@@ -2072,7 +2069,6 @@ function chartCapDist() {
     return;
   }
   const d = A_STOCK_DATA.capDistribution;
-  const chart = echarts.init(el);
   const updateDate = d[0].updateDate || '2026Q2';
   chart.setOption({
     tooltip: {trigger:'item', formatter:p=>`<strong>${p.name}</strong> (${updateDate})<br/>公司数: ${p.data.count}家<br/>总市值: ${p.data.totalMcap}千亿<br/>占比: ${p.percent}%`},
