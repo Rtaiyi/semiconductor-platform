@@ -23,15 +23,15 @@
   --downstream: #e65100;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; margin:0; padding:0; }
 /* Navigation */
 .nav { position: fixed; top:0; left:0; right:0; z-index:1000; background: rgba(10,14,39,0.95); backdrop-filter: blur(20px); border-bottom:1px solid var(--border); padding:0 24px; display:flex; align-items:center; height:56px; gap:8px; }
 .nav .logo { font-size:18px; font-weight:700; color: var(--accent); margin-right:16px; white-space:nowrap; }
 .nav a { color: var(--text2); text-decoration:none; font-size:13px; padding:6px 14px; border-radius:6px; transition:all .2s; white-space:nowrap; }
 .nav a:hover, .nav a.active { color: var(--accent); background: rgba(79,195,247,0.1); }
 /* Layout */
-.container { margin-top:56px; padding:20px 24px; max-width:1600px; margin-left:auto; margin-right:auto; }
-.section { margin-bottom:32px; }
+.container { margin-top:56px; padding:20px 24px; max-width:1600px; margin-left:auto; margin-right:auto; transition:margin-left 0.3s ease; }
+.section { margin-bottom:32px; scroll-margin-top:70px; }
 .section-title { font-size:22px; font-weight:700; margin-bottom:16px; color:#fff; display:flex; align-items:center; gap:10px; }
 .section-title .icon { font-size:26px; }
 /* Cards */
@@ -144,8 +144,8 @@ body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; ba
 .sidebar a { display:block; padding:9px 20px; color:var(--text2); text-decoration:none; font-size:12px; transition:all 0.2s; border-left:3px solid transparent; white-space:nowrap; }
 .sidebar a:hover, .sidebar a.active { color:var(--accent); background:rgba(79,195,247,0.08); border-left-color:var(--accent); }
 /* Main content area */
-.with-sidebar { margin-left:200px; }
-.with-sidebar .nav { left:200px; }
+.with-sidebar { margin-left:200px !important; }
+.with-sidebar .nav { left:200px !important; }
 /* Top tab navigation */
 .nav-tab { padding:8px 20px; border-radius:8px; cursor:pointer; font-size:14px; font-weight:600; color:var(--text2); transition:all 0.2s; border:none; background:transparent; }
 .nav-tab:hover { color:var(--accent); }
@@ -182,7 +182,7 @@ body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; ba
 <div class="container" id="app"></div>
 
 <script>
-/* v20260628c: A-stock stats + sidebar nav + dual-tab architecture */
+/* v20260628d: fix layout overlap + chart fallback + scroll-margin */
 // ── DATA ──
 // ── DATA LOADING (data-driven from JSON files) ──
 let APP_DATA = null;
@@ -1945,7 +1945,12 @@ function findLocalExtremes(dates, values) {
 
 function chartARevenueVsMcap() {
   const el = document.getElementById('chart-a-revenue-mcap');
-  if (!el || !A_STOCK_DATA) return;
+  if (!el) return;
+  const chart = echarts.init(el);
+  if (!A_STOCK_DATA || !A_STOCK_DATA.revenueVsMcap) {
+    chart.setOption({title:{text:'数据加载中...',left:'center',top:'center',textStyle:{color:'#90a4ae',fontSize:14}}});
+    return;
+  }
   const d = A_STOCK_DATA.revenueVsMcap;
   const qs = d.quarters;
   const chart = echarts.init(el);
@@ -1979,7 +1984,12 @@ function chartARevenueVsMcap() {
 
 function chartMarketPE() {
   const el = document.getElementById('chart-a-pe');
-  if (!el || !A_STOCK_DATA) return;
+  if (!el) return;
+  const chart = echarts.init(el);
+  if (!A_STOCK_DATA || !A_STOCK_DATA.marketPE) {
+    chart.setOption({title:{text:'数据加载中...',left:'center',top:'center',textStyle:{color:'#90a4ae',fontSize:14}}});
+    return;
+  }
   const d = A_STOCK_DATA.marketPE;
   const dates = d.peHistory.map(h=>h.date);
   const peVals = d.peHistory.map(h=>h.pe);
@@ -2022,7 +2032,12 @@ function chartMarketPE() {
 
 function chartIndexPE() {
   const el = document.getElementById('chart-a-index-pe');
-  if (!el || !A_STOCK_DATA) return;
+  if (!el) return;
+  const chart = echarts.init(el);
+  if (!A_STOCK_DATA || !A_STOCK_DATA.indexPE) {
+    chart.setOption({title:{text:'数据加载中...',left:'center',top:'center',textStyle:{color:'#90a4ae',fontSize:14}}});
+    return;
+  }
   const d = A_STOCK_DATA.indexPE;
   const chart = echarts.init(el);
   chart.setOption({
@@ -2050,7 +2065,12 @@ function chartIndexPE() {
 
 function chartCapDist() {
   const el = document.getElementById('chart-a-cap-dist');
-  if (!el || !A_STOCK_DATA) return;
+  if (!el) return;
+  const chart = echarts.init(el);
+  if (!A_STOCK_DATA || !A_STOCK_DATA.capDistribution) {
+    chart.setOption({title:{text:'数据加载中...',left:'center',top:'center',textStyle:{color:'#90a4ae',fontSize:14}}});
+    return;
+  }
   const d = A_STOCK_DATA.capDistribution;
   const chart = echarts.init(el);
   const updateDate = d[0].updateDate || '2026Q2';
