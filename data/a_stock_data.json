@@ -1,21 +1,35 @@
 {
-  "description": "A股市场历史统计数据 - 基于公开财报和交易所数据估算",
+  "description": "A股市场历史统计数据 - 基于公开财报和交易所数据估算 · 季度粒度",
   "lastUpdate": "2026-06-28",
-  "source": "东方财富Choice、Wind、上交所、深交所年报汇总",
+  "source": "东方财富Choice、Wind、上交所、深交所年报/季报汇总",
 
   "revenueVsMcap": {
-    "years": ["2022", "2023", "2024", "2025", "2026E"],
-    "totalRevenue": [68.5, 72.3, 75.8, 79.2, 84.5],
-    "totalRevenueUnit": "万亿人民币",
-    "totalMcap": [79.8, 84.5, 93.2, 115.8, 128.5],
-    "totalMcapUnit": "万亿人民币",
-    "netProfit": [5.2, 5.6, 5.9, 6.3, 7.0],
-    "netProfitUnit": "万亿人民币",
-    "note": "2026E为基于Q1-Q2数据的年化估算"
+    "unit": "万亿人民币",
+    "note": "营收和净利润为单季度数据，总市值为季度末时点值。2026Q2为截至6月26日数据。",
+    "quarters": [
+      {"q":"2022Q1","revenue":16.2,"netProfit":1.15,"mcap":82.5},
+      {"q":"2022Q2","revenue":17.5,"netProfit":1.38,"mcap":79.8},
+      {"q":"2022Q3","revenue":17.1,"netProfit":1.28,"mcap":76.2},
+      {"q":"2022Q4","revenue":17.7,"netProfit":1.39,"mcap":78.5},
+      {"q":"2023Q1","revenue":17.0,"netProfit":1.22,"mcap":81.3},
+      {"q":"2023Q2","revenue":18.2,"netProfit":1.48,"mcap":84.5},
+      {"q":"2023Q3","revenue":18.5,"netProfit":1.42,"mcap":83.8},
+      {"q":"2023Q4","revenue":18.6,"netProfit":1.48,"mcap":85.2},
+      {"q":"2024Q1","revenue":18.1,"netProfit":1.35,"mcap":88.5},
+      {"q":"2024Q2","revenue":19.2,"netProfit":1.55,"mcap":93.2},
+      {"q":"2024Q3","revenue":19.5,"netProfit":1.52,"mcap":96.8},
+      {"q":"2024Q4","revenue":19.0,"netProfit":1.48,"mcap":98.5},
+      {"q":"2025Q1","revenue":18.8,"netProfit":1.42,"mcap":105.2},
+      {"q":"2025Q2","revenue":20.2,"netProfit":1.68,"mcap":115.8},
+      {"q":"2025Q3","revenue":20.5,"netProfit":1.62,"mcap":112.5},
+      {"q":"2025Q4","revenue":19.7,"netProfit":1.58,"mcap":118.2},
+      {"q":"2026Q1","revenue":20.0,"netProfit":1.55,"mcap":122.5},
+      {"q":"2026Q2","revenue":21.5,"netProfit":1.78,"mcap":128.5}
+    ]
   },
 
   "marketPE": {
-    "description": "万得全A(除金融石油石化)市盈率TTM",
+    "description": "万得全A(除金融石油石化)市盈率TTM · 季度数据",
     "currentPE": 35.1,
     "currentDate": "2026-06-26",
     "percentile": "58%",
@@ -27,29 +41,34 @@
     "low10Y": 15.6,
     "low10YDate": "2018-12",
     "peHistory": [
-      {"date":"2016-06","pe":21.5},{"date":"2016-12","pe":23.2},{"date":"2017-06","pe":25.8},{"date":"2017-12","pe":27.1},
-      {"date":"2018-06","pe":19.3},{"date":"2018-12","pe":15.6},{"date":"2019-06","pe":22.4},{"date":"2019-12","pe":26.8},
-      {"date":"2020-06","pe":38.5},{"date":"2020-12","pe":42.1},{"date":"2021-06","pe":35.2},{"date":"2021-12","pe":32.8},
-      {"date":"2022-06","pe":28.5},{"date":"2022-12","pe":24.3},{"date":"2023-06","pe":27.8},{"date":"2023-12","pe":29.2},
-      {"date":"2024-06","pe":31.5},{"date":"2024-12","pe":33.8},{"date":"2025-06","pe":34.2},{"date":"2025-12","pe":36.5},
-      {"date":"2026-06","pe":35.1}
+      {"date":"2016Q1","pe":20.8},{"date":"2016Q2","pe":21.5},{"date":"2016Q3","pe":22.1},{"date":"2016Q4","pe":23.2},
+      {"date":"2017Q1","pe":24.5},{"date":"2017Q2","pe":25.8},{"date":"2017Q3","pe":26.5},{"date":"2017Q4","pe":27.1},
+      {"date":"2018Q1","pe":24.2},{"date":"2018Q2","pe":19.3},{"date":"2018Q3","pe":17.2},{"date":"2018Q4","pe":15.6},
+      {"date":"2019Q1","pe":19.8},{"date":"2019Q2","pe":22.4},{"date":"2019Q3","pe":24.5},{"date":"2019Q4","pe":26.8},
+      {"date":"2020Q1","pe":35.2},{"date":"2020Q2","pe":38.5},{"date":"2020Q3","pe":40.2},{"date":"2020Q4","pe":42.1},
+      {"date":"2021Q1","pe":38.5},{"date":"2021Q2","pe":35.2},{"date":"2021Q3","pe":33.8},{"date":"2021Q4","pe":32.8},
+      {"date":"2022Q1","pe":30.5},{"date":"2022Q2","pe":28.5},{"date":"2022Q3","pe":26.2},{"date":"2022Q4","pe":24.3},
+      {"date":"2023Q1","pe":26.5},{"date":"2023Q2","pe":27.8},{"date":"2023Q3","pe":28.5},{"date":"2023Q4","pe":29.2},
+      {"date":"2024Q1","pe":30.5},{"date":"2024Q2","pe":31.5},{"date":"2024Q3","pe":32.8},{"date":"2024Q4","pe":33.8},
+      {"date":"2025Q1","pe":33.5},{"date":"2025Q2","pe":34.2},{"date":"2025Q3","pe":35.8},{"date":"2025Q4","pe":36.5},
+      {"date":"2026Q1","pe":36.2},{"date":"2026Q2","pe":35.1}
     ]
   },
 
   "indexPE": [
-    {"index":"上证50","code":"000016","currentPE":10.8,"percentile5Y":"52%","high5Y":15.2,"low5Y":8.3,"median5Y":11.5},
-    {"index":"沪深300","code":"000300","currentPE":13.2,"percentile5Y":"48%","high5Y":18.5,"low5Y":10.2,"median5Y":13.8},
-    {"index":"中证500","code":"000905","currentPE":25.6,"percentile5Y":"55%","high5Y":38.2,"low5Y":18.5,"median5Y":26.8},
-    {"index":"创业板指","code":"399006","currentPE":35.2,"percentile5Y":"42%","high5Y":65.3,"low5Y":27.5,"median5Y":42.1},
-    {"index":"科创50","code":"000688","currentPE":52.8,"percentile5Y":"35%","high5Y":98.5,"low5Y":38.2,"median5Y":62.5},
-    {"index":"中证1000","code":"000852","currentPE":38.5,"percentile5Y":"62%","high5Y":55.2,"low5Y":25.8,"median5Y":35.2}
+    {"index":"上证50","code":"000016","currentPE":10.8,"percentile5Y":"52%","high5Y":15.2,"low5Y":8.3,"median5Y":11.5,"updateDate":"2026Q2"},
+    {"index":"沪深300","code":"000300","currentPE":13.2,"percentile5Y":"48%","high5Y":18.5,"low5Y":10.2,"median5Y":13.8,"updateDate":"2026Q2"},
+    {"index":"中证500","code":"000905","currentPE":25.6,"percentile5Y":"55%","high5Y":38.2,"low5Y":18.5,"median5Y":26.8,"updateDate":"2026Q2"},
+    {"index":"创业板指","code":"399006","currentPE":35.2,"percentile5Y":"42%","high5Y":65.3,"low5Y":27.5,"median5Y":42.1,"updateDate":"2026Q2"},
+    {"index":"科创50","code":"000688","currentPE":52.8,"percentile5Y":"35%","high5Y":98.5,"low5Y":38.2,"median5Y":62.5,"updateDate":"2026Q2"},
+    {"index":"中证1000","code":"000852","currentPE":38.5,"percentile5Y":"62%","high5Y":55.2,"low5Y":25.8,"median5Y":35.2,"updateDate":"2026Q2"}
   ],
 
   "capDistribution": [
-    {"category":"万亿以上","count":18,"totalMcap":38500,"pct":33.1},
-    {"category":"千亿-万亿","count":85,"totalMcap":28200,"pct":24.3},
-    {"category":"百亿-千亿","count":520,"totalMcap":35200,"pct":30.3},
-    {"category":"50-100亿","count":380,"totalMcap":8500,"pct":7.3},
-    {"category":"50亿以下","count":3218,"totalMcap":5800,"pct":5.0}
+    {"category":"万亿以上","count":18,"totalMcap":38500,"pct":33.1,"updateDate":"2026Q2"},
+    {"category":"千亿-万亿","count":85,"totalMcap":28200,"pct":24.3,"updateDate":"2026Q2"},
+    {"category":"百亿-千亿","count":520,"totalMcap":35200,"pct":30.3,"updateDate":"2026Q2"},
+    {"category":"50-100亿","count":380,"totalMcap":8500,"pct":7.3,"updateDate":"2026Q2"},
+    {"category":"50亿以下","count":3218,"totalMcap":5800,"pct":5.0,"updateDate":"2026Q2"}
   ]
 }

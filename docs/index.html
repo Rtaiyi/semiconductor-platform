@@ -1947,25 +1947,34 @@ function chartARevenueVsMcap() {
   const el = document.getElementById('chart-a-revenue-mcap');
   if (!el || !A_STOCK_DATA) return;
   const d = A_STOCK_DATA.revenueVsMcap;
+  const qs = d.quarters;
   const chart = echarts.init(el);
   chart.setOption({
     tooltip: {trigger:'axis', axisPointer:{type:'cross'}},
-    legend: {data:['总市值','总营收','净利润'], textStyle:{color:'#90a4ae'}, top:5},
+    legend: {data:['总市值(季末)','单季营收','单季净利润'], textStyle:{color:'#90a4ae'}, top:5},
     grid: {left:70, right:70, top:55, bottom:40},
-    xAxis: {type:'category', data:d.years, axisLabel:{color:'#90a4ae'}},
+    xAxis: {type:'category', data:qs.map(q=>q.q), axisLabel:{color:'#90a4ae', fontSize:9, rotate:45, interval:1}},
     yAxis: [
       {type:'value', name:'万亿人民币', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
-      {type:'value', name:'万亿人民币', axisLabel:{color:'#90a4ae'}, splitLine:{show:false}}
+      {type:'value', name:'万亿人民币', axisLabel:{color:'#90a4ae'}, splitLine:{show:false}, max:3}
     ],
     series: [
-      {name:'总市值', type:'bar', data:d.totalMcap, itemStyle:{color:'#4fc3f7'}, barWidth:24, yAxisIndex:0,
-       label:{show:true, position:'top', color:'#4fc3f7', fontSize:10, formatter:p=>p.value.toFixed(1)}},
-      {name:'总营收', type:'line', data:d.totalRevenue, itemStyle:{color:'#ffab40'}, symbol:'circle', symbolSize:10, lineStyle:{width:3}, yAxisIndex:0,
-       label:{show:true, position:'top', color:'#ffab40', fontSize:10, formatter:p=>p.value.toFixed(1)}},
-      {name:'净利润', type:'line', data:d.netProfit, itemStyle:{color:'#69f0ae'}, symbol:'diamond', symbolSize:10, lineStyle:{width:2, type:'dashed'}, yAxisIndex:1,
-       label:{show:true, position:'bottom', color:'#69f0ae', fontSize:10, formatter:p=>p.value.toFixed(1)}}
+      {name:'总市值(季末)', type:'bar', data:qs.map(q=>q.mcap), itemStyle:{color:'#4fc3f7'}, barWidth:12, yAxisIndex:0,
+       label:{show:false}},
+      {name:'单季营收', type:'line', data:qs.map(q=>q.revenue), itemStyle:{color:'#ffab40'}, symbol:'circle', symbolSize:6, lineStyle:{width:2.5}, yAxisIndex:0,
+       label:{show:false}},
+      {name:'单季净利润', type:'line', data:qs.map(q=>q.netProfit), itemStyle:{color:'#69f0ae'}, symbol:'diamond', symbolSize:6, lineStyle:{width:2, type:'dashed'}, yAxisIndex:1,
+       label:{show:false}}
     ]
   });
+  // Update insight
+  const lastQ = qs[qs.length-1];
+  const firstQ = qs[0];
+  const insightEl = document.getElementById('a-insight-revenue');
+  if (insightEl) {
+    insightEl.innerHTML = `<span class="insight-tag insight-tag-bull">市值先行</span> A股总市值从${firstQ.mcap}万亿增至${lastQ.mcap}万亿（+${((lastQ.mcap/firstQ.mcap-1)*100).toFixed(0)}%），同期单季营收从${firstQ.revenue}万亿增至${lastQ.revenue}万亿（+${((lastQ.revenue/firstQ.revenue-1)*100).toFixed(0)}%），<span class="insight-warn">市值扩张远超盈利增长</span>。<br>
+    <hr class="insight-divider"><span class="insight-tag insight-tag-key">${lastQ.q}数据</span> 单季营收${lastQ.revenue}万亿、净利润${lastQ.netProfit}万亿，净利率${(lastQ.netProfit/lastQ.revenue*100).toFixed(1)}%。市值${lastQ.mcap}万亿创历史新高，反映AI+半导体等新兴产业重估驱动。`;
+  }
 }
 
 function chartMarketPE() {
@@ -1981,19 +1990,34 @@ function chartMarketPE() {
 
   const chart = echarts.init(el);
   chart.setOption({
-    tooltip: {trigger:'axis', formatter:p=>p[0].axisValue+'<br/>PE: '+p[0].value.toFixed(1)+'倍'},
-    grid: {left:60, right:30, top:20, bottom:40},
-    xAxis: {type:'category', data:dates, axisLabel:{color:'#90a4ae', fontSize:9, rotate:30, interval:Math.floor(dates.length/8)}},
-    yAxis: {type:'value', name:'PE(TTM)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    tooltip: {trigger:'axis', formatter:p=>{
+      const pe = p.find(s=>s.seriesName==='PE(TTM)');
+      if (!pe) return p[0].axisValue;
+      const pct = ((pe.value - d.low10Y)/(d.high10Y - d.low10Y)*100).toFixed(0);
+      return `${pe.axisValue}<br/>PE(TTM): <strong>${pe.value.toFixed(1)}倍</strong><br/>历史分位: ${pct}%<br/>均值: ${d.mean10Y} | 中位数: ${d.median10Y}`;
+    }},
+    grid: {left:60, right:30, top:20, bottom:45},
+    xAxis: {type:'category', data:dates, axisLabel:{color:'#90a4ae', fontSize:8, rotate:45, interval:Math.max(1,Math.floor(dates.length/12))}},
+    yAxis: {type:'value', name:'PE(TTM)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}, min:10, max:55},
     series: [
-      {name:'±1标准差', type:'line', data:upperBand, lineStyle:{color:'rgba(255,82,82,0.2)', width:0}, areaStyle:{color:'rgba(255,82,82,0.06)'}, symbol:'none', silent:true},
-      {name:'', type:'line', data:lowerBand, lineStyle:{color:'transparent', width:0}, areaStyle:{color:'rgba(105,240,174,0.04)'}, symbol:'none', silent:true},
-      {name:'均值(28.5)', type:'line', data:meanLine, lineStyle:{color:'#ffab40', type:'dashed', width:1.5}, symbol:'none'},
-      {name:'中位数(26.8)', type:'line', data:medianLine, lineStyle:{color:'#ce93d8', type:'dotted', width:1.5}, symbol:'none'},
-      {name:'PE(TTM)', type:'line', data:peVals, itemStyle:{color:'#4fc3f7'}, symbol:'circle', symbolSize:5, lineStyle:{width:2.5},
-       markLine:{silent:true, symbol:'none', lineStyle:{color:'#ff5252', type:'dashed', width:1.5}, label:{formatter:'当前 35.1', color:'#ff5252', fontSize:10}, data:[{yAxis:35.1}]}}
+      {name:'±1σ上轨', type:'line', data:upperBand, lineStyle:{color:'rgba(255,82,82,0.15)', width:0}, areaStyle:{color:'rgba(255,82,82,0.05)'}, symbol:'none', silent:true},
+      {name:'', type:'line', data:lowerBand, lineStyle:{color:'transparent', width:0}, areaStyle:{color:'rgba(105,240,174,0.03)'}, symbol:'none', silent:true},
+      {name:'均值', type:'line', data:meanLine, lineStyle:{color:'#ffab40', type:'dashed', width:1.5}, symbol:'none', silent:true},
+      {name:'中位数', type:'line', data:medianLine, lineStyle:{color:'#ce93d8', type:'dotted', width:1.5}, symbol:'none', silent:true},
+      {name:'PE(TTM)', type:'line', data:peVals, itemStyle:{color:'#4fc3f7'}, symbol:'circle', symbolSize:4, lineStyle:{width:2.5},
+       markLine:{silent:true, symbol:'none', lineStyle:{color:'#ff5252', type:'dashed', width:1.5}, label:{formatter:'当前 '+d.currentPE, color:'#ff5252', fontSize:10}, data:[{yAxis:d.currentPE}]},
+       markPoint:{symbol:'pin', symbolSize:35, label:{fontSize:9}, data:[
+         {name:'最高', coord:[d.high10YDate.replace('-','Q'), d.high10Y], value:d.high10Y, itemStyle:{color:'#ff5252'}, label:{formatter:d.high10Y+'x', color:'#fff'}},
+         {name:'最低', coord:[d.low10YDate.replace('-','Q'), d.low10Y], value:d.low10Y, itemStyle:{color:'#69f0ae'}, label:{formatter:d.low10Y+'x', color:'#fff'}}
+       ]}}
     ]
   });
+  // Update insight
+  const insightEl = document.getElementById('a-insight-pe');
+  if (insightEl) {
+    insightEl.innerHTML = `<span class="insight-tag insight-tag-neut">中枢上移</span> 当前PE <strong>${d.currentPE}倍</strong>（${d.currentDate}），处于近10年<span class="insight-highlight">${d.percentile}分位</span>。PE Band（均值±1σ=${(d.mean10Y-d.stdDev).toFixed(1)}~${(d.mean10Y+d.stdDev).toFixed(1)}）显示估值中枢从2019年25倍逐步上移至35倍，反映A股结构优化。<br>
+    <hr class="insight-divider"><span class="insight-tag insight-tag-key">极值参考</span> 最高 <span class="insight-danger">${d.high10Y}倍</span>(${d.high10YDate}) | 最低 <span class="insight-highlight">${d.low10Y}倍</span>(${d.low10YDate}) | 当前处于"合理偏贵"区间。`;
+  }
 }
 
 function chartIndexPE() {
@@ -2004,11 +2028,11 @@ function chartIndexPE() {
   chart.setOption({
     tooltip: {trigger:'axis', formatter:p=>{
       const item = d[p[0].dataIndex];
-      return `${item.index}<br/>PE: ${item.currentPE}倍<br/>5Y分位: ${item.percentile5Y}<br/>区间: ${item.low5Y}-${item.high5Y}`;
+      return `<strong>${item.index}</strong> (${item.updateDate})<br/>PE: ${item.currentPE}倍<br/>5Y分位: ${item.percentile5Y}<br/>区间: ${item.low5Y}-${item.high5Y}<br/>中位数: ${item.median5Y}`;
     }},
-    grid: {left:90, right:80, top:20, bottom:30},
+    grid: {left:90, right:100, top:20, bottom:30},
     xAxis: {type:'value', name:'PE(倍)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
-    yAxis: {type:'category', data:d.map(i=>i.index), inverse:true, axisLabel:{color:'#90a4ae', fontSize:11}},
+    yAxis: {type:'category', data:d.map(i=>i.index+' ('+i.updateDate+')'), inverse:true, axisLabel:{color:'#90a4ae', fontSize:10}},
     series: [{
       type:'bar', data:d.map(i=>({value:i.currentPE, label:{show:true, formatter:i.currentPE+'x', position:'right', color:'#4fc3f7', fontWeight:'bold'}})),
       itemStyle:{color: p=>{
@@ -2019,7 +2043,7 @@ function chartIndexPE() {
         return '#69f0ae';
       }},
       barWidth:18,
-      markPoint:{symbol:'rect', symbolSize:[60,16], label:{fontSize:9, fontWeight:'bold'}, data:d.map((i,idx)=>({name:i.percentile5Y, coord:[i.currentPE, idx], value:i.percentile5Y, itemStyle:{color:'rgba(255,255,255,0.1)'}, label:{formatter:i.percentile5Y+'分位', color:'#ffab40'}}))}
+      markPoint:{symbol:'rect', symbolSize:[62,16], label:{fontSize:9, fontWeight:'bold'}, data:d.map((i,idx)=>({name:i.percentile5Y, coord:[i.currentPE, idx], value:i.percentile5Y, itemStyle:{color:'rgba(255,255,255,0.1)'}, label:{formatter:i.percentile5Y+'分位', color:'#ffab40'}}))}
     }]
   });
 }
@@ -2029,8 +2053,9 @@ function chartCapDist() {
   if (!el || !A_STOCK_DATA) return;
   const d = A_STOCK_DATA.capDistribution;
   const chart = echarts.init(el);
+  const updateDate = d[0].updateDate || '2026Q2';
   chart.setOption({
-    tooltip: {trigger:'item', formatter:p=>`${p.name}<br/>公司数: ${p.data.count}家<br/>市值: ${p.data.totalMcap}千亿<br/>占比: ${p.percent}%`},
+    tooltip: {trigger:'item', formatter:p=>`<strong>${p.name}</strong> (${updateDate})<br/>公司数: ${p.data.count}家<br/>总市值: ${p.data.totalMcap}千亿<br/>占比: ${p.percent}%`},
     series: [{
       type:'pie', radius:['40%','75%'], center:['50%','50%'],
       data: d.map(i=>({name:i.category, value:i.pct, count:i.count, totalMcap:i.totalMcap})),
@@ -2042,6 +2067,12 @@ function chartCapDist() {
       }}
     }]
   });
+  // Update insight
+  const insightEl = document.getElementById('a-insight-cap-dist');
+  if (insightEl) {
+    insightEl.innerHTML = `<span class="insight-tag insight-tag-key">金字塔结构</span> 仅<span class="insight-highlight">${d[0].count}家</span>公司(${(d[0].count/4221*100).toFixed(1)}%)市值超万亿，贡献<span class="insight-highlight">${d[0].pct}%</span>总市值。百亿以上公司占比${((d[0].count+d[1].count+d[2].count)/4221*100).toFixed(0)}%但贡献${(d[0].pct+d[1].pct+d[2].pct).toFixed(0)}%市值——A股"一九分化"持续强化。<br>
+    <hr class="insight-divider"><span class="insight-tag insight-tag-neut">数据时间</span> 截至${updateDate}，A股上市公司约4,221家，总市值约${(d[0].totalMcap+d[1].totalMcap+d[2].totalMcap+d[3].totalMcap+d[4].totalMcap)/1000}万亿。`;
+  }
 }
 
 </script>
