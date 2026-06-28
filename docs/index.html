@@ -137,49 +137,75 @@ body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; ba
 #loading-overlay .spinner{width:50px;height:50px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 #loading-overlay .loading-text{color:var(--accent);font-size:14px}
+/* Sidebar navigation */
+.sidebar { position:fixed; top:56px; left:0; width:200px; height:calc(100vh - 56px); background:rgba(10,14,39,0.98); border-right:1px solid var(--border); padding:12px 0; overflow-y:auto; z-index:900; transition:transform 0.3s ease; }
+.sidebar.hidden { transform:translateX(-200px); }
+.sidebar .sidebar-title { padding:8px 20px; font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.sidebar a { display:block; padding:9px 20px; color:var(--text2); text-decoration:none; font-size:12px; transition:all 0.2s; border-left:3px solid transparent; white-space:nowrap; }
+.sidebar a:hover, .sidebar a.active { color:var(--accent); background:rgba(79,195,247,0.08); border-left-color:var(--accent); }
+/* Main content area */
+.with-sidebar { margin-left:200px; }
+.with-sidebar .nav { left:200px; }
+/* Top tab navigation */
+.nav-tab { padding:8px 20px; border-radius:8px; cursor:pointer; font-size:14px; font-weight:600; color:var(--text2); transition:all 0.2s; border:none; background:transparent; }
+.nav-tab:hover { color:var(--accent); }
+.nav-tab.active { background:var(--accent); color:#000; }
+/* Panel toggle */
+.panel-hidden { display:none !important; }
+/* Mobile */
+@media (max-width:900px) { .sidebar { display:none; } .with-sidebar { margin-left:0; } .with-sidebar .nav { left:0; } }
 </style>
 </head>
 <body>
 
 <div id="loading-overlay"><div class="spinner"></div><div class="loading-text">正在加载产业链数据...</div></div>
 <nav class="nav" id="nav">
-  <span class="logo">🔬 半导体产业链图谱</span>
-  <a href="#market" class="active" onclick="scrollToSection('market')">A股大盘</a>
-  <a href="#overview" onclick="scrollToSection('overview')">市场总览</a>
-  <a href="#chain" onclick="scrollToSection('chain')">产业链图</a>
-  <a href="#upstream" onclick="scrollToSection('upstream')">上游</a>
-  <a href="#midstream" onclick="scrollToSection('midstream')">中游</a>
-  <a href="#downstream" onclick="scrollToSection('downstream')">下游</a>
-  <a href="#top10" onclick="scrollToSection('top10')">十大板块</a>
-  <a href="#stocks" onclick="scrollToSection('stocks')">厂商股价</a>
-  <a href="#realtime" onclick="scrollToSection('realtime')">实时行情</a>
-  <a href="#star-kline" onclick="scrollToSection('star-kline')">明星个股</a>
+  <span class="logo">🔬 产业链图谱</span>
+  <button class="nav-tab active" id="nav-tab-market" onclick="switchMainTab('market')">A股大盘</button>
+  <button class="nav-tab" id="nav-tab-semi" onclick="switchMainTab('semiconductor')">半导体产业链</button>
 </nav>
+
+<!-- Sidebar for Semiconductor section -->
+<div class="sidebar hidden" id="sidebar">
+  <div class="sidebar-title">📊 半导体产业链</div>
+  <a href="#overview" onclick="scrollToSection('overview')" data-section="overview">市场总览</a>
+  <a href="#chain" onclick="scrollToSection('chain')" data-section="chain">产业链图</a>
+  <a href="#upstream" onclick="scrollToSection('upstream')" data-section="upstream">上游 · 材料设备</a>
+  <a href="#midstream" onclick="scrollToSection('midstream')" data-section="midstream">中游 · 设计制造</a>
+  <a href="#downstream" onclick="scrollToSection('downstream')" data-section="downstream">下游 · 应用市场</a>
+  <a href="#top10" onclick="scrollToSection('top10')" data-section="top10">十大核心板块</a>
+  <a href="#stocks" onclick="scrollToSection('stocks')" data-section="stocks">厂商股价表现</a>
+  <a href="#realtime" onclick="scrollToSection('realtime')" data-section="realtime">实时行情</a>
+  <a href="#star-kline" onclick="scrollToSection('star-kline')" data-section="star-kline">明星个股</a>
+</div>
 
 <div class="container" id="app"></div>
 
 <script>
-/* v20260628b: A-share market dashboard + sector heatmap */
+/* v20260628c: A-stock stats + sidebar nav + dual-tab architecture */
 // ── DATA ──
 // ── DATA LOADING (data-driven from JSON files) ──
 let APP_DATA = null;
 let GLOBAL_STOCKS = [];
 let QUOTE_STOCKS = [];
 let CACHED_QUOTES = null;
+let A_STOCK_DATA = null;
 let DATA_LOADED = false;
 
 async function loadAllData() {
   try {
-    const [mkt, stk, lst, rt] = await Promise.allSettled([
+    const [mkt, stk, lst, rt, astk] = await Promise.allSettled([
       fetch('data/market_data.json').then(r => r.ok ? r.json() : Promise.reject()),
       fetch('data/global_stocks.json').then(r => r.ok ? r.json() : Promise.reject()),
       fetch('data/stock_list.json').then(r => r.ok ? r.json() : Promise.reject()),
-      fetch('data/realtime_quotes.json').then(r => r.ok ? r.json() : Promise.reject())
+      fetch('data/realtime_quotes.json').then(r => r.ok ? r.json() : Promise.reject()),
+      fetch('data/a_stock_data.json').then(r => r.ok ? r.json() : Promise.reject())
     ]);
     if (mkt.status === 'fulfilled') APP_DATA = mkt.value;
     if (stk.status === 'fulfilled') GLOBAL_STOCKS = stk.value;
     if (lst.status === 'fulfilled') QUOTE_STOCKS = lst.value;
     if (rt.status === 'fulfilled') CACHED_QUOTES = rt.value;
+    if (astk.status === 'fulfilled') A_STOCK_DATA = astk.value;
     DATA_LOADED = !!(APP_DATA && GLOBAL_STOCKS.length && QUOTE_STOCKS.length);
     if (DATA_LOADED && APP_DATA) APP_DATA.stocks = GLOBAL_STOCKS;
     document.getElementById('loading-overlay')?.classList.add('hidden');
@@ -221,6 +247,35 @@ async function render() {
         <div class="card"><h3>🏭 行业板块涨跌热力图</h3><div id="chart-sector-heatmap" class="chart-lg"></div>
           <div class="insight-card"><div class="insight-title">💡 板块解读</div><div class="insight-body" id="market-insight-sector">
             加载中...
+          </div></div>
+        </div>
+      </div>
+
+      <!-- A-Share Historical Statistics -->
+      <div class="section-title" style="margin-top:24px;"><span class="icon">📊</span>A股历史统计分析</div>
+      <div class="grid grid-2">
+        <div class="card"><h3>📈 近5年A股总营收 vs 总市值趋势</h3><div id="chart-a-revenue-mcap" class="chart-lg"></div>
+          <div class="insight-card"><div class="insight-title">💡 分析结论</div><div class="insight-body" id="a-insight-revenue">
+            <span class="insight-tag insight-tag-bull">市值先行</span> A股总市值增速(+60%)远超营收增速(+23%)，反映市场估值扩张是近年行情主要驱动力。2025年总市值突破115万亿，但净利润增速仅个位数，<span class="insight-warn">估值消化需要时间</span>。<br>
+            <hr class="insight-divider"><span class="insight-tag insight-tag-key">关键发现</span> 营收从68.5万亿增至84.5万亿(5年CAGR 5.4%)，与GDP增速基本同步。市值增长更多来自流动性宽松和结构性行情（AI、半导体等新兴产业重估）。
+          </div></div>
+        </div>
+        <div class="card"><h3>📉 市场整体市盈率（近10年 · 万得全A除银行）</h3><div id="chart-a-pe" class="chart-lg"></div>
+          <div class="insight-card"><div class="insight-title">💡 分析结论</div><div class="insight-body" id="a-insight-pe">
+            <span class="insight-tag insight-tag-neut">中枢上移</span> 当前PE 35.1倍处于近10年<span class="insight-highlight">58%分位</span>，略高于中位数26.8倍。PE Band显示估值中枢从2019年的25倍逐步上移至35倍，反映A股结构优化（科技+消费占比提升）。<br>
+            <hr class="insight-divider"><span class="insight-tag insight-tag-key">历史参考</span> 极值区间：2015年6月最高52.3倍，2018年12月最低15.6倍。当前估值处于"合理偏贵"区间，向下空间有限(支撑30倍)，向上弹性取决于盈利改善。
+          </div></div>
+        </div>
+        <div class="card"><h3>🎯 核心指数市盈率对比</h3><div id="chart-a-index-pe" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 分析结论</div><div class="insight-body" id="a-insight-index-pe">
+            <span class="insight-tag insight-tag-bull">结构分化</span> <strong>上证50 PE 10.8倍</strong>（银行+保险拉低均值），<strong>科创50 PE 52.8倍</strong>，两者差距近5倍——说明A股内部估值分化极度严重。沪深300(13.2倍)仍低于5年中位数，大盘价值股具备安全边际。<br>
+            <hr class="insight-divider"><span class="insight-tag insight-tag-key">投资启示</span> 中证500/1000(25-38倍)处于中位水平，中小盘成长股估值相对合理。科创50虽然PE高但处于5年35%分位，反映硬科技经历了一轮去泡沫。
+          </div></div>
+        </div>
+        <div class="card"><h3>🏢 A股公司市值分布</h3><div id="chart-a-cap-dist" class="chart"></div>
+          <div class="insight-card"><div class="insight-title">💡 分析结论</div><div class="insight-body" id="a-insight-cap-dist">
+            <span class="insight-tag insight-tag-key">金字塔结构</span> 仅18家公司（0.4%）市值超万亿，但贡献了33%的总市值——<span class="insight-highlight">龙头集中效应显著</span>。百亿以上公司占比仅12%但贡献88%市值，A股"一九分化"格局持续强化。<br>
+            <hr class="insight-divider"><span class="insight-tag insight-tag-neut">小盘困境</span> 50亿以下公司3218家(76%)但仅占5%市值，日均成交额不足千万元，机构覆盖度低。全面注册制下小盘股"仙股化"是长期趋势。
           </div></div>
         </div>
       </div>
@@ -494,6 +549,10 @@ async function render() {
   // Render all charts
   setTimeout(() => {
     loadMarketDashboard();
+    chartARevenueVsMcap();
+    chartMarketPE();
+    chartIndexPE();
+    chartCapDist();
     chartMarketTrend();
     chartSegmentGrowth();
     chartChainSankey();
@@ -883,10 +942,51 @@ function showTop10Detail(idx) {
 }
 
 // ── Navigation ──
+let currentMainTab = 'market';
+
+function switchMainTab(tab) {
+  currentMainTab = tab;
+  const sidebar = document.getElementById('sidebar');
+  const container = document.querySelector('.container');
+  const nav = document.getElementById('nav');
+  
+  // Update top tab buttons
+  document.getElementById('nav-tab-market').classList.toggle('active', tab === 'market');
+  document.getElementById('nav-tab-semi').classList.toggle('active', tab === 'semiconductor');
+  
+  if (tab === 'semiconductor') {
+    sidebar.classList.remove('hidden');
+    container.classList.add('with-sidebar');
+    nav.style.left = '200px';
+    // Scroll to first semiconductor section
+    document.getElementById('overview').scrollIntoView({behavior:'smooth', block:'start'});
+    updateSidebarActive('overview');
+  } else {
+    sidebar.classList.add('hidden');
+    container.classList.remove('with-sidebar');
+    nav.style.left = '0';
+    document.getElementById('market').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  
+  // Resize all charts
+  setTimeout(() => {
+    document.querySelectorAll('.chart, .chart-lg').forEach(el => {
+      const inst = echarts.getInstanceByDom(el);
+      if (inst) inst.resize();
+    });
+  }, 400);
+}
+
+function updateSidebarActive(sectionId) {
+  document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+  const link = document.querySelector(`.sidebar a[data-section="${sectionId}"]`);
+  if (link) link.classList.add('active');
+}
+
 function scrollToSection(id) {
-  document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
-  const link = document.querySelector(`.nav a[href="#${id}"]`);
-  if(link) link.classList.add('active');
+  if (currentMainTab === 'semiconductor') {
+    updateSidebarActive(id);
+  }
   document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
 }
 
@@ -1287,9 +1387,10 @@ window.addEventListener('scroll', function() {
     const el = document.getElementById(id);
     if(el && el.getBoundingClientRect().top <= 100) current = id;
   });
-  document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
-  const activeLink = document.querySelector(`.nav a[href="#${current}"]`);
-  if(activeLink) activeLink.classList.add('active');
+  // Update sidebar active if in semiconductor mode
+  if (currentMainTab === 'semiconductor' && current) {
+    updateSidebarActive(current);
+  }
 });
 
 // ════════════════════════════════════════════
@@ -1837,6 +1938,112 @@ function findLocalExtremes(dates, values) {
   
   return [...highs, ...lows];
 }
+
+// ══════════════════════════════════════════════════════
+// A-STOCK HISTORICAL STATISTICS CHARTS
+// ══════════════════════════════════════════════════════
+
+function chartARevenueVsMcap() {
+  const el = document.getElementById('chart-a-revenue-mcap');
+  if (!el || !A_STOCK_DATA) return;
+  const d = A_STOCK_DATA.revenueVsMcap;
+  const chart = echarts.init(el);
+  chart.setOption({
+    tooltip: {trigger:'axis', axisPointer:{type:'cross'}},
+    legend: {data:['总市值','总营收','净利润'], textStyle:{color:'#90a4ae'}, top:5},
+    grid: {left:70, right:70, top:55, bottom:40},
+    xAxis: {type:'category', data:d.years, axisLabel:{color:'#90a4ae'}},
+    yAxis: [
+      {type:'value', name:'万亿人民币', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+      {type:'value', name:'万亿人民币', axisLabel:{color:'#90a4ae'}, splitLine:{show:false}}
+    ],
+    series: [
+      {name:'总市值', type:'bar', data:d.totalMcap, itemStyle:{color:'#4fc3f7'}, barWidth:24, yAxisIndex:0,
+       label:{show:true, position:'top', color:'#4fc3f7', fontSize:10, formatter:p=>p.value.toFixed(1)}},
+      {name:'总营收', type:'line', data:d.totalRevenue, itemStyle:{color:'#ffab40'}, symbol:'circle', symbolSize:10, lineStyle:{width:3}, yAxisIndex:0,
+       label:{show:true, position:'top', color:'#ffab40', fontSize:10, formatter:p=>p.value.toFixed(1)}},
+      {name:'净利润', type:'line', data:d.netProfit, itemStyle:{color:'#69f0ae'}, symbol:'diamond', symbolSize:10, lineStyle:{width:2, type:'dashed'}, yAxisIndex:1,
+       label:{show:true, position:'bottom', color:'#69f0ae', fontSize:10, formatter:p=>p.value.toFixed(1)}}
+    ]
+  });
+}
+
+function chartMarketPE() {
+  const el = document.getElementById('chart-a-pe');
+  if (!el || !A_STOCK_DATA) return;
+  const d = A_STOCK_DATA.marketPE;
+  const dates = d.peHistory.map(h=>h.date);
+  const peVals = d.peHistory.map(h=>h.pe);
+  const meanLine = new Array(dates.length).fill(d.mean10Y);
+  const medianLine = new Array(dates.length).fill(d.median10Y);
+  const upperBand = new Array(dates.length).fill(d.mean10Y + d.stdDev);
+  const lowerBand = new Array(dates.length).fill(d.mean10Y - d.stdDev);
+
+  const chart = echarts.init(el);
+  chart.setOption({
+    tooltip: {trigger:'axis', formatter:p=>p[0].axisValue+'<br/>PE: '+p[0].value.toFixed(1)+'倍'},
+    grid: {left:60, right:30, top:20, bottom:40},
+    xAxis: {type:'category', data:dates, axisLabel:{color:'#90a4ae', fontSize:9, rotate:30, interval:Math.floor(dates.length/8)}},
+    yAxis: {type:'value', name:'PE(TTM)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    series: [
+      {name:'±1标准差', type:'line', data:upperBand, lineStyle:{color:'rgba(255,82,82,0.2)', width:0}, areaStyle:{color:'rgba(255,82,82,0.06)'}, symbol:'none', silent:true},
+      {name:'', type:'line', data:lowerBand, lineStyle:{color:'transparent', width:0}, areaStyle:{color:'rgba(105,240,174,0.04)'}, symbol:'none', silent:true},
+      {name:'均值(28.5)', type:'line', data:meanLine, lineStyle:{color:'#ffab40', type:'dashed', width:1.5}, symbol:'none'},
+      {name:'中位数(26.8)', type:'line', data:medianLine, lineStyle:{color:'#ce93d8', type:'dotted', width:1.5}, symbol:'none'},
+      {name:'PE(TTM)', type:'line', data:peVals, itemStyle:{color:'#4fc3f7'}, symbol:'circle', symbolSize:5, lineStyle:{width:2.5},
+       markLine:{silent:true, symbol:'none', lineStyle:{color:'#ff5252', type:'dashed', width:1.5}, label:{formatter:'当前 35.1', color:'#ff5252', fontSize:10}, data:[{yAxis:35.1}]}}
+    ]
+  });
+}
+
+function chartIndexPE() {
+  const el = document.getElementById('chart-a-index-pe');
+  if (!el || !A_STOCK_DATA) return;
+  const d = A_STOCK_DATA.indexPE;
+  const chart = echarts.init(el);
+  chart.setOption({
+    tooltip: {trigger:'axis', formatter:p=>{
+      const item = d[p[0].dataIndex];
+      return `${item.index}<br/>PE: ${item.currentPE}倍<br/>5Y分位: ${item.percentile5Y}<br/>区间: ${item.low5Y}-${item.high5Y}`;
+    }},
+    grid: {left:90, right:80, top:20, bottom:30},
+    xAxis: {type:'value', name:'PE(倍)', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'category', data:d.map(i=>i.index), inverse:true, axisLabel:{color:'#90a4ae', fontSize:11}},
+    series: [{
+      type:'bar', data:d.map(i=>({value:i.currentPE, label:{show:true, formatter:i.currentPE+'x', position:'right', color:'#4fc3f7', fontWeight:'bold'}})),
+      itemStyle:{color: p=>{
+        const v = p.value;
+        if(v>40) return '#ef5350';
+        if(v>25) return '#ffab40';
+        if(v>15) return '#4fc3f7';
+        return '#69f0ae';
+      }},
+      barWidth:18,
+      markPoint:{symbol:'rect', symbolSize:[60,16], label:{fontSize:9, fontWeight:'bold'}, data:d.map((i,idx)=>({name:i.percentile5Y, coord:[i.currentPE, idx], value:i.percentile5Y, itemStyle:{color:'rgba(255,255,255,0.1)'}, label:{formatter:i.percentile5Y+'分位', color:'#ffab40'}}))}
+    }]
+  });
+}
+
+function chartCapDist() {
+  const el = document.getElementById('chart-a-cap-dist');
+  if (!el || !A_STOCK_DATA) return;
+  const d = A_STOCK_DATA.capDistribution;
+  const chart = echarts.init(el);
+  chart.setOption({
+    tooltip: {trigger:'item', formatter:p=>`${p.name}<br/>公司数: ${p.data.count}家<br/>市值: ${p.data.totalMcap}千亿<br/>占比: ${p.percent}%`},
+    series: [{
+      type:'pie', radius:['40%','75%'], center:['50%','50%'],
+      data: d.map(i=>({name:i.category, value:i.pct, count:i.count, totalMcap:i.totalMcap})),
+      label:{color:'#e0e0e0', formatter:'{b}\n{d}%', fontSize:10},
+      emphasis:{itemStyle:{shadowBlur:10, shadowColor:'rgba(0,0,0,0.5)'}},
+      itemStyle:{color:p=>{
+        const colors = ['#ff5252','#ffab40','#4fc3f7','#69f0ae','#90a4ae'];
+        return colors[p.dataIndex] || '#90a4ae';
+      }}
+    }]
+  });
+}
+
 </script>
 
 <!-- Sector Detail Modal -->
