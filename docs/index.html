@@ -144,7 +144,8 @@ body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; ba
 <div id="loading-overlay"><div class="spinner"></div><div class="loading-text">正在加载产业链数据...</div></div>
 <nav class="nav" id="nav">
   <span class="logo">🔬 半导体产业链图谱</span>
-  <a href="#overview" class="active" onclick="scrollToSection('overview')">市场总览</a>
+  <a href="#market" class="active" onclick="scrollToSection('market')">A股大盘</a>
+  <a href="#overview" onclick="scrollToSection('overview')">市场总览</a>
   <a href="#chain" onclick="scrollToSection('chain')">产业链图</a>
   <a href="#upstream" onclick="scrollToSection('upstream')">上游</a>
   <a href="#midstream" onclick="scrollToSection('midstream')">中游</a>
@@ -158,7 +159,7 @@ body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; ba
 <div class="container" id="app"></div>
 
 <script>
-/* v20260628: Star monthly K-line + year fixes + ut param */
+/* v20260628b: A-share market dashboard + sector heatmap */
 // ── DATA ──
 // ── DATA LOADING (data-driven from JSON files) ──
 let APP_DATA = null;
@@ -202,6 +203,29 @@ async function render() {
   if (!ok) return;
   const app = document.getElementById('app');
   app.innerHTML = `
+    <!-- A-Share Market Dashboard -->
+    <div class="section" id="market">
+      <div class="section-title"><span class="icon">🇨🇳</span>A股大盘行情 <span style="font-size:12px;color:var(--text2);font-weight:400;" id="market-time"></span></div>
+      <div class="stat-cards" id="index-cards">
+        <div class="stat-card"><div class="value" id="idx-sh">--</div><div class="label">上证指数</div><div class="change" id="idx-sh-chg">加载中...</div></div>
+        <div class="stat-card"><div class="value" id="idx-sz">--</div><div class="label">深证成指</div><div class="change" id="idx-sz-chg">加载中...</div></div>
+        <div class="stat-card"><div class="value" id="idx-cy">--</div><div class="label">创业板指</div><div class="change" id="idx-cy-chg">加载中...</div></div>
+        <div class="stat-card"><div class="value" id="idx-kc">--</div><div class="label">科创50</div><div class="change" id="idx-kc-chg">加载中...</div></div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card"><h3>📈 上证指数月K线走势</h3><div id="chart-sh-idx" class="chart-lg"></div>
+          <div class="insight-card"><div class="insight-title">💡 大盘解读</div><div class="insight-body" id="market-insight-sh">
+            加载中...
+          </div></div>
+        </div>
+        <div class="card"><h3>🏭 行业板块涨跌热力图</h3><div id="chart-sector-heatmap" class="chart-lg"></div>
+          <div class="insight-card"><div class="insight-title">💡 板块解读</div><div class="insight-body" id="market-insight-sector">
+            加载中...
+          </div></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Overview Section -->
     <div class="section" id="overview">
       <div class="section-title"><span class="icon">📊</span>全球半导体市场总览</div>
@@ -469,6 +493,7 @@ async function render() {
 
   // Render all charts
   setTimeout(() => {
+    loadMarketDashboard();
     chartMarketTrend();
     chartSegmentGrowth();
     chartChainSankey();
@@ -1255,7 +1280,7 @@ function startAutoRefresh() {
 }
 
 // Extend scroll spy for realtime section
-const origScrollSections = ['overview','chain','upstream','midstream','downstream','top10','stocks','realtime','star-kline'];
+const origScrollSections = ['market','overview','chain','upstream','midstream','downstream','top10','stocks','realtime','star-kline'];
 window.addEventListener('scroll', function() {
   let current = '';
   origScrollSections.forEach(id=>{
@@ -1407,6 +1432,221 @@ function makeChainClickable() {
     if (!chainSection) return;
     // Already has the insight card; add a clickable grid below it
   }, 500);
+}
+
+// ══════════════════════════════════════════════════════
+// A-SHARE MARKET DASHBOARD — A股大盘行情
+// ══════════════════════════════════════════════════════
+
+const MARKET_INDICES = [
+  {code:'000001', secid:'1.000001', name:'上证指数', elId:'idx-sh', chgId:'idx-sh-chg'},
+  {code:'399001', secid:'0.399001', name:'深证成指', elId:'idx-sz', chgId:'idx-sz-chg'},
+  {code:'399006', secid:'0.399006', name:'创业板指', elId:'idx-cy', chgId:'idx-cy-chg'},
+  {code:'000688', secid:'1.000688', name:'科创50', elId:'idx-kc', chgId:'idx-kc-chg'}
+];
+
+// 行业板块列表 (东方财富行业板块代码)
+const SECTOR_LIST = [
+  {code:'BK0489', name:'半导体'},{code:'BK0477', name:'通信设备'},{code:'BK0479', name:'消费电子'},
+  {code:'BK0438', name:'软件开发'},{code:'BK0481', name:'IT服务'},{code:'BK0465', name:'计算机设备'},
+  {code:'BK0487', name:'电子元件'},{code:'BK0451', name:'医疗器械'},{code:'BK0467', name:'生物制品'},
+  {code:'BK0447', name:'中药'},{code:'BK0480', name:'化学制药'},{code:'BK0493', name:'电力行业'},
+  {code:'BK0456', name:'汽车整车'},{code:'BK0483', name:'汽车零部件'},{code:'BK0445', name:'食品饮料'},
+  {code:'BK0484', name:'家电行业'},{code:'BK0449', name:'银行'},{code:'BK0473', name:'保险'},
+  {code:'BK0488', name:'证券'},{code:'BK0432', name:'房地产开发'},{code:'BK0443', name:'工程建设'},
+  {code:'BK0435', name:'有色金属'},{code:'BK0476', name:'钢铁行业'},{code:'BK0453', name:'煤炭行业'},
+  {code:'BK0442', name:'石油行业'},{code:'BK0434', name:'化肥行业'},{code:'BK0440', name:'光伏设备'},
+  {code:'BK0448', name:'风电设备'},{code:'BK0494', name:'锂电池'},{code:'BK0495', name:'新能源车'}
+];
+
+let marketIndexData = [];
+let sectorData = [];
+let shIdxKlineData = [];
+
+async function loadMarketDashboard() {
+  await Promise.all([
+    loadMarketIndices(),
+    loadSHIndexKline(),
+    loadSectorData()
+  ]);
+  updateMarketTime();
+}
+
+async function loadMarketIndices() {
+  const secids = MARKET_INDICES.map(i=>i.secid).join(',');
+  try {
+    const url = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2,f3,f4,f12,f14&secids=${secids}`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    if (data.data && data.data.diff) {
+      marketIndexData = data.data.diff;
+      renderIndexCards();
+    }
+  } catch(e) { console.error('指数加载失败:', e); }
+}
+
+function renderIndexCards() {
+  marketIndexData.forEach(item => {
+    const idx = MARKET_INDICES.find(i=>i.code===item.f12);
+    if (!idx) return;
+    const valEl = document.getElementById(idx.elId);
+    const chgEl = document.getElementById(idx.chgId);
+    if (!valEl || !chgEl) return;
+    const price = item.f2;
+    const chgPct = item.f3;
+    const chgAmt = item.f4;
+    const isUp = chgPct >= 0;
+    valEl.textContent = price ? price.toFixed(2) : '--';
+    valEl.style.color = isUp ? 'var(--red)' : 'var(--green)';
+    chgEl.textContent = `${isUp?'+':''}${chgPct.toFixed(2)}%  ${isUp?'+':''}${chgAmt.toFixed(2)}`;
+    chgEl.className = 'change ' + (isUp ? 'change-up' : 'change-down');
+  });
+}
+
+async function loadSHIndexKline() {
+  try {
+    const url = `https://push2his.eastmoney.com/api/qt/stock/kline/get?fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&ut=fa5fd1943c7b386f172d6893dbfba10b&secid=1.000001&klt=103&fqt=1&end=20500101&lmt=120`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    if (data.data && data.data.klines) {
+      shIdxKlineData = data.data.klines;
+      renderSHIndexChart();
+    }
+  } catch(e) { console.error('上证K线加载失败:', e); }
+}
+
+function renderSHIndexChart() {
+  const el = document.getElementById('chart-sh-idx');
+  if (!el || !shIdxKlineData.length) return;
+  const chart = echarts.init(el);
+  const dates = [], values = [], volumes = [];
+  let highest = -Infinity, highestDate = '', lowest = Infinity, lowestDate = '';
+  
+  shIdxKlineData.forEach(line => {
+    const p = line.split(',');
+    dates.push(p[0]);
+    values.push([parseFloat(p[1]), parseFloat(p[2]), parseFloat(p[4]), parseFloat(p[3])]);
+    volumes.push([parseFloat(p[5]), p[0]]);
+    if (parseFloat(p[3]) > highest) { highest = parseFloat(p[3]); highestDate = p[0]; }
+    if (parseFloat(p[4]) < lowest) { lowest = parseFloat(p[4]); lowestDate = p[0]; }
+  });
+
+  const fmtDate = d => { const pts = d.split('-'); return pts[0]+'/'+pts[1]; };
+
+  chart.setOption({
+    tooltip: {trigger:'axis', axisPointer:{type:'cross'}},
+    grid: [{left:70, right:20, top:20, height:'58%'}, {left:70, right:20, top:'82%', height:'12%'}],
+    xAxis: [
+      {type:'category', data:dates, axisLabel:{color:'#90a4ae', fontSize:9, rotate:30, interval:Math.max(1,Math.floor(dates.length/10))}, gridIndex:0},
+      {type:'category', data:dates, axisLabel:{show:false}, gridIndex:1}
+    ],
+    yAxis: [
+      {type:'value', axisLabel:{color:'#90a4ae', fontSize:9}, splitLine:{lineStyle:{color:'#1e2456'}}, gridIndex:0, scale:true},
+      {type:'value', axisLabel:{color:'#90a4ae', fontSize:8}, splitLine:{lineStyle:{color:'#1e2456'}}, gridIndex:1}
+    ],
+    series: [
+      {
+        type:'candlestick', data:values,
+        itemStyle:{color:'#ef5350', color0:'#69f0ae', borderColor:'#ef5350', borderColor0:'#69f0ae'},
+        xAxisIndex:0, yAxisIndex:0,
+        markPoint: {
+          symbol:'pin', symbolSize:40,
+          label:{fontSize:10, fontWeight:'bold'},
+          data: [
+            {name:'历史最高', coord:[highestDate, highest], value: highest.toFixed(0),
+             itemStyle:{color:'#ef5350'}, label:{formatter:`最高\\n${highest.toFixed(0)}\\n${fmtDate(highestDate)}`, color:'#fff', fontSize:10}},
+            {name:'历史最低', coord:[lowestDate, lowest], value: lowest.toFixed(0),
+             itemStyle:{color:'#69f0ae'}, label:{formatter:`最低\\n${lowest.toFixed(0)}\\n${fmtDate(lowestDate)}`, color:'#fff', fontSize:10}}
+          ]
+        }
+      },
+      {type:'bar', data:volumes.map(v=>v[0]), itemStyle:{color:function(p){const i=p.dataIndex;return values[i]&&values[i][1]>=values[i][0]?'#ef5350':'#69f0ae'}}, xAxisIndex:1, yAxisIndex:1}
+    ]
+  });
+
+  // 大盘解读
+  const latest = values[values.length-1];
+  const prev = values[values.length-2];
+  const momChg = prev ? ((latest[1]-prev[1])/prev[1]*100) : 0;
+  const insightEl = document.getElementById('market-insight-sh');
+  if (insightEl) {
+    const trend = momChg > 2 ? '强势上涨' : momChg > 0 ? '震荡偏强' : momChg > -2 ? '震荡偏弱' : '明显回调';
+    const tag = momChg > 0 ? 'insight-tag-bull' : 'insight-tag-bear';
+    insightEl.innerHTML = `<span class="insight-tag ${tag}">${trend}</span> 上证指数最新收盘 <strong style="color:#fff;">${latest[1].toFixed(2)}</strong>，近一月变动 <strong>${momChg>=0?'+':''}${momChg.toFixed(2)}%</strong>。<br>
+      <hr class="insight-divider">
+      <span class="insight-tag insight-tag-key">历史极值</span> 历史最高 <span class="insight-highlight">${highest.toFixed(0)}</span>（${highestDate}），历史最低 <span style="color:var(--green);">${lowest.toFixed(0)}</span>（${lowestDate}）。当前点位处于历史 <strong>${((latest[1]-lowest)/(highest-lowest)*100).toFixed(0)}%</strong> 分位。`;
+  }
+}
+
+async function loadSectorData() {
+  const codes = SECTOR_LIST.map(s=>'90.'+s.code).join(',');
+  try {
+    const url = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2,f3,f4,f12,f14&secids=${codes}`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    if (data.data && data.data.diff) {
+      sectorData = data.data.diff;
+      renderSectorHeatmap();
+    }
+  } catch(e) { console.error('板块数据加载失败:', e); }
+}
+
+function renderSectorHeatmap() {
+  const el = document.getElementById('chart-sector-heatmap');
+  if (!el || !sectorData.length) return;
+  const chart = echarts.init(el);
+
+  // 按涨跌幅排序
+  const sorted = [...sectorData].sort((a,b) => b.f3 - a.f3);
+  const names = sorted.map(s => {
+    const info = SECTOR_LIST.find(sl=>sl.code===s.f12);
+    return info ? info.name : s.f14;
+  });
+  const vals = sorted.map(s => s.f3);
+
+  chart.setOption({
+    tooltip: {trigger:'axis', formatter: p => {
+      const v = p[0];
+      return v.name + '<br/>涨跌幅: ' + (v.value>=0?'+':'') + v.value.toFixed(2) + '%';
+    }},
+    grid: {left:90, right:60, top:20, bottom:20},
+    xAxis: {type:'value', name:'%', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    yAxis: {type:'category', data:names, inverse:true, axisLabel:{color:'#90a4ae', fontSize:10}},
+    visualMap: {
+      show:false, min:-5, max:5,
+      inRange: {color: ['#69f0ae','#69f0ae','#1e2456','#1e2456','#ef5350','#ef5350']}
+    },
+    series: [{
+      type:'bar', data:vals.map(v => ({
+        value: v,
+        label: {show:true, formatter: (v>=0?'+':'')+v.toFixed(1)+'%', position: v>=0?'right':'left', color: v>=0?'#ef5350':'#69f0ae', fontWeight:'bold', fontSize:10}
+      })),
+      barWidth:14
+    }]
+  });
+
+  // 板块解读
+  const upCount = sorted.filter(s=>s.f3>0).length;
+  const downCount = sorted.filter(s=>s.f3<0).length;
+  const avgChg = vals.reduce((a,b)=>a+b,0)/vals.length;
+  const top3 = sorted.slice(0,3);
+  const bot3 = sorted.slice(-3).reverse();
+  const insightEl = document.getElementById('market-insight-sector');
+  if (insightEl) {
+    const sentiment = avgChg > 1 ? '市场情绪偏热' : avgChg > 0 ? '市场情绪中性偏暖' : avgChg > -1 ? '市场情绪中性偏冷' : '市场情绪偏弱';
+    const tag = avgChg > 0 ? 'insight-tag-bull' : 'insight-tag-bear';
+    insightEl.innerHTML = `<span class="insight-tag ${tag}">${sentiment}</span> 监控${SECTOR_LIST.length}个核心行业板块，<span class="insight-highlight">${upCount}个上涨</span>、${downCount}个下跌，平均涨跌幅 <strong>${avgChg>=0?'+':''}${avgChg.toFixed(2)}%</strong>。<br>
+      <hr class="insight-divider">
+      <span class="insight-tag insight-tag-bull">领涨TOP3</span> ${top3.map((s,i)=>{const info=SECTOR_LIST.find(sl=>sl.code===s.f12);return (info?info.name:s.f14)+' +'+s.f3.toFixed(2)+'%';}).join(' | ')}<br>
+      <span class="insight-tag insight-tag-bear">领跌TOP3</span> ${bot3.map((s,i)=>{const info=SECTOR_LIST.find(sl=>sl.code===s.f12);return (info?info.name:s.f14)+' '+s.f3.toFixed(2)+'%';}).join(' | ')}`;
+  }
+}
+
+function updateMarketTime() {
+  const now = new Date();
+  const ts = now.toLocaleTimeString('zh-CN', {hour12:false});
+  const el = document.getElementById('market-time');
+  if (el) el.textContent = `更新时间: ${ts}`;
 }
 
 // ══════════════════════════════════════════════════════
