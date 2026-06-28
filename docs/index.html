@@ -152,12 +152,13 @@ body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; ba
   <a href="#top10" onclick="scrollToSection('top10')">十大板块</a>
   <a href="#stocks" onclick="scrollToSection('stocks')">厂商股价</a>
   <a href="#realtime" onclick="scrollToSection('realtime')">实时行情</a>
+  <a href="#star-kline" onclick="scrollToSection('star-kline')">明星个股</a>
 </nav>
 
 <div class="container" id="app"></div>
 
 <script>
-/* v20260627-2: K-line fix + data sync */
+/* v20260628: Star monthly K-line + year fixes + ut param */
 // ── DATA ──
 // ── DATA LOADING (data-driven from JSON files) ──
 let APP_DATA = null;
@@ -241,7 +242,7 @@ async function render() {
             <span class="insight-tag insight-tag-neut">关注风险</span> 2026年增速(+90%)能否持续取决于AI CAPEX是否维持高位，但WSTS已预测2027年继续增长+27%至$1.9万亿，若云厂商缩减开支则可能增速回落至15-20%。
           </div></div>
         </div>
-        <div class="card"><h3>2024年分品类增长对比</h3><div id="chart-segment-growth" class="chart"></div>
+        <div class="card"><h3>2023→2024年分品类增长对比</h3><div id="chart-segment-growth" class="chart"></div>
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
             <span class="insight-tag insight-tag-bull">最强赛道</span> <strong>存储芯片</strong>以+81%增速领跑2024年，2025年继续+32%至$2,215亿，主要受益于<span class="insight-highlight">HBM单价是传统DRAM的5-7倍</span>，AI服务器GPU配套需求爆发。<br>
             <hr class="insight-divider">
@@ -377,9 +378,9 @@ async function render() {
 
     <!-- Stocks -->
     <div class="section" id="stocks">
-      <div class="section-title"><span class="icon">📈</span>核心厂商2024年股价表现</div>
+      <div class="section-title"><span class="icon">📈</span>核心厂商2024-2025年股价表现</div>
       <div class="grid grid-2">
-        <div class="card"><h3>2024年涨跌幅排名（Top 15）</h3><div id="chart-stocks-bar" class="chart-lg"></div>
+        <div class="card"><h3>2024-2025年涨跌幅排名（Top 15）</h3><div id="chart-stocks-bar" class="chart-lg"></div>
           <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body">
             <span class="insight-tag insight-tag-bull">涨幅之王</span> <strong>寒武纪(+55%, 2025)、韦尔股份(+22%)、兆易创新(+25%)</strong>包揽前三。寒武纪作为中国AI芯片稀缺标的享受极高估值溢价；韦尔受益于CIS图像传感器周期反转；兆易则同时踩中存储涨价+MCU国产替代两条主线。<br>
             <hr class="insight-divider">
@@ -445,6 +446,25 @@ async function render() {
         <div id="chart-kline" class="chart-lg"></div>
       </div>
     </div>
+
+    <!-- Star Stock Monthly K-line Section -->
+    <div class="section" id="star-kline">
+      <div class="section-title"><span class="icon">⭐</span>明星个股月K线图 — 上市以来全景</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">展示宁德时代、泡泡玛特、寒武纪、中际旭创从上市以来的月K线走势，标注历史最高点和最低点</div>
+      <div class="grid grid-2" id="star-kline-grid">
+        <div class="card"><h3>🔋 宁德时代 (300750)</h3><div id="chart-star-0" class="chart-lg"></div></div>
+        <div class="card"><h3>🫧 泡泡玛特 (09992.HK)</h3><div id="chart-star-1" class="chart-lg"></div></div>
+        <div class="card"><h3>🧠 寒武纪 (688256)</h3><div id="chart-star-2" class="chart-lg"></div></div>
+        <div class="card"><h3>💡 中际旭创 (300308)</h3><div id="chart-star-3" class="chart-lg"></div></div>
+      </div>
+      <div class="insight-card"><div class="insight-title">💡 AI 分析结论</div><div class="insight-body" id="star-kline-insight">
+        <span class="insight-tag insight-tag-key">核心发现</span> 四只明星个股代表了中国新经济的不同维度：<strong>宁德时代</strong>（新能源电池全球龙头，上市以来最高涨10倍+）、<strong>泡泡玛特</strong>（潮玩IP经济代表，港股消费新势力）、<strong>寒武纪</strong>（中国AI芯片稀缺标的，2025年暴涨433%）、<strong>中际旭创</strong>（光模块全球龙头，AI算力核心供应商）。<br>
+        <hr class="insight-divider">
+        <span class="insight-tag insight-tag-bull">共同特征</span> 四只股票均在2024-2026年AI/新经济大潮中创出历史新高，但波动幅度巨大——寒武纪区间振幅超300%，泡泡玛特区间振幅超200%。<span class="insight-highlight">高成长伴随高波动</span>是这些明星股的共同特征。<br>
+        <hr class="insight-divider">
+        <span class="insight-tag insight-tag-neut">投资启示</span> 上市以来的高低点标注清晰展示了"买入持有"策略的巨大回报——但也揭示了如果买在错误时点（如寒武纪2023年低点前买入），需承受50%+的回撤。选对赛道+择时同样重要。
+      </div></div>
+    </div>
   `;
 
   // Render all charts
@@ -465,6 +485,7 @@ async function render() {
     renderTop10Table();
     loadRealtimeQuotes();
     startAutoRefresh();
+    loadStarMonthlyKlines();
   }, 100);
 }
 
@@ -686,7 +707,7 @@ function chartMidstreamStock(tab) {
   const names = items.map(i=>i.name);
   const vals = items.map(i=>i.stock||0);
   c.setOption({
-    tooltip: {trigger:'axis', formatter:p=>p[0].name+'<br/>2024股价: '+pct(p[0].value)},
+    tooltip: {trigger:'axis', formatter:p=>p[0].name+'<br/>2024-2025股价: '+pct(p[0].value)},
     grid: {left:100, right:40, top:20, bottom:30},
     xAxis: {type:'value', name:'%', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
     yAxis: {type:'category', data:names, inverse:true, axisLabel:{color:'#90a4ae'}},
@@ -773,7 +794,7 @@ function chartStocksBar() {
   const c = echarts.init(document.getElementById('chart-stocks-bar'));
   const sorted = [...APP_DATA.stocks].sort((a,b)=>b.chg2024-a.chg2024).slice(0,15);
   c.setOption({
-    tooltip: {trigger:'axis', formatter:p=>p[0].name+'<br/>2024涨跌幅: '+pct(p[0].value)},
+    tooltip: {trigger:'axis', formatter:p=>p[0].name+'<br/>2024-2025涨跌幅: '+pct(p[0].value)},
     grid: {left:100, right:50, top:10, bottom:30},
     xAxis: {type:'value', name:'%', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
     yAxis: {type:'category', data:sorted.map(s=>s.name+' ('+s.code+')'), inverse:true, axisLabel:{color:'#90a4ae', fontSize:10}},
@@ -1142,7 +1163,7 @@ async function loadKlineChart(stock) {
   const secid = `${mkt}.${stock.code}`;
   
   try {
-    const url = `https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=${secid}&klt=${klt}&fqt=1&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57&lmt=120`;
+    const url = `https://push2his.eastmoney.com/api/qt/stock/kline/get?fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&ut=fa5fd1943c7b386f172d6893dbfba10b&secid=${secid}&klt=${klt}&fqt=1&end=20500101&lmt=120`;
     const resp = await fetch(url);
     const data = await resp.json();
     
@@ -1234,7 +1255,7 @@ function startAutoRefresh() {
 }
 
 // Extend scroll spy for realtime section
-const origScrollSections = ['overview','chain','upstream','midstream','downstream','top10','stocks','realtime'];
+const origScrollSections = ['overview','chain','upstream','midstream','downstream','top10','stocks','realtime','star-kline'];
 window.addEventListener('scroll', function() {
   let current = '';
   origScrollSections.forEach(id=>{
@@ -1386,6 +1407,195 @@ function makeChainClickable() {
     if (!chainSection) return;
     // Already has the insight card; add a clickable grid below it
   }, 500);
+}
+
+// ══════════════════════════════════════════════════════
+// STAR STOCKS MONTHLY KLINE — 明星个股月K线图
+// ══════════════════════════════════════════════════════
+
+const STAR_STOCKS = [
+  {code:'300750', market:'sz', secid:'0.300750', name:'宁德时代', icon:'🔋'},
+  {code:'09992', market:'hk', secid:'116.09992', name:'泡泡玛特', icon:'🫧'},
+  {code:'688256', market:'sh', secid:'1.688256', name:'寒武纪', icon:'🧠'},
+  {code:'300308', market:'sz', secid:'0.300308', name:'中际旭创', icon:'💡'}
+];
+
+async function loadStarMonthlyKlines() {
+  const promises = STAR_STOCKS.map(async (stock, idx) => {
+    try {
+      const url = `https://push2his.eastmoney.com/api/qt/stock/kline/get?fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&ut=fa5fd1943c7b386f172d6893dbfba10b&secid=${stock.secid}&klt=103&fqt=1&end=20500101&lmt=500`;
+      const resp = await fetch(url);
+      const data = await resp.json();
+      if (data.data && data.data.klines && data.data.klines.length > 0) {
+        renderStarKlineChart(idx, stock, data.data.klines);
+      } else {
+        showStarError(idx, stock, '暂无数据');
+      }
+    } catch(e) {
+      console.error(`Star kline load failed for ${stock.name}:`, e);
+      showStarError(idx, stock, '加载失败');
+    }
+  });
+  await Promise.allSettled(promises);
+}
+
+function showStarError(idx, stock, msg) {
+  const el = document.getElementById(`chart-star-${idx}`);
+  if (!el) return;
+  const chart = echarts.init(el);
+  chart.setOption({
+    title: {text: `${stock.name} (${stock.code})`, subtext: msg, left:'center', top:'center', textStyle:{color:'#90a4ae', fontSize:14}, subtextStyle:{color:'#ff5252', fontSize:12}}
+  });
+}
+
+function renderStarKlineChart(idx, stock, klines) {
+  const el = document.getElementById(`chart-star-${idx}`);
+  if (!el) return;
+  
+  const dates = [], values = [], volumes = [];
+  let highestPrice = -Infinity, highestDate = '';
+  let lowestPrice = Infinity, lowestDate = '';
+  
+  klines.forEach(line => {
+    const parts = line.split(',');
+    const date = parts[0];
+    const open = parseFloat(parts[1]);
+    const close = parseFloat(parts[2]);
+    const high = parseFloat(parts[3]);
+    const low = parseFloat(parts[4]);
+    const volume = parseFloat(parts[5]);
+    
+    dates.push(date);
+    values.push([open, close, low, high]);
+    volumes.push([volume, date]);
+    
+    // Track highs and lows
+    if (high > highestPrice) {
+      highestPrice = high;
+      highestDate = date;
+    }
+    if (low < lowestPrice) {
+      lowestPrice = low;
+      lowestDate = date;
+    }
+  });
+  
+  // Also find local highs and lows (within 12-month windows for more context)
+  const localExtremes = findLocalExtremes(dates, values);
+  
+  const chart = echarts.init(el);
+  
+  // Format date for display
+  const fmtDate = (d) => {
+    if (!d) return '';
+    const parts = d.split('-');
+    return parts[0] + '/' + parts[1];
+  };
+  
+  chart.setOption({
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {type: 'cross'},
+      formatter: function(params) {
+        if (!params || params.length < 2) return '';
+        const d = params[0].axisValue;
+        const v = values[params[0].dataIndex];
+        if (!v) return d;
+        return `<strong>${d}</strong><br/>
+          开盘: ${v[0].toFixed(2)}<br/>
+          收盘: ${v[1].toFixed(2)}<br/>
+          最低: ${v[2].toFixed(2)}<br/>
+          最高: ${v[3].toFixed(2)}<br/>
+          成交量: ${(volumes[params[0].dataIndex][0]/10000).toFixed(0)}万手`;
+      }
+    },
+    grid: [
+      {left:70, right:20, top:40, height:'58%'},
+      {left:70, right:20, top:'82%', height:'12%'}
+    ],
+    xAxis: [
+      {type:'category', data:dates, axisLabel:{color:'#90a4ae', fontSize:9, rotate:30, interval:Math.max(1, Math.floor(dates.length/12))}, gridIndex:0},
+      {type:'category', data:dates, axisLabel:{show:false}, gridIndex:1}
+    ],
+    yAxis: [
+      {type:'value', axisLabel:{color:'#90a4ae', fontSize:9}, splitLine:{lineStyle:{color:'#1e2456'}}, gridIndex:0, scale:true},
+      {type:'value', axisLabel:{color:'#90a4ae', fontSize:8}, splitLine:{lineStyle:{color:'#1e2456'}}, gridIndex:1}
+    ],
+    series: [
+      {
+        name: stock.name,
+        type: 'candlestick',
+        data: values,
+        itemStyle: {color:'#ef5350', color0:'#69f0ae', borderColor:'#ef5350', borderColor0:'#69f0ae'},
+        xAxisIndex: 0, yAxisIndex: 0,
+        markPoint: {
+          symbol: 'pin',
+          symbolSize: 40,
+          label: {fontSize:10, fontWeight:'bold'},
+          data: [
+            {name:'历史最高', coord:[highestDate, highestPrice], value: highestPrice.toFixed(2), itemStyle:{color:'#ef5350'},
+             label:{formatter:`最高\\n¥${highestPrice.toFixed(2)}\\n${fmtDate(highestDate)}`, color:'#fff', fontSize:10}},
+            {name:'历史最低', coord:[lowestDate, lowestPrice], value: lowestPrice.toFixed(2), itemStyle:{color:'#69f0ae'},
+             label:{formatter:`最低\\n¥${lowestPrice.toFixed(2)}\\n${fmtDate(lowestDate)}`, color:'#fff', fontSize:10}}
+          ].concat(localExtremes.map(e => ({
+            name: e.type === 'high' ? '阶段高点' : '阶段低点',
+            coord: [e.date, e.price],
+            value: e.price.toFixed(2),
+            symbol: 'roundRect',
+            symbolSize: [8,8],
+            itemStyle: {color: e.type === 'high' ? '#ff8a80' : '#b9f6ca'},
+            label: {show: false}
+          })))
+        }
+      },
+      {
+        name: '成交量',
+        type: 'bar',
+        data: volumes.map(v => v[0]),
+        itemStyle: {color: function(p) {
+          const idx = p.dataIndex;
+          return values[idx] && values[idx][1] >= values[idx][0] ? '#ef5350' : '#69f0ae';
+        }},
+        xAxisIndex: 1, yAxisIndex: 1
+      }
+    ]
+  });
+  
+  // Responsive resize
+  window.addEventListener('resize', () => chart.resize());
+}
+
+function findLocalExtremes(dates, values) {
+  const extremes = [];
+  const windowSize = 12; // 12-month window for local extremes
+  
+  for (let i = windowSize; i < values.length - windowSize; i++) {
+    const currentHigh = values[i][3]; // high price
+    const currentLow = values[i][2];  // low price
+    
+    let isLocalHigh = true;
+    let isLocalLow = true;
+    
+    for (let j = i - windowSize; j <= i + windowSize; j++) {
+      if (j === i) continue;
+      if (j < 0 || j >= values.length) continue;
+      if (values[j][3] >= currentHigh) isLocalHigh = false;
+      if (values[j][2] <= currentLow) isLocalLow = false;
+    }
+    
+    if (isLocalHigh) {
+      extremes.push({type:'high', date: dates[i], price: currentHigh});
+    }
+    if (isLocalLow) {
+      extremes.push({type:'low', date: dates[i], price: currentLow});
+    }
+  }
+  
+  // Limit to top 3 of each
+  const highs = extremes.filter(e => e.type === 'high').sort((a,b) => b.price - a.price).slice(0, 3);
+  const lows = extremes.filter(e => e.type === 'low').sort((a,b) => a.price - b.price).slice(0, 3);
+  
+  return [...highs, ...lows];
 }
 </script>
 
