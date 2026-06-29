@@ -1,0 +1,751 @@
+{
+  "overview": {
+    "title": "航天产业全链条动态图谱",
+    "subtitle": "数据更新：2025全年实际+2026年Space Foundation预测 | 2026年6月29日",
+    "globalMarket": {
+      "years": [
+        2023,
+        2024,
+        2025,
+        2026,
+        2027
+      ],
+      "total": [
+        4200,
+        4700,
+        5500,
+        6500,
+        7800
+      ],
+      "卫星制造": [
+        320,
+        380,
+        480,
+        600,
+        750
+      ],
+      "火箭发射": [
+        120,
+        155,
+        210,
+        280,
+        360
+      ],
+      "卫星服务": [
+        1200,
+        1350,
+        1600,
+        1900,
+        2300
+      ],
+      "地面设备": [
+        1450,
+        1600,
+        1850,
+        2150,
+        2500
+      ],
+      "太空旅游": [
+        12,
+        22,
+        40,
+        70,
+        110
+      ]
+    },
+    "segments": {
+      "equipment": [
+        280,
+        340,
+        420,
+        520,
+        640
+      ],
+      "materials": [
+        180,
+        210,
+        250,
+        300,
+        360
+      ],
+      "foundry": [
+        350,
+        420,
+        520,
+        650,
+        800
+      ],
+      "osat": [
+        480,
+        550,
+        650,
+        780,
+        920
+      ],
+      "chinaMarket": [
+        580,
+        720,
+        950,
+        1250,
+        1650
+      ]
+    }
+  },
+  "chain": {
+    "upstream": {
+      "materials": [
+        {
+          "name": "钛合金",
+          "global2024": 28,
+          "yoy": 12,
+          "china2024": 12,
+          "domesticRate": 45,
+          "globalLeader": "VSMPO(30%)",
+          "chinaLeader": "西部超导",
+          "cagr": 15,
+          "global2025e": 32
+        },
+        {
+          "name": "碳纤维复合材料",
+          "global2024": 35,
+          "yoy": 18,
+          "china2024": 15,
+          "domesticRate": 38,
+          "globalLeader": "东丽(25%)",
+          "chinaLeader": "光威复材",
+          "cagr": 20,
+          "global2025e": 42
+        },
+        {
+          "name": "高温合金",
+          "global2024": 22,
+          "yoy": 10,
+          "china2024": 9,
+          "domesticRate": 35,
+          "globalLeader": "Carpenter(20%)",
+          "chinaLeader": "钢研高纳",
+          "cagr": 12,
+          "global2025e": 25
+        },
+        {
+          "name": "特种陶瓷",
+          "global2024": 15,
+          "yoy": 8,
+          "china2024": 5,
+          "domesticRate": 28,
+          "globalLeader": "CoorsTek(22%)",
+          "chinaLeader": "中材高新",
+          "cagr": 10,
+          "global2025e": 16.5
+        },
+        {
+          "name": "航天电子元器件",
+          "global2024": 48,
+          "yoy": 15,
+          "china2024": 18,
+          "domesticRate": 42,
+          "globalLeader": "BAE/霍尼韦尔",
+          "chinaLeader": "航天电子",
+          "cagr": 16,
+          "global2025e": 56
+        },
+        {
+          "name": "推进剂",
+          "global2024": 18,
+          "yoy": 6,
+          "china2024": 6.5,
+          "domesticRate": 50,
+          "globalLeader": "诺格/洛克达因",
+          "chinaLeader": "航天科技六院",
+          "cagr": 8,
+          "global2025e": 19.5
+        }
+      ],
+      "equipment": [
+        {
+          "name": "火箭发动机",
+          "global2024": 65,
+          "yoy": 22,
+          "china2024": 18,
+          "domesticRate": 35,
+          "globalLeader": "SpaceX(Raptor)",
+          "chinaLeader": "航天科技六院",
+          "cagr": 25,
+          "global2025e": 80
+        },
+        {
+          "name": "卫星平台",
+          "global2024": 85,
+          "yoy": 18,
+          "china2024": 28,
+          "domesticRate": 40,
+          "globalLeader": "空客/Thales",
+          "chinaLeader": "中国空间技术研究院",
+          "cagr": 20,
+          "global2025e": 102
+        },
+        {
+          "name": "地面测控",
+          "global2024": 42,
+          "yoy": 12,
+          "china2024": 15,
+          "domesticRate": 45,
+          "globalLeader": "SSC/KSAT",
+          "chinaLeader": "中国卫星测控部",
+          "cagr": 14,
+          "global2025e": 48
+        },
+        {
+          "name": "发射场设备",
+          "global2024": 25,
+          "yoy": 15,
+          "china2024": 10,
+          "domesticRate": 55,
+          "globalLeader": "SpaceX星舰发射台",
+          "chinaLeader": "海南商业发射场",
+          "cagr": 18,
+          "global2025e": 30
+        },
+        {
+          "name": "环境试验设备",
+          "global2024": 12,
+          "yoy": 8,
+          "china2024": 4.5,
+          "domesticRate": 38,
+          "globalLeader": "ACS/Weiss",
+          "chinaLeader": "航天测试所",
+          "cagr": 10,
+          "global2025e": 13
+        }
+      ]
+    },
+    "midstream": {
+      "design": [
+        {
+          "name": "火箭制造",
+          "global2024": 155,
+          "yoy": 22,
+          "china2024": 42,
+          "domesticRate": 30,
+          "cagr": 25
+        },
+        {
+          "name": "卫星制造",
+          "global2024": 480,
+          "yoy": 25,
+          "china2024": 120,
+          "domesticRate": 28,
+          "cagr": 22
+        },
+        {
+          "name": "地面设备",
+          "global2024": 250,
+          "yoy": 12,
+          "china2024": 85,
+          "domesticRate": 35,
+          "cagr": 14
+        },
+        {
+          "name": "太空服务",
+          "global2024": 42,
+          "yoy": 30,
+          "china2024": 10,
+          "domesticRate": 22,
+          "cagr": 28
+        },
+        {
+          "name": "太空制造",
+          "global2024": 5,
+          "yoy": 50,
+          "china2024": 1.2,
+          "domesticRate": 20,
+          "cagr": 45
+        }
+      ],
+      "foundry": [
+        {
+          "name": "中国航天科技(CASC)",
+          "revenue": 450,
+          "yoy": 8,
+          "share": 35,
+          "node": "长征火箭/北斗/嫦娥",
+          "stock": 0
+        },
+        {
+          "name": "中国航天科工(CASIC)",
+          "revenue": 320,
+          "yoy": 10,
+          "share": 25,
+          "node": "快舟火箭/导弹/卫星",
+          "stock": 0
+        },
+        {
+          "name": "SpaceX",
+          "revenue": 150,
+          "yoy": 35,
+          "share": 12,
+          "node": "猎鹰9/星舰/星链",
+          "stock": 0
+        },
+        {
+          "name": "蓝色起源(Blue Origin)",
+          "revenue": 15,
+          "yoy": 20,
+          "share": 1.2,
+          "node": "新格伦/新谢泼德",
+          "stock": 0
+        },
+        {
+          "name": "中科宇航",
+          "revenue": 3.5,
+          "yoy": 50,
+          "share": 0.3,
+          "node": "力箭一号",
+          "stock": 0
+        },
+        {
+          "name": "星河动力",
+          "revenue": 2.8,
+          "yoy": 45,
+          "share": 0.2,
+          "node": "谷神星/智神星",
+          "stock": 0
+        },
+        {
+          "name": "星际荣耀",
+          "revenue": 2.2,
+          "yoy": 30,
+          "share": 0.2,
+          "node": "双曲线系列",
+          "stock": 0
+        },
+        {
+          "name": "蓝箭航天",
+          "revenue": 4.2,
+          "yoy": 65,
+          "share": 0.3,
+          "node": "朱雀二号(甲烷)",
+          "stock": 0
+        }
+      ],
+      "osat": [
+        {
+          "name": "中国卫通",
+          "revenue": 28,
+          "yoy": 8,
+          "share": 25,
+          "advPack": "Ka高通量卫星运营",
+          "stock": 12
+        },
+        {
+          "name": "中国卫星",
+          "revenue": 22,
+          "yoy": 5,
+          "share": 20,
+          "advPack": "卫星制造+应用",
+          "stock": 8
+        },
+        {
+          "name": "亚太卫星",
+          "revenue": 12,
+          "yoy": 3,
+          "share": 10,
+          "advPack": "C/Ku频段运营",
+          "stock": -5
+        },
+        {
+          "name": "中科星图",
+          "revenue": 15,
+          "yoy": 35,
+          "share": 13,
+          "advPack": "GEOVIS数字地球",
+          "stock": 42
+        },
+        {
+          "name": "航天宏图",
+          "revenue": 10,
+          "yoy": 28,
+          "share": 9,
+          "advPack": "PIE遥感平台",
+          "stock": 25
+        },
+        {
+          "name": "北斗星通",
+          "revenue": 8,
+          "yoy": 12,
+          "share": 7,
+          "advPack": "北斗芯片/板卡",
+          "stock": 15
+        }
+      ]
+    },
+    "downstream": [
+      {
+        "sector": "卫星通信",
+        "sub": "低轨宽带星座",
+        "global2024": 320,
+        "yoy": 45,
+        "cagr": 35,
+        "driver": "星链5000+星/千帆星座首发"
+      },
+      {
+        "sector": "卫星通信",
+        "sub": "卫星直连手机",
+        "global2024": 15,
+        "yoy": 200,
+        "cagr": 80,
+        "driver": "华为/苹果卫星SOS+AST"
+      },
+      {
+        "sector": "遥感观测",
+        "sub": "光学遥感卫星",
+        "global2024": 85,
+        "yoy": 18,
+        "cagr": 20,
+        "driver": "商业遥感星座组网"
+      },
+      {
+        "sector": "遥感观测",
+        "sub": "SAR雷达卫星",
+        "global2024": 25,
+        "yoy": 25,
+        "cagr": 22,
+        "driver": "全天候成像需求增长"
+      },
+      {
+        "sector": "导航定位",
+        "sub": "北斗应用终端",
+        "global2024": 180,
+        "yoy": 15,
+        "cagr": 16,
+        "driver": "北斗三号全球组网完成"
+      },
+      {
+        "sector": "导航定位",
+        "sub": "高精度定位服务",
+        "global2024": 35,
+        "yoy": 22,
+        "cagr": 25,
+        "driver": "自动驾驶/无人机需求"
+      },
+      {
+        "sector": "科学探测",
+        "sub": "深空探测器",
+        "global2024": 18,
+        "yoy": 10,
+        "cagr": 12,
+        "driver": "月球/火星探测竞赛"
+      },
+      {
+        "sector": "科学探测",
+        "sub": "空间站实验",
+        "global2024": 8,
+        "yoy": 15,
+        "cagr": 18,
+        "driver": "中国空间站科学实验"
+      },
+      {
+        "sector": "太空旅游",
+        "sub": "亚轨道旅游",
+        "global2024": 8,
+        "yoy": 40,
+        "cagr": 35,
+        "driver": "蓝色起源/维珍银河"
+      },
+      {
+        "sector": "太空旅游",
+        "sub": "轨道旅游",
+        "global2024": 32,
+        "yoy": 25,
+        "cagr": 30,
+        "driver": "SpaceX龙飞船/公理"
+      },
+      {
+        "sector": "国防安全",
+        "sub": "军用侦察卫星",
+        "global2024": 150,
+        "yoy": 8,
+        "cagr": 10,
+        "driver": "国防信息化+太空安全"
+      },
+      {
+        "sector": "国防安全",
+        "sub": "导弹预警/防御",
+        "global2024": 95,
+        "yoy": 12,
+        "cagr": 14,
+        "driver": "高超音速武器防御"
+      }
+    ]
+  },
+  "top10": [
+    {
+      "rank": 1,
+      "name": "低轨卫星星座",
+      "global2024": 320,
+      "yoy": 45,
+      "global2025e": 480,
+      "cagr": 35,
+      "globalLeader": "SpaceX星链(5000+星)",
+      "chinaLeader": "千帆星座/星网集团",
+      "driver": "全球卫星互联网竞赛；中国千帆星座/G60星链启动；手机直连卫星成新增长极",
+      "outlook": "星链用户突破500万；千帆星座首发36颗；卫星制造成本降至$50万/颗",
+      "risk": "轨道资源争夺+太空碎片风险；商业模式验证中；地缘政治分割",
+      "priority": 5,
+      "metric": "星链用户数、千帆发射进度、卫星制造成本"
+    },
+    {
+      "rank": 2,
+      "name": "可回收火箭",
+      "global2024": 120,
+      "yoy": 35,
+      "global2025e": 180,
+      "cagr": 30,
+      "globalLeader": "SpaceX猎鹰9(200+回收)",
+      "chinaLeader": "蓝箭/星际荣耀/星河动力",
+      "driver": "降低发射成本90%+；中国商业火箭可回收技术突破；巨型星座发射需求",
+      "outlook": "SpaceX星舰可回收首试；蓝箭朱雀三号可回收验证；发射成本降至$1000/kg",
+      "risk": "回收技术验证风险；国内发射工位不足；可回收后运力过剩",
+      "priority": 5,
+      "metric": "SpaceX发射频次、中国可回收火箭试验进度"
+    },
+    {
+      "rank": 3,
+      "name": "卫星互联网",
+      "global2024": 350,
+      "yoy": 40,
+      "global2025e": 520,
+      "cagr": 35,
+      "globalLeader": "Starlink/OneWeb/Kuiper",
+      "chinaLeader": "中国星网/千帆星座",
+      "driver": "全球30亿人无宽带覆盖；手机直连卫星技术突破；航空/海事刚需",
+      "outlook": "星链手机直连2025商用；千帆星座2025年200+星；Kuiper首发",
+      "risk": "频谱协调困难；终端成本过高；地面5G/6G竞争",
+      "priority": 5,
+      "metric": "卫星互联网用户数、星座发射进度"
+    },
+    {
+      "rank": 4,
+      "name": "遥感卫星",
+      "global2024": 110,
+      "yoy": 20,
+      "global2025e": 135,
+      "cagr": 18,
+      "globalLeader": "Maxar/Planet/Airbus",
+      "chinaLeader": "中科星图/航天宏图/长光卫星",
+      "driver": "商业遥感星座组网；AI解译提升数据价值；政府+农业+保险应用",
+      "outlook": "吉林一号138颗星座组网；0.3m分辨率商业开放；遥感数据交易平台上线",
+      "risk": "数据同质化竞争；军民用界限模糊；海外市场拓展受限",
+      "priority": 4,
+      "metric": "中科星图GEOVIS营收、吉林一号星座规模"
+    },
+    {
+      "rank": 5,
+      "name": "北斗导航",
+      "global2024": 220,
+      "yoy": 16,
+      "global2025e": 255,
+      "cagr": 15,
+      "globalLeader": "北斗/GPS/Galileo",
+      "chinaLeader": "北斗星通/海格通信/华力创通",
+      "driver": "北斗三号全球组网完成；高精度定位进入自动驾驶/无人机；一带一路推广",
+      "outlook": "北斗+5G融合应用；厘米级定位覆盖全国；北斗短报文手机标配",
+      "risk": "GPS生态替代缓慢；芯片价格战；海外市场接受度",
+      "priority": 4,
+      "metric": "北斗终端出货量、高精度定位渗透率"
+    },
+    {
+      "rank": 6,
+      "name": "太空旅游",
+      "global2024": 40,
+      "yoy": 30,
+      "global2025e": 70,
+      "cagr": 35,
+      "globalLeader": "SpaceX/蓝色起源/维珍银河",
+      "chinaLeader": "中科宇航(规划中)",
+      "driver": "超高净值人群体验需求；发射成本持续下降；亚轨道技术成熟",
+      "outlook": "SpaceX轨道旅游常态化；蓝色起源新谢泼德复飞；票价降至$25万",
+      "risk": "安全风险事件影响信心；市场容量有限；监管框架不完善",
+      "priority": 3,
+      "metric": "太空旅游人次、票价趋势"
+    },
+    {
+      "rank": 7,
+      "name": "太空制造",
+      "global2024": 5,
+      "yoy": 50,
+      "global2025e": 10,
+      "cagr": 45,
+      "globalLeader": "Varda/Space Forge",
+      "chinaLeader": "航天科技(实验阶段)",
+      "driver": "微重力环境下特种材料/药物制造优势；在轨3D打印技术突破",
+      "outlook": "Varda太空制药返回舱成功回收；光纤/合金在轨制造商业化",
+      "risk": "技术验证阶段；成本极高；返回技术风险",
+      "priority": 3,
+      "metric": "太空制造融资额、在轨实验次数"
+    },
+    {
+      "rank": 8,
+      "name": "在轨服务",
+      "global2024": 8,
+      "yoy": 35,
+      "global2025e": 14,
+      "cagr": 30,
+      "globalLeader": "诺格MEV/Astroscale",
+      "chinaLeader": "航天科技(实践系列)",
+      "driver": "太空碎片清理紧迫性；卫星延寿/燃料补加需求；轨道服务商业化",
+      "outlook": "中国实践-21碎片清除验证；MEV-2成功延寿；在轨服务标准制定",
+      "risk": "技术复杂度高；军民用双重用途争议；商业模式不成熟",
+      "priority": 3,
+      "metric": "在轨服务合同额、碎片清除任务数"
+    },
+    {
+      "rank": 9,
+      "name": "深空探测",
+      "global2024": 25,
+      "yoy": 12,
+      "global2025e": 30,
+      "cagr": 15,
+      "globalLeader": "NASA/ESA/CNSA",
+      "chinaLeader": "中国国家航天局",
+      "driver": "月球基地建设计划；火星采样返回；小行星探测/资源利用",
+      "outlook": "嫦娥七号南极探测；天问三号火星采样返回；Artemis II载人绕月",
+      "risk": "投资巨大周期长；国际合作不确定性；技术挑战极高",
+      "priority": 3,
+      "metric": "全球深空探测预算、任务里程碑"
+    },
+    {
+      "rank": 10,
+      "name": "太空太阳能",
+      "global2024": 0.5,
+      "yoy": 100,
+      "global2025e": 1.5,
+      "cagr": 60,
+      "globalLeader": "JAXA/Caltech/ESA",
+      "chinaLeader": "中国空间技术研究院",
+      "driver": "清洁能源终极方案；无线能量传输技术突破；碳中和长期需求",
+      "outlook": "中国空间太阳能电站地面验证；Caltech SSPD在轨测试；2035年兆瓦级实验",
+      "risk": "技术极度超前(10-20年)；投资巨大；无线传输效率/安全争议",
+      "priority": 2,
+      "metric": "无线传能效率、地面验证项目进展"
+    }
+  ],
+  "stocks": [
+    {
+      "code": "600118",
+      "name": "中国卫星",
+      "sector": "卫星制造+应用",
+      "market": "上交所",
+      "focus": "小卫星制造/卫星应用"
+    },
+    {
+      "code": "600879",
+      "name": "航天电子",
+      "sector": "航天电子元器件",
+      "market": "上交所",
+      "focus": "航天惯导/测控/电缆"
+    },
+    {
+      "code": "002179",
+      "name": "中航光电",
+      "sector": "连接器/互连",
+      "market": "深交所",
+      "focus": "航天/航空连接器"
+    },
+    {
+      "code": "002025",
+      "name": "航天电器",
+      "sector": "航天电子元器件",
+      "market": "深交所",
+      "focus": "继电器/连接器/电机"
+    },
+    {
+      "code": "003547",
+      "name": "航天发展",
+      "sector": "航天应用",
+      "market": "深交所",
+      "focus": "电子蓝军/网络安全"
+    },
+    {
+      "code": "000733",
+      "name": "振华科技",
+      "sector": "军用电子元器件",
+      "market": "深交所",
+      "focus": "宇航级阻容感/半导体"
+    },
+    {
+      "code": "002465",
+      "name": "海格通信",
+      "sector": "卫星通信/导航",
+      "market": "深交所",
+      "focus": "北斗终端/卫星通信"
+    },
+    {
+      "code": "002151",
+      "name": "北斗星通",
+      "sector": "北斗导航",
+      "market": "深交所",
+      "focus": "北斗芯片/板卡/天线"
+    },
+    {
+      "code": "601698",
+      "name": "中国卫通",
+      "sector": "卫星运营",
+      "market": "上交所",
+      "focus": "通信广播卫星运营"
+    },
+    {
+      "code": "300045",
+      "name": "华力创通",
+      "sector": "卫星应用",
+      "market": "深交所",
+      "focus": "卫星仿真/天通芯片"
+    },
+    {
+      "code": "688568",
+      "name": "中科星图",
+      "sector": "遥感应用",
+      "market": "科创板",
+      "focus": "GEOVIS数字地球"
+    },
+    {
+      "code": "688066",
+      "name": "航天宏图",
+      "sector": "遥感应用",
+      "market": "科创板",
+      "focus": "PIE遥感平台"
+    },
+    {
+      "code": "688311",
+      "name": "盟升电子",
+      "sector": "卫星通信",
+      "market": "科创板",
+      "focus": "卫通天线/电子对抗"
+    },
+    {
+      "code": "002935",
+      "name": "天奥电子",
+      "sector": "时间频率",
+      "market": "深交所",
+      "focus": "原子钟/时频系统"
+    },
+    {
+      "code": "001270",
+      "name": "铖昌科技",
+      "sector": "射频芯片",
+      "market": "深交所",
+      "focus": "相控阵T/R芯片"
+    }
+  ],
+  "updated": "2026-06-29",
+  "last_updated": "2026-06-29T12:00:00.000000+08:00",
+  "update_note": "Space Foundation 2025年航天报告数据，中国市场数据来自国家航天局/中国航天科技集团年报。商业航天数据含36氪/未来宇航统计。",
+  "key_metrics_2025": {
+    "global_market": "$5,500亿",
+    "china_market": "$950亿 (全球17%)",
+    "china_launch_count": "67次(全球第二)",
+    "starlink_satellites": "5,000+",
+    "key_driver": "低轨星座竞赛+可回收火箭+商业航天开放",
+    "source": "Space Foundation 2025, CNSA, 36Kr"
+  }
+}

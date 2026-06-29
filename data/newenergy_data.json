@@ -1,0 +1,525 @@
+{
+  "overview": {
+    "title": "新能源全产业链动态图谱（光伏+风电+储能+锂电+氢能）",
+    "subtitle": "数据更新：2025全年实际+2026年预测 | 2026年6月27日",
+    "globalMarket": {
+      "years": [2023, 2024, 2025, 2026, 2027],
+      "total": [11200, 13500, 16200, 19200, 22500],
+      "光伏": [3200, 3850, 4600, 5400, 6200],
+      "风电": [2100, 2450, 2850, 3300, 3800],
+      "储能": [1200, 1650, 2200, 2900, 3800],
+      "锂电": [3800, 4500, 5300, 6200, 7200],
+      "氢能": [900, 1050, 1250, 1500, 1800]
+    },
+    "segments": {
+      "equipment": [4800, 5600, 6600, 7800, 9100],
+      "materials": [2200, 2650, 3150, 3700, 4300],
+      "powerGeneration": [3500, 4200, 5000, 5900, 7000],
+      "storage": [1200, 1650, 2200, 2900, 3800],
+      "chinaMarket": [5200, 6300, 7600, 9100, 10800]
+    }
+  },
+  "chain": {
+    "upstream": {
+      "materials": [
+        {
+          "name": "硅料",
+          "global2024": 380,
+          "yoy": -25.5,
+          "china2024": 310,
+          "domesticRate": 82,
+          "globalLeader": "通威/协鑫/大全",
+          "chinaLeader": "通威股份",
+          "cagr": 5.0,
+          "global2025e": 320
+        },
+        {
+          "name": "锂矿",
+          "global2024": 420,
+          "yoy": 20.0,
+          "china2024": 260,
+          "domesticRate": 62,
+          "globalLeader": "雅保/SQM/赣锋",
+          "chinaLeader": "天齐锂业",
+          "cagr": 15.0,
+          "global2025e": 480
+        },
+        {
+          "name": "钴镍矿",
+          "global2024": 510,
+          "yoy": 6.3,
+          "china2024": 180,
+          "domesticRate": 35,
+          "globalLeader": "嘉能可/淡水河谷",
+          "chinaLeader": "华友钴业",
+          "cagr": 6.5,
+          "global2025e": 540
+        },
+        {
+          "name": "稀土永磁",
+          "global2024": 220,
+          "yoy": 9.5,
+          "china2024": 160,
+          "domesticRate": 73,
+          "globalLeader": "日立金属/中科三环",
+          "chinaLeader": "中科三环",
+          "cagr": 9.0,
+          "global2025e": 240
+        },
+        {
+          "name": "碳纤维",
+          "global2024": 85,
+          "yoy": 12.5,
+          "china2024": 35,
+          "domesticRate": 41,
+          "globalLeader": "东丽(35%)",
+          "chinaLeader": "中复神鹰",
+          "cagr": 10.0,
+          "global2025e": 95
+        },
+        {
+          "name": "电解液",
+          "global2024": 180,
+          "yoy": 8.5,
+          "china2024": 120,
+          "domesticRate": 67,
+          "globalLeader": "天赐材料/新宙邦",
+          "chinaLeader": "天赐材料",
+          "cagr": 8.0,
+          "global2025e": 195
+        }
+      ],
+      "equipment": [
+        {
+          "name": "光伏设备",
+          "global2024": 850,
+          "yoy": 15.2,
+          "china2024": 580,
+          "domesticRate": 68,
+          "globalLeader": "应用材料/梅耶博格",
+          "chinaLeader": "迈为股份/捷佳伟创",
+          "cagr": 12.0,
+          "global2025e": 980
+        },
+        {
+          "name": "风机设备",
+          "global2024": 720,
+          "yoy": 8.5,
+          "china2024": 380,
+          "domesticRate": 53,
+          "globalLeader": "维斯塔斯/西门子歌美飒",
+          "chinaLeader": "金风科技/明阳智能",
+          "cagr": 7.0,
+          "global2025e": 780
+        },
+        {
+          "name": "储能设备",
+          "global2024": 520,
+          "yoy": 35.5,
+          "china2024": 280,
+          "domesticRate": 54,
+          "globalLeader": "特斯拉/ Fluence",
+          "chinaLeader": "阳光电源/宁德时代",
+          "cagr": 25.0,
+          "global2025e": 700
+        },
+        {
+          "name": "电解槽",
+          "global2024": 45,
+          "yoy": 42.5,
+          "china2024": 22,
+          "domesticRate": 49,
+          "globalLeader": "Nel/蒂森克虏伯",
+          "chinaLeader": "隆基氢能/阳光氢能",
+          "cagr": 35.0,
+          "global2025e": 62
+        },
+        {
+          "name": "充电桩设备",
+          "global2024": 280,
+          "yoy": 22.5,
+          "china2024": 150,
+          "domesticRate": 54,
+          "globalLeader": "ABB/特锐德",
+          "chinaLeader": "特锐德/星星充电",
+          "cagr": 18.0,
+          "global2025e": 340
+        }
+      ]
+    },
+    "midstream": {
+      "design": [
+        {
+          "name": "光伏组件",
+          "global2024": 2200,
+          "yoy": 18.5,
+          "china2024": 1600,
+          "domesticRate": 73,
+          "cagr": 15.0
+        },
+        {
+          "name": "风电整机",
+          "global2024": 1200,
+          "yoy": 8.2,
+          "china2024": 650,
+          "domesticRate": 54,
+          "cagr": 7.5
+        },
+        {
+          "name": "储能系统",
+          "global2024": 850,
+          "yoy": 35.0,
+          "china2024": 420,
+          "domesticRate": 49,
+          "cagr": 25.0
+        },
+        {
+          "name": "动力电池",
+          "global2024": 2800,
+          "yoy": 22.5,
+          "china2024": 1650,
+          "domesticRate": 59,
+          "cagr": 18.0
+        },
+        {
+          "name": "氢燃料电池",
+          "global2024": 85,
+          "yoy": 45.5,
+          "china2024": 35,
+          "domesticRate": 41,
+          "cagr": 35.0
+        }
+      ],
+      "foundry": [
+        {
+          "name": "隆基绿能",
+          "revenue": 1280,
+          "yoy": -5.2,
+          "share": 28,
+          "node": "硅片+电池+组件一体化",
+          "stock": -32
+        },
+        {
+          "name": "通威股份",
+          "revenue": 1100,
+          "yoy": -8.5,
+          "share": 24,
+          "node": "硅料+电池双龙头",
+          "stock": -25
+        },
+        {
+          "name": "阳光电源",
+          "revenue": 680,
+          "yoy": 35.5,
+          "share": 15,
+          "node": "逆变器+储能系统",
+          "stock": 45
+        },
+        {
+          "name": "金风科技",
+          "revenue": 450,
+          "yoy": 6.2,
+          "share": 9.8,
+          "node": "风电整机龙头",
+          "stock": 12
+        },
+        {
+          "name": "宁德时代",
+          "revenue": 4200,
+          "yoy": 18.5,
+          "share": 37,
+          "node": "动力+储能电池全球第一",
+          "stock": 28
+        },
+        {
+          "name": "比亚迪",
+          "revenue": 6800,
+          "yoy": 22.5,
+          "share": 25,
+          "node": "整车+电池垂直整合",
+          "stock": 35
+        },
+        {
+          "name": "亿纬锂能",
+          "revenue": 520,
+          "yoy": 28.5,
+          "share": 4.6,
+          "node": "消费+动力+储能电池",
+          "stock": 22
+        },
+        {
+          "name": "明阳智能",
+          "revenue": 320,
+          "yoy": 10.5,
+          "share": 7.0,
+          "node": "海上风电龙头",
+          "stock": 18
+        }
+      ],
+      "osat": [
+        {
+          "name": "三峡能源",
+          "revenue": 280,
+          "yoy": 12.5,
+          "share": 18,
+          "advPack": "风光电站运营",
+          "stock": 15
+        },
+        {
+          "name": "龙源电力",
+          "revenue": 350,
+          "yoy": 8.2,
+          "share": 22,
+          "advPack": "风电运营龙头",
+          "stock": 10
+        },
+        {
+          "name": "华能国际",
+          "revenue": 250,
+          "yoy": 15.5,
+          "share": 16,
+          "advPack": "火电+新能源转型",
+          "stock": 20
+        },
+        {
+          "name": "中广核新能源",
+          "revenue": 180,
+          "yoy": 18.5,
+          "share": 11.5,
+          "advPack": "核电+风光",
+          "stock": 28
+        },
+        {
+          "name": "华电国际",
+          "revenue": 160,
+          "yoy": 10.5,
+          "share": 10,
+          "advPack": "风光水火储一体化",
+          "stock": 8
+        }
+      ]
+    },
+    "downstream": [
+      {
+        "sector": "光伏电站",
+        "sub": "集中式+分布式光伏",
+        "global2024": 2200,
+        "yoy": 25.5,
+        "cagr": 20.0,
+        "driver": "组件降价+政策支持+消纳改善"
+      },
+      {
+        "sector": "风电场",
+        "sub": "陆上+海上风电",
+        "global2024": 1500,
+        "yoy": 12.5,
+        "cagr": 10.0,
+        "driver": "海上风电加速+大兆瓦机型"
+      },
+      {
+        "sector": "储能电站",
+        "sub": "电网侧+用户侧储能",
+        "global2024": 850,
+        "yoy": 45.5,
+        "cagr": 30.0,
+        "driver": "新能源配储政策+峰谷价差"
+      },
+      {
+        "sector": "新能源汽车",
+        "sub": "乘用车+商用车电动化",
+        "global2024": 6800,
+        "yoy": 22.5,
+        "cagr": 18.0,
+        "driver": "全球电动化渗透率提升"
+      },
+      {
+        "sector": "绿色制氢",
+        "sub": "电解水制氢+氢储运",
+        "global2024": 120,
+        "yoy": 55.5,
+        "cagr": 40.0,
+        "driver": "绿氢成本下降+碳关税驱动"
+      },
+      {
+        "sector": "工业脱碳",
+        "sub": "钢铁/化工/水泥脱碳",
+        "global2024": 280,
+        "yoy": 18.5,
+        "cagr": 15.0,
+        "driver": "碳市场扩容+绿色溢价"
+      }
+    ]
+  },
+  "top10": [
+    {
+      "rank": 1,
+      "name": "光伏硅片",
+      "global2024": 480,
+      "yoy": 12.5,
+      "global2025e": 520,
+      "cagr": 10.0,
+      "globalLeader": "隆基绿能/TCL中环",
+      "chinaLeader": "隆基绿能",
+      "driver": "N型替代P型加速，大尺寸+薄片化趋势",
+      "outlook": "2026年N型占比超80%，硅片环节集中度进一步提升",
+      "risk": "产能过剩导致价格战；海外贸易壁垒",
+      "priority": 5,
+      "metric": "硅片价格、N型渗透率、开工率"
+    },
+    {
+      "rank": 2,
+      "name": "光伏电池",
+      "global2024": 520,
+      "yoy": 22.5,
+      "global2025e": 620,
+      "cagr": 18.0,
+      "globalLeader": "通威/爱旭/隆基",
+      "chinaLeader": "通威股份",
+      "driver": "TOPCon+HJT+BC技术迭代，转换效率持续突破",
+      "outlook": "2026年TOPCon成为主流，HJT/BC规模化量产",
+      "risk": "技术路线不确定性；设备投资沉没成本",
+      "priority": 5,
+      "metric": "电池效率、TOPCon/HJT产能、非硅成本"
+    },
+    {
+      "rank": 3,
+      "name": "风电整机",
+      "global2024": 1200,
+      "yoy": 8.2,
+      "global2025e": 1300,
+      "cagr": 7.5,
+      "globalLeader": "维斯塔斯/金风/西门子歌美飒",
+      "chinaLeader": "金风科技",
+      "driver": "海上风电加速+风机大型化+出口增长",
+      "outlook": "15MW+海上风机批量交付，中国风机出海提速",
+      "risk": "价格战压缩利润；海外认证周期长",
+      "priority": 4,
+      "metric": "风机招标量/价、海上风电装机、出口订单"
+    },
+    {
+      "rank": 4,
+      "name": "储能电池",
+      "global2024": 520,
+      "yoy": 45.5,
+      "global2025e": 750,
+      "cagr": 35.0,
+      "globalLeader": "宁德时代/比亚迪",
+      "chinaLeader": "宁德时代",
+      "driver": "新能源配储政策+电力市场化改革+AI数据中心备电",
+      "outlook": "2026年全球储能装机超300GWh，大储+工商储双增长",
+      "risk": "产能过剩风险；电芯价格持续下行",
+      "priority": 5,
+      "metric": "储能电芯价格、全球储能装机量、宁德储能营收占比"
+    },
+    {
+      "rank": 5,
+      "name": "动力电池",
+      "global2024": 2800,
+      "yoy": 22.5,
+      "global2025e": 3400,
+      "cagr": 18.0,
+      "globalLeader": "宁德时代(37%)/比亚迪",
+      "chinaLeader": "宁德时代",
+      "driver": "全球电动化+商用车电动化+固态电池研发",
+      "outlook": "2026年全球动力电池装机超1.2TWh，磷酸铁锂占比继续提升",
+      "risk": "欧美本地化要求；整车厂自建电池产能",
+      "priority": 5,
+      "metric": "动力电池装机量、市场份额、碳酸锂价格"
+    },
+    {
+      "rank": 6,
+      "name": "光伏逆变器",
+      "global2024": 380,
+      "yoy": 28.5,
+      "global2025e": 480,
+      "cagr": 22.0,
+      "globalLeader": "华为/阳光电源",
+      "chinaLeader": "阳光电源",
+      "driver": "光伏装机增长+储能逆变器需求+AI运维",
+      "outlook": "2026年组串式+微型逆变器占比提升，储能PCS高速增长",
+      "risk": "IGBT/SiC器件供应风险；海外认证壁垒",
+      "priority": 4,
+      "metric": "逆变器出口数据、阳光电源储能PCS出货"
+    },
+    {
+      "rank": 7,
+      "name": "氢电解槽",
+      "global2024": 45,
+      "yoy": 42.5,
+      "global2025e": 62,
+      "cagr": 35.0,
+      "globalLeader": "Nel/隆基氢能/阳光氢能",
+      "chinaLeader": "隆基氢能",
+      "driver": "绿氢成本下降+碳关税+工业脱碳需求",
+      "outlook": "2026年中国电解槽产能突破20GW，PEM技术路线加速",
+      "risk": "绿氢经济性尚未完全验证；氢储运技术瓶颈",
+      "priority": 4,
+      "metric": "电解槽招标量、绿氢成本、碱性/PEM占比"
+    },
+    {
+      "rank": 8,
+      "name": "海上风电",
+      "global2024": 380,
+      "yoy": 18.5,
+      "global2025e": 450,
+      "cagr": 15.0,
+      "globalLeader": "西门子歌美飒/维斯塔斯",
+      "chinaLeader": "明阳智能/电气风电",
+      "driver": "深远海开发+漂浮式技术+欧洲海风规划",
+      "outlook": "2026年全球海上风电新增装机超25GW，中国占比超50%",
+      "risk": "用海审批复杂；施工窗口期限制；成本高于陆上",
+      "priority": 4,
+      "metric": "海上风电新增装机、风机大型化进度、度电成本"
+    },
+    {
+      "rank": 9,
+      "name": "钙钛矿",
+      "global2024": 8,
+      "yoy": 120,
+      "global2025e": 18,
+      "cagr": 50.0,
+      "globalLeader": "极电光能/纤纳光电/Oxford PV",
+      "chinaLeader": "极电光能",
+      "driver": "效率突破+叠层技术+柔性应用场景",
+      "outlook": "2026年钙钛矿GW级产线落地，叠层效率突破33%",
+      "risk": "稳定性+大面积制备+含铅环保问题",
+      "priority": 3,
+      "metric": "钙钛矿效率纪录、GW产线进度、稳定性测试"
+    },
+    {
+      "rank": 10,
+      "name": "固态电池",
+      "global2024": 5,
+      "yoy": 80,
+      "global2025e": 10,
+      "cagr": 55.0,
+      "globalLeader": "丰田/QuantumScape/宁德",
+      "chinaLeader": "宁德时代/清陶能源",
+      "driver": "安全性+能量密度突破+车企定点",
+      "outlook": "2026年半固态电池装车量提升，全固态中试线投产",
+      "risk": "量产工艺难度大；成本远高于液态电池",
+      "priority": 3,
+      "metric": "固态电池装车量、电解质技术路线、成本曲线"
+    }
+  ],
+  "stocks": [
+    { "code": "601012", "name": "隆基绿能", "sector": "光伏一体化", "market": "A股" },
+    { "code": "600438", "name": "通威股份", "sector": "硅料+电池", "market": "A股" },
+    { "code": "300274", "name": "阳光电源", "sector": "逆变器+储能", "market": "A股" },
+    { "code": "002202", "name": "金风科技", "sector": "风电整机", "market": "A股" },
+    { "code": "300750", "name": "宁德时代", "sector": "动力+储能电池", "market": "A股" },
+    { "code": "002594", "name": "比亚迪", "sector": "整车+电池", "market": "A股" },
+    { "code": "300014", "name": "亿纬锂能", "sector": "锂电池", "market": "A股" },
+    { "code": "601615", "name": "明阳智能", "sector": "海上风电", "market": "A股" },
+    { "code": "688599", "name": "天合光能", "sector": "光伏组件", "market": "A股" },
+    { "code": "002459", "name": "晶澳科技", "sector": "光伏组件", "market": "A股" },
+    { "code": "002129", "name": "中环股份", "sector": "光伏硅片", "market": "A股" },
+    { "code": "300450", "name": "先导智能", "sector": "锂电设备", "market": "A股" },
+    { "code": "002074", "name": "国轩高科", "sector": "动力电池", "market": "A股" },
+    { "code": "300207", "name": "欣旺达", "sector": "消费+动力电池", "market": "A股" },
+    { "code": "300438", "name": "鹏辉能源", "sector": "储能电池", "market": "A股" }
+  ],
+  "updated": "2026-06-27",
+  "last_updated": "2026-06-27T20:38:22.340660+08:00",
+  "update_note": "新能源行业数据基于2025年实际+2026年预测。全球新能源市场快速增长。数据来源：CPIA/IRENA/BNEF/SNE Research/高工锂电。"
+}

@@ -1,0 +1,534 @@
+{
+  "overview": {
+    "title": "金属全产业链动态图谱（贵金属+有色金属）",
+    "subtitle": "数据更新：2025全年实际+2026年预测 | 2026年6月27日",
+    "globalMarket": {
+      "years": [2023, 2024, 2025, 2026, 2027],
+      "total": [28500, 29800, 31500, 33200, 35000],
+      "铜": [4200, 4450, 4700, 4950, 5200],
+      "铝": [3800, 3950, 4100, 4280, 4480],
+      "黄金": [2100, 2350, 2650, 2900, 3150],
+      "白银": [680, 720, 780, 840, 900],
+      "稀土": [380, 420, 460, 500, 550],
+      "锂": [350, 420, 480, 540, 620],
+      "钴镍": [480, 510, 540, 580, 620],
+      "铂族": [350, 380, 410, 440, 470],
+      "钨钼": [280, 310, 340, 370, 400]
+    },
+    "segments": {
+      "mining": [5200, 5450, 5750, 6050, 6380],
+      "smelting": [6800, 7100, 7500, 7900, 8350],
+      "processing": [4500, 4700, 4980, 5250, 5550],
+      "trading": [3800, 3950, 4180, 4400, 4650],
+      "chinaMarket": [9800, 10300, 11000, 11800, 12600]
+    }
+  },
+  "chain": {
+    "upstream": {
+      "materials": [
+        {
+          "name": "矿山勘探",
+          "global2024": 580,
+          "yoy": 8.5,
+          "china2024": 195,
+          "domesticRate": 34,
+          "globalLeader": "力拓/必和必拓(合计25%)",
+          "chinaLeader": "紫金矿业",
+          "cagr": 7.5,
+          "global2025e": 630
+        },
+        {
+          "name": "采矿设备",
+          "global2024": 720,
+          "yoy": 10.2,
+          "china2024": 250,
+          "domesticRate": 35,
+          "globalLeader": "卡特彼勒(28%)",
+          "chinaLeader": "中信重工",
+          "cagr": 8.0,
+          "global2025e": 790
+        },
+        {
+          "name": "选矿药剂",
+          "global2024": 85,
+          "yoy": 6.5,
+          "china2024": 32,
+          "domesticRate": 38,
+          "globalLeader": "巴斯夫(18%)",
+          "chinaLeader": "矿冶科技",
+          "cagr": 6.0,
+          "global2025e": 90
+        },
+        {
+          "name": "爆破器材",
+          "global2024": 210,
+          "yoy": 5.8,
+          "china2024": 85,
+          "domesticRate": 40,
+          "globalLeader": "Orica(22%)",
+          "chinaLeader": "宏大爆破",
+          "cagr": 5.5,
+          "global2025e": 222
+        },
+        {
+          "name": "矿山运输",
+          "global2024": 350,
+          "yoy": 7.2,
+          "china2024": 120,
+          "domesticRate": 34,
+          "globalLeader": "小松(20%)",
+          "chinaLeader": "中国中铁",
+          "cagr": 6.5,
+          "global2025e": 375
+        },
+        {
+          "name": "矿山环保",
+          "global2024": 165,
+          "yoy": 12.5,
+          "china2024": 55,
+          "domesticRate": 33,
+          "globalLeader": "威立雅(15%)",
+          "chinaLeader": "中金环境",
+          "cagr": 10.0,
+          "global2025e": 185
+        }
+      ],
+      "equipment": [
+        {
+          "name": "破碎研磨设备",
+          "global2024": 280,
+          "yoy": 9.5,
+          "china2024": 95,
+          "domesticRate": 34,
+          "globalLeader": "美卓(22%)",
+          "chinaLeader": "中信重工",
+          "cagr": 7.5,
+          "global2025e": 305
+        },
+        {
+          "name": "浮选设备",
+          "global2024": 195,
+          "yoy": 8.0,
+          "china2024": 68,
+          "domesticRate": 35,
+          "globalLeader": "FLSmidth(25%)",
+          "chinaLeader": "北方重工",
+          "cagr": 7.0,
+          "global2025e": 210
+        },
+        {
+          "name": "冶炼设备",
+          "global2024": 420,
+          "yoy": 11.2,
+          "china2024": 155,
+          "domesticRate": 37,
+          "globalLeader": "奥图泰(20%)",
+          "chinaLeader": "中国中冶",
+          "cagr": 8.5,
+          "global2025e": 465
+        },
+        {
+          "name": "精炼设备",
+          "global2024": 250,
+          "yoy": 8.8,
+          "china2024": 88,
+          "domesticRate": 35,
+          "globalLeader": "三菱材料(18%)",
+          "chinaLeader": "江西铜业",
+          "cagr": 7.5,
+          "global2025e": 272
+        }
+      ]
+    },
+    "midstream": {
+      "design": [
+        {
+          "name": "铜冶炼",
+          "global2024": 4450,
+          "yoy": 6.0,
+          "china2024": 1850,
+          "domesticRate": 42,
+          "cagr": 5.5
+        },
+        {
+          "name": "铝冶炼",
+          "global2024": 3950,
+          "yoy": 3.9,
+          "china2024": 2300,
+          "domesticRate": 58,
+          "cagr": 4.5
+        },
+        {
+          "name": "铅锌冶炼",
+          "global2024": 620,
+          "yoy": 3.2,
+          "china2024": 280,
+          "domesticRate": 45,
+          "cagr": 3.5
+        },
+        {
+          "name": "稀土冶炼",
+          "global2024": 420,
+          "yoy": 9.5,
+          "china2024": 320,
+          "domesticRate": 76,
+          "cagr": 9.0
+        },
+        {
+          "name": "锂盐加工",
+          "global2024": 420,
+          "yoy": 20.0,
+          "china2024": 260,
+          "domesticRate": 62,
+          "cagr": 15.0
+        }
+      ],
+      "foundry": [
+        {
+          "name": "紫金矿业",
+          "revenue": 3350,
+          "yoy": 12.5,
+          "share": 28,
+          "node": "铜+黄金双轮驱动",
+          "stock": 38
+        },
+        {
+          "name": "洛阳钼业",
+          "revenue": 1980,
+          "yoy": 15.2,
+          "share": 16.5,
+          "node": "铜钴+钼钨",
+          "stock": 25
+        },
+        {
+          "name": "山东黄金",
+          "revenue": 950,
+          "yoy": 18.5,
+          "share": 7.9,
+          "node": "黄金龙头",
+          "stock": 32
+        },
+        {
+          "name": "中金黄金",
+          "revenue": 680,
+          "yoy": 10.8,
+          "share": 5.7,
+          "node": "黄金+铜",
+          "stock": 20
+        },
+        {
+          "name": "江西铜业",
+          "revenue": 5200,
+          "yoy": 8.5,
+          "share": 43,
+          "node": "铜冶炼龙头",
+          "stock": 15
+        },
+        {
+          "name": "中国铝业",
+          "revenue": 2950,
+          "yoy": 5.2,
+          "share": 24.5,
+          "node": "铝土矿+氧化铝+电解铝",
+          "stock": 12
+        },
+        {
+          "name": "北方稀土",
+          "revenue": 380,
+          "yoy": 22.5,
+          "share": 3.2,
+          "node": "稀土全产业链",
+          "stock": 45
+        }
+      ],
+      "osat": [
+        {
+          "name": "中铝加工",
+          "revenue": 480,
+          "yoy": 6.5,
+          "share": 22,
+          "advPack": "铝板带箔/型材",
+          "stock": 10
+        },
+        {
+          "name": "铜加工(海亮)",
+          "revenue": 620,
+          "yoy": 8.2,
+          "share": 28,
+          "advPack": "铜管/铜棒/铜箔",
+          "stock": 18
+        },
+        {
+          "name": "宝钛股份",
+          "revenue": 85,
+          "yoy": 12.5,
+          "share": 3.9,
+          "advPack": "钛合金/锆材",
+          "stock": 35
+        },
+        {
+          "name": "南山铝业",
+          "revenue": 220,
+          "yoy": 7.8,
+          "share": 10,
+          "advPack": "航空铝材/汽车板",
+          "stock": 15
+        },
+        {
+          "name": "中钨高新",
+          "revenue": 58,
+          "yoy": 15.2,
+          "share": 2.7,
+          "advPack": "硬质合金/刀具",
+          "stock": 42
+        },
+        {
+          "name": "云海金属",
+          "revenue": 42,
+          "yoy": 18.5,
+          "share": 1.9,
+          "advPack": "镁合金/铝合金",
+          "stock": 28
+        }
+      ]
+    },
+    "downstream": [
+      {
+        "sector": "建筑建材",
+        "sub": "建筑用铜/铝/钢",
+        "global2024": 6200,
+        "yoy": 3.5,
+        "cagr": 3.0,
+        "driver": "基建投资+城市更新"
+      },
+      {
+        "sector": "电力电网",
+        "sub": "输配电铜铝材",
+        "global2024": 4800,
+        "yoy": 8.2,
+        "cagr": 7.5,
+        "driver": "特高压+配网改造"
+      },
+      {
+        "sector": "新能源汽车",
+        "sub": "锂/铜/铝/稀土",
+        "global2024": 3800,
+        "yoy": 25.5,
+        "cagr": 20.0,
+        "driver": "电动化+轻量化"
+      },
+      {
+        "sector": "消费电子",
+        "sub": "精密铜/铝/金/银",
+        "global2024": 1500,
+        "yoy": 6.8,
+        "cagr": 5.5,
+        "driver": "AI终端+可穿戴"
+      },
+      {
+        "sector": "航空航天",
+        "sub": "钛合金/高温合金",
+        "global2024": 850,
+        "yoy": 12.5,
+        "cagr": 10.0,
+        "driver": "国产大飞机+卫星"
+      },
+      {
+        "sector": "医疗器械",
+        "sub": "钛/铂/金/不锈钢",
+        "global2024": 520,
+        "yoy": 7.2,
+        "cagr": 6.5,
+        "driver": "高端医疗设备国产化"
+      },
+      {
+        "sector": "珠宝首饰",
+        "sub": "黄金/铂金/白银",
+        "global2024": 3200,
+        "yoy": 10.5,
+        "cagr": 8.0,
+        "driver": "避险需求+消费升级"
+      },
+      {
+        "sector": "投资储备",
+        "sub": "金条/金币/ETF",
+        "global2024": 2800,
+        "yoy": 22.5,
+        "cagr": 15.0,
+        "driver": "央行购金+地缘风险"
+      }
+    ]
+  },
+  "top10": [
+    {
+      "rank": 1,
+      "name": "铜",
+      "global2024": 4450,
+      "yoy": 6.0,
+      "global2025e": 4700,
+      "cagr": 5.5,
+      "globalLeader": "智利国家铜业/自由港",
+      "chinaLeader": "紫金矿业/江西铜业",
+      "driver": "新能源+电网投资驱动铜需求增长，全球铜矿供给偏紧",
+      "outlook": "2025-2026铜价维持高位，绿色转型长期利好铜需求",
+      "risk": "全球经济增长放缓；铜矿罢工风险；替代材料",
+      "priority": 5,
+      "metric": "LME铜价、全球显性库存、TC/RC费用"
+    },
+    {
+      "rank": 2,
+      "name": "铝",
+      "global2024": 3950,
+      "yoy": 3.9,
+      "global2025e": 4100,
+      "cagr": 4.5,
+      "globalLeader": "俄铝/力拓/美铝",
+      "chinaLeader": "中国铝业/魏桥",
+      "driver": "汽车轻量化+光伏边框+特高压拉动铝需求",
+      "outlook": "国内电解铝产能天花板4500万吨，供给刚性支撑铝价",
+      "risk": "云南水电季节性限产；海外需求波动",
+      "priority": 5,
+      "metric": "LME铝价、国内社会库存、氧化铝价格"
+    },
+    {
+      "rank": 3,
+      "name": "黄金",
+      "global2024": 2350,
+      "yoy": 11.9,
+      "global2025e": 2650,
+      "cagr": 10.0,
+      "globalLeader": "纽蒙特/巴里克",
+      "chinaLeader": "山东黄金/中金黄金",
+      "driver": "全球央行持续购金+地缘风险+降息周期+去美元化",
+      "outlook": "金价突破$3500后高位震荡，央行购金趋势不变",
+      "risk": "美元走强；实际利率上升；风险偏好回升",
+      "priority": 5,
+      "metric": "COMEX金价、全球央行购金量、SPDR持仓"
+    },
+    {
+      "rank": 4,
+      "name": "锂",
+      "global2024": 420,
+      "yoy": 20.0,
+      "global2025e": 480,
+      "cagr": 15.0,
+      "globalLeader": "雅保/SQM",
+      "chinaLeader": "天齐锂业/赣锋锂业",
+      "driver": "动力电池+储能双轮驱动，锂盐需求持续高增",
+      "outlook": "碳酸锂价格底部企稳反弹，2026年供需改善",
+      "risk": "产能过剩风险；钠电池替代；海外资源民族主义",
+      "priority": 4,
+      "metric": "碳酸锂/氢氧化锂价格、锂盐开工率"
+    },
+    {
+      "rank": 5,
+      "name": "稀土",
+      "global2024": 420,
+      "yoy": 9.5,
+      "global2025e": 460,
+      "cagr": 9.0,
+      "globalLeader": "中国(占全球60%+供给)",
+      "chinaLeader": "北方稀土/中国稀土集团",
+      "driver": "新能源车永磁电机+风电+机器人伺服电机需求",
+      "outlook": "稀土集团整合完成，价格管控能力增强",
+      "risk": "海外稀土供应链建设加速；磁材回收技术进步",
+      "priority": 4,
+      "metric": "氧化镨钕价格、稀土开采总量控制指标"
+    },
+    {
+      "rank": 6,
+      "name": "钴镍",
+      "global2024": 510,
+      "yoy": 6.3,
+      "global2025e": 540,
+      "cagr": 6.5,
+      "globalLeader": "嘉能可/淡水河谷",
+      "chinaLeader": "华友钴业/格林美",
+      "driver": "三元电池+不锈钢+高温合金需求",
+      "outlook": "印尼镍产能持续释放，钴价底部盘整",
+      "risk": "印尼政策变动；磷酸铁锂占比提升压制钴需求",
+      "priority": 3,
+      "metric": "LME镍价、MB钴价、印尼NPI产量"
+    },
+    {
+      "rank": 7,
+      "name": "白银",
+      "global2024": 720,
+      "yoy": 5.9,
+      "global2025e": 780,
+      "cagr": 7.0,
+      "globalLeader": "弗雷斯尼洛/泛美白银",
+      "chinaLeader": "盛达资源/兴业矿业",
+      "driver": "光伏银浆+工业需求+投资避险双属性驱动",
+      "outlook": "光伏用银持续增长，银价跟随金价维持强势",
+      "risk": "光伏银浆减量技术；银价波动性大",
+      "priority": 3,
+      "metric": "COMEX银价、金银比、光伏银浆需求"
+    },
+    {
+      "rank": 8,
+      "name": "铂族金属",
+      "global2024": 380,
+      "yoy": 8.6,
+      "global2025e": 410,
+      "cagr": 7.0,
+      "globalLeader": "英美铂业/斯班-静水",
+      "chinaLeader": "贵研铂业",
+      "driver": "氢能催化剂+汽车尾气催化剂+珠宝需求",
+      "outlook": "氢能产业发展拉动铂需求，钯金面临电动化替代压力",
+      "risk": "燃油车占比下降减少钯金需求；氢能产业化进度",
+      "priority": 3,
+      "metric": "铂钯价格、燃料电池车销量、催化剂回收率"
+    },
+    {
+      "rank": 9,
+      "name": "钨",
+      "global2024": 180,
+      "yoy": 8.2,
+      "global2025e": 195,
+      "cagr": 7.5,
+      "globalLeader": "中国(占全球80%+供给)",
+      "chinaLeader": "厦门钨业/中钨高新",
+      "driver": "硬质合金+军工+光伏钨丝需求增长",
+      "outlook": "钨矿开采总量控制，供给刚性支撑价格",
+      "risk": "海外钨矿开发；替代材料技术进步",
+      "priority": 3,
+      "metric": "钨精矿价格、APT出口量、硬质合金产量"
+    },
+    {
+      "rank": 10,
+      "name": "钼",
+      "global2024": 130,
+      "yoy": 12.5,
+      "global2025e": 145,
+      "cagr": 10.0,
+      "globalLeader": "自由港/智利国家铜业",
+      "chinaLeader": "洛阳钼业/金钼股份",
+      "driver": "特钢+不锈钢+新能源用钼需求增长",
+      "outlook": "钼价维持高位，铜矿伴生钼供给受限",
+      "risk": "钢铁行业景气度下行；钼替代材料",
+      "priority": 3,
+      "metric": "钼精矿价格、不锈钢产量、特钢出口"
+    }
+  ],
+  "stocks": [
+    { "code": "601899", "name": "紫金矿业", "sector": "铜+黄金", "market": "A股" },
+    { "code": "603993", "name": "洛阳钼业", "sector": "铜钴+钼钨", "market": "A股" },
+    { "code": "600547", "name": "山东黄金", "sector": "黄金", "market": "A股" },
+    { "code": "600489", "name": "中金黄金", "sector": "黄金+铜", "market": "A股" },
+    { "code": "600362", "name": "江西铜业", "sector": "铜冶炼", "market": "A股" },
+    { "code": "601600", "name": "中国铝业", "sector": "铝", "market": "A股" },
+    { "code": "600111", "name": "北方稀土", "sector": "稀土", "market": "A股" },
+    { "code": "002466", "name": "天齐锂业", "sector": "锂", "market": "A股" },
+    { "code": "002460", "name": "赣锋锂业", "sector": "锂", "market": "A股" },
+    { "code": "603799", "name": "华友钴业", "sector": "钴镍", "market": "A股" },
+    { "code": "601168", "name": "西部矿业", "sector": "铜铅锌", "market": "A股" },
+    { "code": "000630", "name": "铜陵有色", "sector": "铜", "market": "A股" },
+    { "code": "000878", "name": "云南铜业", "sector": "铜", "market": "A股" },
+    { "code": "000758", "name": "中色股份", "sector": "有色金属工程", "market": "A股" },
+    { "code": "600549", "name": "厦门钨业", "sector": "钨钼+稀土", "market": "A股" }
+  ],
+  "updated": "2026-06-27",
+  "last_updated": "2026-06-27T20:38:22.340660+08:00",
+  "update_note": "金属行业数据基于2025年实际+2026年预测。全球金属市场规模约$3万亿。数据来源：安泰科/SMM/世界金属统计局(WBMS)/世界黄金协会(WGC)。"
+}

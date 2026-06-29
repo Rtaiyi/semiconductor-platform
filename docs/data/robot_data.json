@@ -1,0 +1,751 @@
+{
+  "overview": {
+    "title": "机器人产业全链条动态图谱",
+    "subtitle": "数据更新：2025全年实际+2026年IFR预测 | 2026年6月29日",
+    "globalMarket": {
+      "years": [
+        2023,
+        2024,
+        2025,
+        2026,
+        2027
+      ],
+      "total": [
+        420,
+        510,
+        600,
+        720,
+        860
+      ],
+      "工业机器人": [
+        165,
+        195,
+        230,
+        270,
+        315
+      ],
+      "服务机器人": [
+        120,
+        145,
+        175,
+        210,
+        255
+      ],
+      "人形机器人": [
+        3.5,
+        8.5,
+        18,
+        45,
+        95
+      ],
+      "特种机器人": [
+        42,
+        55,
+        65,
+        78,
+        92
+      ],
+      "核心零部件": [
+        89.5,
+        106.5,
+        112,
+        117,
+        103
+      ]
+    },
+    "segments": {
+      "equipment": [
+        85,
+        102,
+        125,
+        150,
+        178
+      ],
+      "materials": [
+        120,
+        145,
+        170,
+        200,
+        240
+      ],
+      "foundry": [
+        95,
+        120,
+        150,
+        185,
+        225
+      ],
+      "osat": [
+        55,
+        68,
+        82,
+        100,
+        122
+      ],
+      "chinaMarket": [
+        155,
+        195,
+        245,
+        310,
+        390
+      ]
+    }
+  },
+  "chain": {
+    "upstream": {
+      "materials": [
+        {
+          "name": "减速器",
+          "global2024": 42,
+          "yoy": 12,
+          "china2024": 18,
+          "domesticRate": 35,
+          "globalLeader": "纳博特斯克(35%)",
+          "chinaLeader": "绿的谐波",
+          "cagr": 15,
+          "global2025e": 48
+        },
+        {
+          "name": "伺服电机",
+          "global2024": 38,
+          "yoy": 10,
+          "china2024": 15,
+          "domesticRate": 28,
+          "globalLeader": "安川/松下(合计40%)",
+          "chinaLeader": "汇川技术",
+          "cagr": 12,
+          "global2025e": 43
+        },
+        {
+          "name": "控制器",
+          "global2024": 25,
+          "yoy": 8,
+          "china2024": 10,
+          "domesticRate": 22,
+          "globalLeader": "发那科(25%)",
+          "chinaLeader": "埃斯顿",
+          "cagr": 10,
+          "global2025e": 28
+        },
+        {
+          "name": "传感器",
+          "global2024": 32,
+          "yoy": 18,
+          "china2024": 8,
+          "domesticRate": 18,
+          "globalLeader": "基恩士(20%)",
+          "chinaLeader": "禾川科技",
+          "cagr": 20,
+          "global2025e": 38
+        },
+        {
+          "name": "编码器",
+          "global2024": 12,
+          "yoy": 9,
+          "china2024": 3.2,
+          "domesticRate": 15,
+          "globalLeader": "海德汉(30%)",
+          "chinaLeader": "雷赛智能",
+          "cagr": 11,
+          "global2025e": 13.5
+        },
+        {
+          "name": "丝杠导轨",
+          "global2024": 22,
+          "yoy": 7,
+          "china2024": 9,
+          "domesticRate": 30,
+          "globalLeader": "THK(25%)",
+          "chinaLeader": "鼎智科技",
+          "cagr": 9,
+          "global2025e": 24
+        }
+      ],
+      "equipment": [
+        {
+          "name": "机器人铸件",
+          "global2024": 18,
+          "yoy": 6,
+          "china2024": 8,
+          "domesticRate": 55,
+          "globalLeader": "发那科铸件部门",
+          "chinaLeader": "埃斯顿",
+          "cagr": 8,
+          "global2025e": 19.5
+        },
+        {
+          "name": "精密加工",
+          "global2024": 25,
+          "yoy": 8,
+          "china2024": 10,
+          "domesticRate": 40,
+          "globalLeader": "DMG MORI",
+          "chinaLeader": "华中数控",
+          "cagr": 10,
+          "global2025e": 27.5
+        },
+        {
+          "name": "电机绕线",
+          "global2024": 15,
+          "yoy": 7,
+          "china2024": 6.5,
+          "domesticRate": 42,
+          "globalLeader": "日特/Nittoku",
+          "chinaLeader": "汇川技术",
+          "cagr": 9,
+          "global2025e": 16.5
+        },
+        {
+          "name": "传感器封装",
+          "global2024": 10,
+          "yoy": 15,
+          "china2024": 3.5,
+          "domesticRate": 25,
+          "globalLeader": "博世(22%)",
+          "chinaLeader": "禾川科技",
+          "cagr": 18,
+          "global2025e": 11.8
+        },
+        {
+          "name": "电路板",
+          "global2024": 8,
+          "yoy": 5,
+          "china2024": 4.2,
+          "domesticRate": 60,
+          "globalLeader": "鹏鼎控股",
+          "chinaLeader": "深南电路",
+          "cagr": 6,
+          "global2025e": 8.5
+        }
+      ]
+    },
+    "midstream": {
+      "design": [
+        {
+          "name": "工业机器人",
+          "global2024": 230,
+          "yoy": 18,
+          "china2024": 95,
+          "domesticRate": 38,
+          "cagr": 15
+        },
+        {
+          "name": "服务机器人",
+          "global2024": 175,
+          "yoy": 21,
+          "china2024": 75,
+          "domesticRate": 42,
+          "cagr": 20
+        },
+        {
+          "name": "人形机器人",
+          "global2024": 18,
+          "yoy": 112,
+          "china2024": 6,
+          "domesticRate": 25,
+          "cagr": 55
+        },
+        {
+          "name": "特种机器人",
+          "global2024": 65,
+          "yoy": 13,
+          "china2024": 22,
+          "domesticRate": 30,
+          "cagr": 14
+        },
+        {
+          "name": "协作机器人",
+          "global2024": 28,
+          "yoy": 35,
+          "china2024": 12,
+          "domesticRate": 35,
+          "cagr": 32
+        }
+      ],
+      "foundry": [
+        {
+          "name": "发那科(FANUC)",
+          "revenue": 68,
+          "yoy": 10,
+          "share": 18,
+          "node": "全系列工业机器人",
+          "stock": 12
+        },
+        {
+          "name": "ABB",
+          "revenue": 52,
+          "yoy": 6,
+          "share": 14,
+          "node": "工业+协作机器人",
+          "stock": 8
+        },
+        {
+          "name": "库卡(KUKA)",
+          "revenue": 38,
+          "yoy": 12,
+          "share": 10,
+          "node": "汽车制造专用",
+          "stock": 25
+        },
+        {
+          "name": "安川(Yaskawa)",
+          "revenue": 35,
+          "yoy": 5,
+          "share": 9,
+          "node": "伺服+机器人一体化",
+          "stock": -5
+        },
+        {
+          "name": "埃斯顿(Estun)",
+          "revenue": 22,
+          "yoy": 28,
+          "share": 5.8,
+          "node": "国产工业机器人龙头",
+          "stock": 35
+        },
+        {
+          "name": "汇川技术",
+          "revenue": 20,
+          "yoy": 32,
+          "share": 5.2,
+          "node": "伺服系统+SCARA",
+          "stock": 42
+        },
+        {
+          "name": "绿的谐波",
+          "revenue": 6.5,
+          "yoy": 45,
+          "share": 1.7,
+          "node": "谐波减速器龙头",
+          "stock": 55
+        },
+        {
+          "name": "拓斯达",
+          "revenue": 5.8,
+          "yoy": 22,
+          "share": 1.5,
+          "node": "注塑辅机+机器人",
+          "stock": 18
+        }
+      ],
+      "osat": [
+        {
+          "name": "库卡系统集成",
+          "revenue": 28,
+          "yoy": 10,
+          "share": 18,
+          "advPack": "汽车焊装线集成",
+          "stock": 15
+        },
+        {
+          "name": "埃斯顿集成",
+          "revenue": 18,
+          "yoy": 25,
+          "share": 12,
+          "advPack": "折弯/焊接集成",
+          "stock": 38
+        },
+        {
+          "name": "新松机器人",
+          "revenue": 15,
+          "yoy": 8,
+          "share": 10,
+          "advPack": "AGV/智能仓储集成",
+          "stock": 10
+        },
+        {
+          "name": "拓斯达集成",
+          "revenue": 12,
+          "yoy": 18,
+          "share": 8,
+          "advPack": "注塑自动化集成",
+          "stock": 22
+        },
+        {
+          "name": "华中数控集成",
+          "revenue": 8,
+          "yoy": 12,
+          "share": 5.3,
+          "advPack": "机床上下料集成",
+          "stock": 8
+        },
+        {
+          "name": "科沃斯商用",
+          "revenue": 6.5,
+          "yoy": 20,
+          "share": 4.3,
+          "advPack": "商用清洁集成",
+          "stock": 28
+        }
+      ]
+    },
+    "downstream": [
+      {
+        "sector": "汽车制造",
+        "sub": "焊装机器人",
+        "global2024": 85,
+        "yoy": 8,
+        "cagr": 10,
+        "driver": "新能源车扩产+轻量化"
+      },
+      {
+        "sector": "汽车制造",
+        "sub": "涂装/总装机器人",
+        "global2024": 45,
+        "yoy": 6,
+        "cagr": 8,
+        "driver": "柔性化生产需求"
+      },
+      {
+        "sector": "3C电子",
+        "sub": "组装机器人",
+        "global2024": 62,
+        "yoy": 15,
+        "cagr": 14,
+        "driver": "消费电子精密装配"
+      },
+      {
+        "sector": "3C电子",
+        "sub": "检测机器人",
+        "global2024": 28,
+        "yoy": 18,
+        "cagr": 16,
+        "driver": "AI视觉检测普及"
+      },
+      {
+        "sector": "金属加工",
+        "sub": "焊接机器人",
+        "global2024": 38,
+        "yoy": 7,
+        "cagr": 9,
+        "driver": "钢结构/船舶焊接"
+      },
+      {
+        "sector": "金属加工",
+        "sub": "搬运码垛机器人",
+        "global2024": 22,
+        "yoy": 5,
+        "cagr": 7,
+        "driver": "制造业人力替代"
+      },
+      {
+        "sector": "物流仓储",
+        "sub": "AGV/AMR",
+        "global2024": 48,
+        "yoy": 25,
+        "cagr": 22,
+        "driver": "电商仓储自动化升级"
+      },
+      {
+        "sector": "物流仓储",
+        "sub": "分拣机器人",
+        "global2024": 18,
+        "yoy": 22,
+        "cagr": 20,
+        "driver": "快递物流智能分拣"
+      },
+      {
+        "sector": "医疗健康",
+        "sub": "手术机器人",
+        "global2024": 22,
+        "yoy": 28,
+        "cagr": 25,
+        "driver": "微创手术普及+AI辅助"
+      },
+      {
+        "sector": "医疗健康",
+        "sub": "康复机器人",
+        "global2024": 12,
+        "yoy": 20,
+        "cagr": 22,
+        "driver": "老龄化康复需求"
+      },
+      {
+        "sector": "家庭服务",
+        "sub": "扫地/清洁机器人",
+        "global2024": 55,
+        "yoy": 12,
+        "cagr": 14,
+        "driver": "全屋智能+导航升级"
+      },
+      {
+        "sector": "家庭服务",
+        "sub": "教育/陪伴机器人",
+        "global2024": 15,
+        "yoy": 8,
+        "cagr": 10,
+        "driver": "AI大模型赋能交互"
+      }
+    ]
+  },
+  "top10": [
+    {
+      "rank": 1,
+      "name": "工业机器人",
+      "global2024": 230,
+      "yoy": 18,
+      "global2025e": 270,
+      "cagr": 15,
+      "globalLeader": "发那科/ABB/库卡",
+      "chinaLeader": "埃斯顿/汇川技术/拓斯达",
+      "driver": "制造业自动化升级+新能源扩产+国产替代加速，中国连续9年全球最大市场",
+      "outlook": "埃斯顿市占率冲击10%；汇川SCARA出货量翻倍；协作机器人渗透率提升至15%",
+      "risk": "制造业投资周期波动；价格战加剧；核心零部件依赖进口",
+      "priority": 5,
+      "metric": "中国工业机器人月产量、埃斯顿订单量"
+    },
+    {
+      "rank": 2,
+      "name": "协作机器人",
+      "global2024": 28,
+      "yoy": 35,
+      "global2025e": 42,
+      "cagr": 32,
+      "globalLeader": "Universal Robots(40%)",
+      "chinaLeader": "节卡/遨博/艾利特",
+      "driver": "中小企业自动化需求+易编程+安全性优势，人机协作场景爆发",
+      "outlook": "协作机器人价格下探至5万元；AI视觉+力控集成成为标配",
+      "risk": "市场规模尚小；技术门槛降低导致竞争加剧",
+      "priority": 5,
+      "metric": "协作机器人出货量、UR/节卡季度营收"
+    },
+    {
+      "rank": 3,
+      "name": "人形机器人",
+      "global2024": 18,
+      "yoy": 112,
+      "global2025e": 45,
+      "cagr": 55,
+      "globalLeader": "特斯拉Optimus/Figure",
+      "chinaLeader": "优必选/小米/达闼",
+      "driver": "AI大模型+具身智能突破；特斯拉Optimus量产预期；政策强力支持",
+      "outlook": "特斯拉Optimus 2025年千台级量产；国内人形机器人企业超100家",
+      "risk": "技术尚未完全成熟；成本过高(>50万/台)；应用场景不清晰",
+      "priority": 5,
+      "metric": "特斯拉Optimus量产进度、优必选Walker订单"
+    },
+    {
+      "rank": 4,
+      "name": "减速器",
+      "global2024": 42,
+      "yoy": 12,
+      "global2025e": 48,
+      "cagr": 15,
+      "globalLeader": "纳博特斯克/哈默纳科",
+      "chinaLeader": "绿的谐波/双环传动/中大力德",
+      "driver": "工业机器人放量+人形机器人关节需求爆发，谐波/RV减速器供需紧张",
+      "outlook": "绿的谐波产能扩至50万台/年；人形机器人单机需14-28个减速器",
+      "risk": "人形机器人路线不确定；日本厂商降价打压；国产一致性待提升",
+      "priority": 4,
+      "metric": "绿的谐波出货量、减速器价格走势"
+    },
+    {
+      "rank": 5,
+      "name": "伺服电机",
+      "global2024": 38,
+      "yoy": 10,
+      "global2025e": 43,
+      "cagr": 12,
+      "globalLeader": "安川/松下/西门子",
+      "chinaLeader": "汇川技术/禾川科技/信捷电气",
+      "driver": "国产伺服替代加速(国产化率从20%升至35%)+人形机器人空心杯电机新需求",
+      "outlook": "汇川伺服市占率冲击20%；空心杯电机市场从2亿增至10亿",
+      "risk": "日系降价反击；上游稀土磁材价格波动",
+      "priority": 4,
+      "metric": "汇川伺服季度营收、伺服国产化率"
+    },
+    {
+      "rank": 6,
+      "name": "控制器",
+      "global2024": 25,
+      "yoy": 8,
+      "global2025e": 28,
+      "cagr": 10,
+      "globalLeader": "发那科/KEBA",
+      "chinaLeader": "埃斯顿/华中数控/雷赛智能",
+      "driver": "国产控制器在SCARA/协作机器人领域突破，AI轨迹规划提升性能",
+      "outlook": "埃斯顿TRIO控制器平台放量；华中数控五轴联动CNC+机器人控制一体化",
+      "risk": "高端控制器仍依赖进口；软件生态薄弱",
+      "priority": 3,
+      "metric": "埃斯顿控制器出货量、华中数控机器人业务占比"
+    },
+    {
+      "rank": 7,
+      "name": "传感器",
+      "global2024": 32,
+      "yoy": 18,
+      "global2025e": 38,
+      "cagr": 20,
+      "globalLeader": "基恩士/西克/巴鲁夫",
+      "chinaLeader": "禾川科技/汉威科技/敏芯股份",
+      "driver": "机器人智能化对力觉/触觉/视觉传感器需求爆发；人形机器人单机需40+传感器",
+      "outlook": "六维力传感器国产突破；电子皮肤技术从实验室走向量产",
+      "risk": "高端传感器国产化率不足15%；人形机器人传感器方案未定型",
+      "priority": 4,
+      "metric": "传感器国产化率、六维力传感器出货量"
+    },
+    {
+      "rank": 8,
+      "name": "物流机器人",
+      "global2024": 48,
+      "yoy": 25,
+      "global2025e": 60,
+      "cagr": 22,
+      "globalLeader": "极智嘉/快仓/海柔创新",
+      "chinaLeader": "极智嘉/新松/快仓",
+      "driver": "电商物流自动化+海外仓扩张+AI调度系统升级",
+      "outlook": "AMR替代AGV成为主流；海外收入占比超40%；激光SLAM成本下降50%",
+      "risk": "行业竞争白热化；海外市场地缘风险",
+      "priority": 3,
+      "metric": "极智嘉海外订单、AMR出货量"
+    },
+    {
+      "rank": 9,
+      "name": "手术机器人",
+      "global2024": 22,
+      "yoy": 28,
+      "global2025e": 30,
+      "cagr": 25,
+      "globalLeader": "Intuitive(达芬奇>70%)",
+      "chinaLeader": "微创机器人/天智航/精锋医疗",
+      "driver": "微创手术渗透率提升+国产手术机器人获批加速+5G远程手术",
+      "outlook": "微创图迈累计装机超100台；骨科/腔镜多科室扩展；医保纳入预期",
+      "risk": "达芬奇专利壁垒；医院采购预算限制；临床推广周期长",
+      "priority": 3,
+      "metric": "国产手术机器人中标数量、装机量"
+    },
+    {
+      "rank": 10,
+      "name": "AI机器人",
+      "global2024": 12,
+      "yoy": 85,
+      "global2025e": 25,
+      "cagr": 50,
+      "globalLeader": "Figure/Physical Intelligence",
+      "chinaLeader": "银河通用/星尘智能/智元",
+      "driver": "大模型赋予机器人通用操作能力；具身智能成为AI下一个万亿级赛道",
+      "outlook": "VLA(视觉-语言-动作)模型突破；世界模型加速训练；2025年为具身智能元年",
+      "risk": "技术路线分歧(端到端vs模块化)；商业化路径不清晰",
+      "priority": 3,
+      "metric": "具身智能融资额、VLA模型benchmark"
+    }
+  ],
+  "stocks": [
+    {
+      "code": "688017",
+      "name": "绿的谐波",
+      "sector": "核心零部件",
+      "market": "科创板",
+      "focus": "谐波减速器"
+    },
+    {
+      "code": "002747",
+      "name": "埃斯顿",
+      "sector": "整机制造",
+      "market": "深交所",
+      "focus": "工业机器人"
+    },
+    {
+      "code": "300124",
+      "name": "汇川技术",
+      "sector": "核心零部件+整机",
+      "market": "深交所",
+      "focus": "伺服系统/SCARA"
+    },
+    {
+      "code": "300607",
+      "name": "拓斯达",
+      "sector": "整机制造+集成",
+      "market": "深交所",
+      "focus": "注塑自动化"
+    },
+    {
+      "code": "300024",
+      "name": "机器人(新松)",
+      "sector": "整机制造+集成",
+      "market": "深交所",
+      "focus": "工业/物流机器人"
+    },
+    {
+      "code": "300161",
+      "name": "华中数控",
+      "sector": "控制系统",
+      "market": "深交所",
+      "focus": "数控系统/控制器"
+    },
+    {
+      "code": "603486",
+      "name": "科沃斯",
+      "sector": "服务机器人",
+      "market": "上交所",
+      "focus": "扫地/清洁机器人"
+    },
+    {
+      "code": "688169",
+      "name": "石头科技",
+      "sector": "服务机器人",
+      "market": "科创板",
+      "focus": "智能扫地机器人"
+    },
+    {
+      "code": "689009",
+      "name": "九号公司",
+      "sector": "服务机器人",
+      "market": "科创板",
+      "focus": "配送/短交通机器人"
+    },
+    {
+      "code": "688320",
+      "name": "禾川科技",
+      "sector": "核心零部件",
+      "market": "科创板",
+      "focus": "伺服电机/传感器"
+    },
+    {
+      "code": "688698",
+      "name": "伟创电气",
+      "sector": "核心零部件",
+      "market": "科创板",
+      "focus": "伺服/变频器"
+    },
+    {
+      "code": "603416",
+      "name": "信捷电气",
+      "sector": "控制系统",
+      "market": "上交所",
+      "focus": "PLC/伺服"
+    },
+    {
+      "code": "002979",
+      "name": "雷赛智能",
+      "sector": "核心零部件",
+      "market": "深交所",
+      "focus": "步进/伺服/编码器"
+    },
+    {
+      "code": "688160",
+      "name": "步科股份",
+      "sector": "核心零部件",
+      "market": "科创板",
+      "focus": "低压伺服/HMI"
+    },
+    {
+      "code": "603667",
+      "name": "鼎智科技",
+      "sector": "核心零部件",
+      "market": "上交所",
+      "focus": "丝杠/线性执行器"
+    }
+  ],
+  "updated": "2026-06-29",
+  "last_updated": "2026-06-29T12:00:00.000000+08:00",
+  "update_note": "IFR 2025年全球机器人报告数据，中国市场数据来自CRIA/高工机器人。人形机器人数据含高工/GGII预测。",
+  "key_metrics_2025": {
+    "global_market": "$600亿",
+    "china_market": "$245亿 (全球41%)",
+    "china_industrial_install": "全球装机量51%",
+    "humanoid_robot_startups": "中国100+家",
+    "key_driver": "制造业自动化+人形机器人元年+AI具身智能",
+    "source": "IFR World Robotics 2025, CRIA, GGII"
+  }
+}

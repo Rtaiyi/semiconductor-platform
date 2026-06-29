@@ -1,0 +1,792 @@
+{
+  "overview": {
+    "title": "创新药全产业链动态图谱",
+    "subtitle": "数据更新：2025全年实际+2026年行业预测 | 2026年6月29日",
+    "globalMarket": {
+      "years": [
+        2023,
+        2024,
+        2025,
+        2026,
+        2027
+      ],
+      "total": [
+        12500,
+        13800,
+        14800,
+        16000,
+        17500
+      ],
+      "化学药": [
+        6200,
+        6500,
+        6700,
+        7000,
+        7300
+      ],
+      "生物药": [
+        3800,
+        4300,
+        4900,
+        5600,
+        6400
+      ],
+      "细胞治疗": [
+        180,
+        250,
+        350,
+        500,
+        720
+      ],
+      "基因治疗": [
+        85,
+        120,
+        170,
+        240,
+        350
+      ],
+      "CRO": [
+        850,
+        960,
+        1050,
+        1150,
+        1280
+      ]
+    },
+    "segments": {
+      "创新药研发": [
+        4200,
+        4850,
+        5300,
+        6000,
+        6800
+      ],
+      "CXO服务": [
+        2200,
+        2600,
+        2950,
+        3350,
+        3800
+      ],
+      "原料药/中间体": [
+        1800,
+        1950,
+        2080,
+        2250,
+        2420
+      ],
+      "生物类似药": [
+        320,
+        420,
+        550,
+        720,
+        920
+      ],
+      "中国市场": [
+        1800,
+        2200,
+        2600,
+        3100,
+        3700
+      ]
+    }
+  },
+  "chain": {
+    "upstream": {
+      "materials": [
+        {
+          "name": "药物发现CRO",
+          "global2024": 420,
+          "yoy": 15,
+          "china2024": 120,
+          "domesticRate": 28,
+          "globalLeader": "药明康德(7-8%)",
+          "chinaLeader": "药明康德",
+          "cagr": 12.5,
+          "global2025e": 480
+        },
+        {
+          "name": "原料药API",
+          "global2024": 1950,
+          "yoy": 8,
+          "china2024": 480,
+          "domesticRate": 35,
+          "globalLeader": "Teva/Dr.Reddy's(5%)",
+          "chinaLeader": "华海药业",
+          "cagr": 7.5,
+          "global2025e": 2080
+        },
+        {
+          "name": "基因测序",
+          "global2024": 85,
+          "yoy": 22,
+          "china2024": 28,
+          "domesticRate": 33,
+          "globalLeader": "Illumina(70%)",
+          "chinaLeader": "华大智造",
+          "cagr": 18.0,
+          "global2025e": 105
+        },
+        {
+          "name": "实验室设备",
+          "global2024": 650,
+          "yoy": 10,
+          "china2024": 180,
+          "domesticRate": 22,
+          "globalLeader": "Thermo Fisher(20%)",
+          "chinaLeader": "泰坦科技",
+          "cagr": 9.0,
+          "global2025e": 715
+        },
+        {
+          "name": "试剂耗材",
+          "global2024": 380,
+          "yoy": 12,
+          "china2024": 95,
+          "domesticRate": 25,
+          "globalLeader": "Merck/Sigma(15%)",
+          "chinaLeader": "阿拉丁/麦克林",
+          "cagr": 10.0,
+          "global2025e": 425
+        },
+        {
+          "name": "动物模型",
+          "global2024": 28,
+          "yoy": 18,
+          "china2024": 8.5,
+          "domesticRate": 30,
+          "globalLeader": "Charles River(35%)",
+          "chinaLeader": "集萃药康",
+          "cagr": 15.0,
+          "global2025e": 33
+        }
+      ],
+      "equipment": [
+        {
+          "name": "临床试验CRO",
+          "global2024": 520,
+          "yoy": 14,
+          "china2024": 150,
+          "domesticRate": 29,
+          "globalLeader": "IQVIA(15%)",
+          "chinaLeader": "泰格医药",
+          "cagr": 12.0,
+          "global2025e": 590
+        },
+        {
+          "name": "CDMO",
+          "global2024": 1350,
+          "yoy": 16,
+          "china2024": 380,
+          "domesticRate": 28,
+          "globalLeader": "Lonza(10%)",
+          "chinaLeader": "药明生物/凯莱英",
+          "cagr": 14.0,
+          "global2025e": 1570
+        },
+        {
+          "name": "药品注册",
+          "global2024": 45,
+          "yoy": 10,
+          "china2024": 15,
+          "domesticRate": 33,
+          "globalLeader": "Parexel(12%)",
+          "chinaLeader": "泰格医药/昆翎",
+          "cagr": 9.0,
+          "global2025e": 50
+        },
+        {
+          "name": "药物安全评价",
+          "global2024": 32,
+          "yoy": 12,
+          "china2024": 9,
+          "domesticRate": 28,
+          "globalLeader": "Labcorp(25%)",
+          "chinaLeader": "药明康德/益诺思",
+          "cagr": 11.0,
+          "global2025e": 36
+        }
+      ]
+    },
+    "midstream": {
+      "design": [
+        {
+          "name": "化学药",
+          "global2024": 6500,
+          "yoy": 5.5,
+          "china2024": 1200,
+          "domesticRate": 22,
+          "cagr": 4.5
+        },
+        {
+          "name": "生物药",
+          "global2024": 4900,
+          "yoy": 14,
+          "china2024": 800,
+          "domesticRate": 18,
+          "cagr": 15.0
+        },
+        {
+          "name": "细胞治疗",
+          "global2024": 350,
+          "yoy": 40,
+          "china2024": 45,
+          "domesticRate": 13,
+          "cagr": 28.0
+        },
+        {
+          "name": "基因治疗",
+          "global2024": 170,
+          "yoy": 42,
+          "china2024": 12,
+          "domesticRate": 7,
+          "cagr": 30.0
+        },
+        {
+          "name": "疫苗",
+          "global2024": 680,
+          "yoy": 8,
+          "china2024": 150,
+          "domesticRate": 22,
+          "cagr": 10.0
+        }
+      ],
+      "foundry": [
+        {
+          "name": "恒瑞医药",
+          "revenue": 330,
+          "yoy": 12,
+          "share": 15,
+          "node": "PD-1/ADC/GLP-1多管线",
+          "stock": 18
+        },
+        {
+          "name": "百济神州",
+          "revenue": 280,
+          "yoy": 38,
+          "share": 12.7,
+          "node": "BTKi全球领先/Zymeloc",
+          "stock": 25
+        },
+        {
+          "name": "信达生物",
+          "revenue": 95,
+          "yoy": 28,
+          "share": 4.3,
+          "node": "PD-1+GLP-1双核驱动",
+          "stock": 32
+        },
+        {
+          "name": "荣昌生物",
+          "revenue": 45,
+          "yoy": 35,
+          "share": 2.0,
+          "node": "ADC药物全球布局",
+          "stock": 22
+        },
+        {
+          "name": "康方生物",
+          "revenue": 38,
+          "yoy": 55,
+          "share": 1.7,
+          "node": "双抗PD-1/VEGF突破",
+          "stock": 48
+        },
+        {
+          "name": "君实生物",
+          "revenue": 32,
+          "yoy": 15,
+          "share": 1.4,
+          "node": "PD-1国际化+新冠口服",
+          "stock": -8
+        },
+        {
+          "name": "传奇生物",
+          "revenue": 52,
+          "yoy": 65,
+          "share": 2.4,
+          "node": "Carvykti全球放量",
+          "stock": 55
+        },
+        {
+          "name": "和黄医药",
+          "revenue": 42,
+          "yoy": 22,
+          "share": 1.9,
+          "node": "呋喹替尼全球商业化",
+          "stock": 15
+        }
+      ],
+      "osat": [
+        {
+          "name": "复宏汉霖",
+          "revenue": 58,
+          "yoy": 18,
+          "share": 22,
+          "advPack": "曲妥珠/利妥昔/贝伐珠",
+          "stock": 25
+        },
+        {
+          "name": "正大天晴(生物药)",
+          "revenue": 42,
+          "yoy": 12,
+          "share": 16,
+          "advPack": "贝伐珠/利妥昔类似药",
+          "stock": 10
+        },
+        {
+          "name": "丽珠医药",
+          "revenue": 35,
+          "yoy": 8,
+          "share": 13,
+          "advPack": "重组蛋白/疫苗",
+          "stock": 15
+        },
+        {
+          "name": "华兰生物",
+          "revenue": 30,
+          "yoy": 10,
+          "share": 11.5,
+          "advPack": "凝血因子/疫苗",
+          "stock": 12
+        },
+        {
+          "name": "三生制药",
+          "revenue": 28,
+          "yoy": 6,
+          "share": 10.7,
+          "advPack": "EPO/G-CSF生物类似药",
+          "stock": 8
+        },
+        {
+          "name": "甘李药业",
+          "revenue": 25,
+          "yoy": 20,
+          "share": 9.6,
+          "advPack": "胰岛素类似药全球",
+          "stock": 28
+        }
+      ]
+    },
+    "downstream": [
+      {
+        "sector": "肿瘤治疗",
+        "sub": "实体瘤免疫治疗",
+        "global2024": 3200,
+        "yoy": 18.5,
+        "cagr": 16,
+        "driver": "PD-1/ADC双驱动+早筛普及"
+      },
+      {
+        "sector": "肿瘤治疗",
+        "sub": "血液瘤CAR-T",
+        "global2024": 380,
+        "yoy": 38,
+        "cagr": 30,
+        "driver": "CD19/BCMA靶点成熟"
+      },
+      {
+        "sector": "自身免疫",
+        "sub": "自免生物制剂",
+        "global2024": 1800,
+        "yoy": 14.2,
+        "cagr": 13,
+        "driver": "IL-17/IL-23/TYK2新靶点"
+      },
+      {
+        "sector": "代谢疾病",
+        "sub": "GLP-1/减重药物",
+        "global2024": 550,
+        "yoy": 42,
+        "cagr": 35,
+        "driver": "司美格鲁肽/替尔泊肽引爆"
+      },
+      {
+        "sector": "感染疾病",
+        "sub": "抗病毒/抗生素",
+        "global2024": 1200,
+        "yoy": 5.8,
+        "cagr": 5,
+        "driver": "新冠后疫情时代+耐药菌"
+      },
+      {
+        "sector": "神经系统",
+        "sub": "AD/帕金森药物",
+        "global2024": 280,
+        "yoy": 25,
+        "cagr": 22,
+        "driver": "Aβ抗体突破/Lecanemab"
+      },
+      {
+        "sector": "心血管",
+        "sub": "降脂/抗凝/PCSK9",
+        "global2024": 850,
+        "yoy": 8.3,
+        "cagr": 7,
+        "driver": "PCSK9 siRNA长效降脂"
+      },
+      {
+        "sector": "眼科",
+        "sub": "抗VEGF/基因治疗",
+        "global2024": 320,
+        "yoy": 12,
+        "cagr": 14,
+        "driver": "AMD/糖尿病黄斑水肿"
+      },
+      {
+        "sector": "罕见病",
+        "sub": "孤儿药",
+        "global2024": 680,
+        "yoy": 11.5,
+        "cagr": 12,
+        "driver": "基因治疗+政策激励"
+      }
+    ]
+  },
+  "top10": [
+    {
+      "rank": 1,
+      "name": "PD-1/PD-L1免疫检查点",
+      "global2024": 520,
+      "yoy": 20,
+      "global2025e": 620,
+      "cagr": 18,
+      "globalLeader": "默沙东Keytruda(>50%)",
+      "chinaLeader": "百济神州/信达/恒瑞",
+      "driver": "适应症持续扩展+联用疗法突破，Keytruda年销$300亿+",
+      "outlook": "皮下注射剂型获批扩大可及性；围手术期适应症拓展；国产PD-1出海加速",
+      "risk": "竞争白热化价格下行；医保控费压力；专利到期(2028)",
+      "priority": 5,
+      "metric": "Keytruda季度营收、国产PD-1出海数量"
+    },
+    {
+      "rank": 2,
+      "name": "ADC药物",
+      "global2024": 280,
+      "yoy": 32,
+      "global2025e": 380,
+      "cagr": 28,
+      "globalLeader": "第一三共/AZ(Enhertu)",
+      "chinaLeader": "荣昌生物/科伦博泰/恒瑞",
+      "driver": "HER2/Trop2/CLDN18.2多靶点突破+化疗替代趋势+BD交易火热",
+      "outlook": "Enhertu适应症扩展至泛瘤种；国产ADC海外授权持续；双抗ADC新方向",
+      "risk": "靶点同质化竞争；安全性(ILD等)；CMC工艺复杂度",
+      "priority": 5,
+      "metric": "全球ADC BD交易额、Enhertu季度营收"
+    },
+    {
+      "rank": 3,
+      "name": "CAR-T细胞治疗",
+      "global2024": 120,
+      "yoy": 38,
+      "global2025e": 170,
+      "cagr": 35,
+      "globalLeader": "吉利德/Kite(Yescarta)",
+      "chinaLeader": "传奇生物/药明巨诺/科济",
+      "driver": "Carvykti前线治疗获批+通用型CAR-T突破+实体瘤探索",
+      "outlook": "传奇Carvykti销售额突破$30亿；通用型/异体CAR-T临床推进",
+      "risk": "制备成本高($30万+/人)；细胞因子风暴风险；商业化可及性",
+      "priority": 4,
+      "metric": "Carvykti季度营收、CAR-T临床试验数量"
+    },
+    {
+      "rank": 4,
+      "name": "GLP-1减重药物",
+      "global2024": 420,
+      "yoy": 55,
+      "global2025e": 620,
+      "cagr": 40,
+      "globalLeader": "诺和诺德/礼来(合计>90%)",
+      "chinaLeader": "信达生物/恒瑞医药/华东",
+      "driver": "减重适应症爆发+MASH/心衰/肾病等新适应症拓展+口服剂型迭代",
+      "outlook": "口服小分子GLP-1获批；多靶点(GIP/GCG)组合；中国减重市场启动",
+      "risk": "供给瓶颈；胃肠道副作用；医保覆盖争议",
+      "priority": 4,
+      "metric": "司美格鲁肽/替尔泊肽季度营收、GLP-1新适应症获批"
+    },
+    {
+      "rank": 5,
+      "name": "mRNA疫苗/治疗",
+      "global2024": 280,
+      "yoy": -15,
+      "global2025e": 320,
+      "cagr": 22,
+      "globalLeader": "Moderna/BioNTech",
+      "chinaLeader": "沃森生物/艾美疫苗/石药",
+      "driver": "新冠后mRNA平台拓展至肿瘤/RSV/流感+个性化癌症疫苗突破",
+      "outlook": "mRNA-4157(肿瘤疫苗)关键临床数据；RSV mRNA疫苗上市；流感组合疫苗",
+      "risk": "新冠营收下滑过渡期；递送系统专利纠纷；储存运输条件苛刻",
+      "priority": 3,
+      "metric": "Moderna非新冠管线里程碑、mRNA肿瘤疫苗临床进展"
+    },
+    {
+      "rank": 6,
+      "name": "双抗/多特异性抗体",
+      "global2024": 95,
+      "yoy": 45,
+      "global2025e": 145,
+      "cagr": 35,
+      "globalLeader": "罗氏/强生/安进",
+      "chinaLeader": "康方生物/康宁杰瑞/宜明昂科",
+      "driver": "康方依沃西HARMONi-A成功+CD3/CD20双抗+实体瘤突破",
+      "outlook": "康方依沃西全球商业化；T细胞衔接器实体瘤突破；三特异性抗体进入临床",
+      "risk": "免疫相关不良反应(CRS)；CMC复杂性；靶点选择窗口窄",
+      "priority": 3,
+      "metric": "康方依沃西销售额、双抗获批数量"
+    },
+    {
+      "rank": 7,
+      "name": "PROTAC蛋白降解",
+      "global2024": 18,
+      "yoy": 80,
+      "global2025e": 35,
+      "cagr": 50,
+      "globalLeader": "Arvinas/Pfizer/Nurix",
+      "chinaLeader": "开拓药业/海创药业/睿跃",
+      "driver": "AR降解剂III期成功+不可成药靶点突破+分子胶新方向",
+      "outlook": "首个PROTAC药物(ARV-471/ARV-766)有望获批；分子胶药物进入临床后期",
+      "risk": "口服生物利用度挑战；选择性/脱靶毒性；商业化前景待验证",
+      "priority": 2,
+      "metric": "PROTAC关键临床数据读出、BD交易数量"
+    },
+    {
+      "rank": 8,
+      "name": "基因编辑(CRISPR)",
+      "global2024": 15,
+      "yoy": 150,
+      "global2025e": 32,
+      "cagr": 45,
+      "globalLeader": "CRISPR Therapeutics/Vertex/Intellia",
+      "chinaLeader": "博雅辑因/邦耀生物/启函",
+      "driver": "Casgevy获批验证商业化路径+体内编辑技术突破+LNP递送成熟",
+      "outlook": "体内基因编辑临床数据；通用型CAR-T编辑；肝脏/眼科靶向编辑",
+      "risk": "脱靶效应安全性；高昂治疗费用($220万+)；伦理争议",
+      "priority": 2,
+      "metric": "Casgevy治疗人数、体内编辑临床进展"
+    },
+    {
+      "rank": 9,
+      "name": "AI制药",
+      "global2024": 8,
+      "yoy": 60,
+      "global2025e": 15,
+      "cagr": 55,
+      "globalLeader": "Recursion/Exscientia/Isomorphic",
+      "chinaLeader": "晶泰科技/英矽智能/深势科技",
+      "driver": "AlphaFold3发布+大语言模型+AI驱动药物发现效率10x提升",
+      "outlook": "AI设计药物进入临床II/III期；MNC与AI公司合作持续升温",
+      "risk": "AI预测与真实药效差距；黑盒模型可解释性；管线验证周期长",
+      "priority": 2,
+      "metric": "AI制药管线进入临床数量、MNC合作金额"
+    },
+    {
+      "rank": 10,
+      "name": "CXO(医药外包)",
+      "global2024": 2950,
+      "yoy": 13,
+      "global2025e": 3350,
+      "cagr": 14,
+      "globalLeader": "IQVIA/ICON/Lonza",
+      "chinaLeader": "药明康德/药明生物/康龙化成",
+      "driver": "全球研发投入持续增长+中国工程师红利+CGT/ADC等新兴赛道需求",
+      "outlook": "药明系美国业务逐步恢复；CGT CDMO产能扩张；AI+CRO融合",
+      "risk": "地缘政治/生物安全法案；投融资周期波动；价格战",
+      "priority": 3,
+      "metric": "全球生物医药投融资额、CXO龙头在手订单"
+    }
+  ],
+  "stocks": [
+    {
+      "chain": "中游-创新药",
+      "name": "恒瑞医药",
+      "code": "600276",
+      "country": "中国",
+      "chg2024": 12,
+      "chg2025": 18,
+      "revenue2024": 330,
+      "revenueYoy": 10,
+      "mcap": 4200,
+      "highlight": "创新药转型标杆, 30+创新药管线, 2025营收~¥350亿"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "百济神州",
+      "code": "688235",
+      "country": "中国",
+      "chg2024": 38,
+      "chg2025": 25,
+      "revenue2024": 280,
+      "revenueYoy": 35,
+      "mcap": 3200,
+      "highlight": "泽布替尼全球$25亿+, 血液瘤全球领先"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "信达生物",
+      "code": "01801.HK",
+      "country": "中国",
+      "chg2024": 28,
+      "chg2025": 32,
+      "revenue2024": 95,
+      "revenueYoy": 30,
+      "mcap": 1100,
+      "highlight": "PD-1+GLP-1双核, 玛仕度肽减重NDA"
+    },
+    {
+      "chain": "上游-CXO",
+      "name": "药明康德",
+      "code": "603259",
+      "country": "中国",
+      "chg2024": -5,
+      "chg2025": 15,
+      "revenue2024": 410,
+      "revenueYoy": -2,
+      "mcap": 2800,
+      "highlight": "全球CRO龙头, 美国业务逐步恢复, 2025营收~¥430亿"
+    },
+    {
+      "chain": "上游-CXO",
+      "name": "康龙化成",
+      "code": "300759",
+      "country": "中国",
+      "chg2024": 8,
+      "chg2025": 18,
+      "revenue2024": 120,
+      "revenueYoy": 12,
+      "mcap": 850,
+      "highlight": "CRO+CDMO全产业链, 海外收入占比80%+"
+    },
+    {
+      "chain": "上游-CXO",
+      "name": "泰格医药",
+      "code": "300347",
+      "country": "中国",
+      "chg2024": 12,
+      "chg2025": 20,
+      "revenue2024": 88,
+      "revenueYoy": 15,
+      "mcap": 680,
+      "highlight": "临床CRO龙头, 国际化+数统业务高增"
+    },
+    {
+      "chain": "上游-CXO",
+      "name": "凯莱英",
+      "code": "002821",
+      "country": "中国",
+      "chg2024": -10,
+      "chg2025": 22,
+      "revenue2024": 78,
+      "revenueYoy": -8,
+      "mcap": 520,
+      "highlight": "CDMO龙头, 化学大分子+多肽产能释放"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "荣昌生物",
+      "code": "688331",
+      "country": "中国",
+      "chg2024": 35,
+      "chg2025": 22,
+      "revenue2024": 45,
+      "revenueYoy": 38,
+      "mcap": 380,
+      "highlight": "ADC药物全球布局, RC48海外授权Seagen"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "康方生物",
+      "code": "09926.HK",
+      "country": "中国",
+      "chg2024": 55,
+      "chg2025": 48,
+      "revenue2024": 38,
+      "revenueYoy": 60,
+      "mcap": 580,
+      "highlight": "依沃西双抗全球突破, Summit合作$50亿+"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "君实生物",
+      "code": "688180",
+      "country": "中国",
+      "chg2024": 15,
+      "chg2025": -8,
+      "revenue2024": 32,
+      "revenueYoy": 18,
+      "mcap": 320,
+      "highlight": "PD-1获FDA批准, 新冠口服药V116贡献营收"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "诺诚健华",
+      "code": "688428",
+      "country": "中国",
+      "chg2024": 22,
+      "chg2025": 28,
+      "revenue2024": 18,
+      "revenueYoy": 32,
+      "mcap": 220,
+      "highlight": "BTK抑制剂奥布替尼, 自免适应症拓展"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "再鼎医药",
+      "code": "09688.HK",
+      "country": "中国",
+      "chg2024": 18,
+      "chg2025": 20,
+      "revenue2024": 35,
+      "revenueYoy": 25,
+      "mcap": 280,
+      "highlight": "License-in模式标杆, 艾加莫德自免放量"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "传奇生物",
+      "code": "LEGN",
+      "country": "中国/美国",
+      "chg2024": 65,
+      "chg2025": 55,
+      "revenue2024": 52,
+      "revenueYoy": 70,
+      "mcap": 1100,
+      "highlight": "Carvykti全球放量$30亿+, 强生合作"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "和黄医药",
+      "code": "00013.HK",
+      "country": "中国",
+      "chg2024": 22,
+      "chg2025": 15,
+      "revenue2024": 42,
+      "revenueYoy": 25,
+      "mcap": 350,
+      "highlight": "呋喹替尼全球商业化, 武田合作全球布局"
+    },
+    {
+      "chain": "中游-创新药",
+      "name": "科伦博泰",
+      "code": "06990.HK",
+      "country": "中国",
+      "chg2024": 42,
+      "chg2025": 35,
+      "revenue2024": 28,
+      "revenueYoy": 55,
+      "mcap": 420,
+      "highlight": "ADC管线默沙东合作$118亿, TROP2 ADC推进"
+    }
+  ],
+  "updated": "2026-06-29",
+  "last_updated": "2026-06-29T12:00:00.000000+08:00",
+  "update_note": "基于2025全年实际数据+2026年行业预测构建。全球创新药市场~$1.6万亿，中国市场快速增长。",
+  "key_metrics_2026": {
+    "2025_actual": "$1.48万亿 (+7.2%)",
+    "2026_forecast": "$1.6万亿 (+8.1%)",
+    "2027_forecast": "$1.75万亿 (+9.4%)",
+    "biologics_2026": "+14%, 达到$5600亿",
+    "cell_therapy_2026": "+43%",
+    "key_driver": "GLP-1减重爆发+ADC药物商业化+AI制药加速",
+    "source": "EvaluatePharma/IQVIA/Frost & Sullivan综合估算 (2026.6)"
+  }
+}

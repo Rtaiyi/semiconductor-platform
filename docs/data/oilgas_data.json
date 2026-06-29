@@ -1,0 +1,767 @@
+{
+  "overview": {
+    "title": "油气产业全链条动态图谱",
+    "subtitle": "数据更新：2025全年实际+2026年IEA预测 | 2026年6月29日",
+    "globalMarket": {
+      "years": [
+        2023,
+        2024,
+        2025,
+        2026,
+        2027
+      ],
+      "total": [
+        42000,
+        45000,
+        50000,
+        53000,
+        56000
+      ],
+      "原油": [
+        25000,
+        26000,
+        28000,
+        29000,
+        30000
+      ],
+      "天然气": [
+        8500,
+        9200,
+        10000,
+        10800,
+        11600
+      ],
+      "炼油": [
+        5500,
+        5800,
+        6200,
+        6500,
+        6800
+      ],
+      "化工": [
+        6500,
+        7000,
+        7500,
+        8000,
+        8600
+      ],
+      "油田服务": [
+        2800,
+        3100,
+        3500,
+        3800,
+        4100
+      ]
+    },
+    "segments": {
+      "equipment": [
+        1800,
+        2000,
+        2250,
+        2500,
+        2750
+      ],
+      "materials": [
+        2200,
+        2400,
+        2650,
+        2900,
+        3150
+      ],
+      "foundry": [
+        8000,
+        8500,
+        9200,
+        9800,
+        10500
+      ],
+      "osat": [
+        1500,
+        1650,
+        1850,
+        2050,
+        2250
+      ],
+      "chinaMarket": [
+        5200,
+        5800,
+        6800,
+        7500,
+        8200
+      ]
+    }
+  },
+  "chain": {
+    "upstream": {
+      "materials": [
+        {
+          "name": "钻井设备",
+          "global2024": 320,
+          "yoy": 8,
+          "china2024": 85,
+          "domesticRate": 42,
+          "globalLeader": "NOV/斯伦贝谢",
+          "chinaLeader": "杰瑞股份",
+          "cagr": 10,
+          "global2025e": 350
+        },
+        {
+          "name": "测井仪器",
+          "global2024": 180,
+          "yoy": 6,
+          "china2024": 35,
+          "domesticRate": 25,
+          "globalLeader": "斯伦贝谢(30%)",
+          "chinaLeader": "中海油服",
+          "cagr": 8,
+          "global2025e": 195
+        },
+        {
+          "name": "油田化学品",
+          "global2024": 250,
+          "yoy": 5,
+          "china2024": 75,
+          "domesticRate": 38,
+          "globalLeader": "贝克休斯/哈里伯顿",
+          "chinaLeader": "石化油服",
+          "cagr": 6,
+          "global2025e": 265
+        },
+        {
+          "name": "管道钢材",
+          "global2024": 420,
+          "yoy": 4,
+          "china2024": 180,
+          "domesticRate": 65,
+          "globalLeader": "Tenaris/新日铁",
+          "chinaLeader": "宝钢股份",
+          "cagr": 5,
+          "global2025e": 440
+        },
+        {
+          "name": "海上平台",
+          "global2024": 280,
+          "yoy": 12,
+          "china2024": 65,
+          "domesticRate": 35,
+          "globalLeader": "SBM Offshore",
+          "chinaLeader": "海油工程",
+          "cagr": 14,
+          "global2025e": 320
+        },
+        {
+          "name": "压裂设备",
+          "global2024": 150,
+          "yoy": 10,
+          "china2024": 55,
+          "domesticRate": 48,
+          "globalLeader": "哈里伯顿(25%)",
+          "chinaLeader": "杰瑞股份",
+          "cagr": 12,
+          "global2025e": 168
+        }
+      ],
+      "equipment": [
+        {
+          "name": "地震勘探",
+          "global2024": 95,
+          "yoy": 8,
+          "china2024": 28,
+          "domesticRate": 35,
+          "globalLeader": "CGG/斯伦贝谢",
+          "chinaLeader": "中海油服",
+          "cagr": 9,
+          "global2025e": 103
+        },
+        {
+          "name": "钻井平台",
+          "global2024": 350,
+          "yoy": 10,
+          "china2024": 80,
+          "domesticRate": 30,
+          "globalLeader": "Transocean/Seadrill",
+          "chinaLeader": "中海油服",
+          "cagr": 11,
+          "global2025e": 388
+        },
+        {
+          "name": "完井设备",
+          "global2024": 160,
+          "yoy": 7,
+          "china2024": 42,
+          "domesticRate": 32,
+          "globalLeader": "哈里伯顿(22%)",
+          "chinaLeader": "石化油服",
+          "cagr": 8,
+          "global2025e": 173
+        },
+        {
+          "name": "采油设备",
+          "global2024": 220,
+          "yoy": 5,
+          "china2024": 75,
+          "domesticRate": 40,
+          "globalLeader": "贝克休斯(20%)",
+          "chinaLeader": "杰瑞股份",
+          "cagr": 6,
+          "global2025e": 233
+        },
+        {
+          "name": "储运设施",
+          "global2024": 180,
+          "yoy": 6,
+          "china2024": 60,
+          "domesticRate": 50,
+          "globalLeader": "中石油管道局",
+          "chinaLeader": "中石油管道局",
+          "cagr": 7,
+          "global2025e": 192
+        }
+      ]
+    },
+    "midstream": {
+      "design": [
+        {
+          "name": "上游勘探",
+          "global2024": 3100,
+          "yoy": 12,
+          "china2024": 680,
+          "domesticRate": 25,
+          "cagr": 10
+        },
+        {
+          "name": "中游储运",
+          "global2024": 1850,
+          "yoy": 8,
+          "china2024": 520,
+          "domesticRate": 55,
+          "cagr": 8
+        },
+        {
+          "name": "下游炼化",
+          "global2024": 6200,
+          "yoy": 6,
+          "china2024": 1850,
+          "domesticRate": 48,
+          "cagr": 5
+        },
+        {
+          "name": "石化产品",
+          "global2024": 7500,
+          "yoy": 8,
+          "china2024": 2200,
+          "domesticRate": 42,
+          "cagr": 7
+        },
+        {
+          "name": "天然气液化",
+          "global2024": 1200,
+          "yoy": 15,
+          "china2024": 180,
+          "domesticRate": 28,
+          "cagr": 16
+        }
+      ],
+      "foundry": [
+        {
+          "name": "中国石油(PetroChina)",
+          "revenue": 3200,
+          "yoy": 5,
+          "share": 28,
+          "node": "上游勘探开发龙头",
+          "stock": 15
+        },
+        {
+          "name": "中国石化(Sinopec)",
+          "revenue": 2900,
+          "yoy": 3,
+          "share": 25,
+          "node": "炼化+销售龙头",
+          "stock": 8
+        },
+        {
+          "name": "中海油(CNOOC)",
+          "revenue": 1250,
+          "yoy": 8,
+          "share": 11,
+          "node": "海上油气龙头",
+          "stock": 22
+        },
+        {
+          "name": "埃克森美孚(ExxonMobil)",
+          "revenue": 2800,
+          "yoy": -5,
+          "share": 24,
+          "node": "全球最大上市油气",
+          "stock": -12
+        },
+        {
+          "name": "壳牌(Shell)",
+          "revenue": 2400,
+          "yoy": -8,
+          "share": 21,
+          "node": "LNG全球第一",
+          "stock": -5
+        },
+        {
+          "name": "BP",
+          "revenue": 1700,
+          "yoy": -10,
+          "share": 15,
+          "node": "能源转型先行者",
+          "stock": -18
+        },
+        {
+          "name": "道达尔(TotalEnergies)",
+          "revenue": 1650,
+          "yoy": -6,
+          "share": 14,
+          "node": "欧洲能源巨头",
+          "stock": -8
+        },
+        {
+          "name": "雪佛龙(Chevron)",
+          "revenue": 1800,
+          "yoy": -3,
+          "share": 16,
+          "node": "美国综合油气",
+          "stock": -15
+        }
+      ],
+      "osat": [
+        {
+          "name": "中石油管道",
+          "revenue": 320,
+          "yoy": 6,
+          "share": 22,
+          "advPack": "西气东输/中俄管道",
+          "stock": 10
+        },
+        {
+          "name": "中石化管道",
+          "revenue": 250,
+          "yoy": 5,
+          "share": 17,
+          "advPack": "成品油管网",
+          "stock": 8
+        },
+        {
+          "name": "国家管网集团",
+          "revenue": 380,
+          "yoy": 8,
+          "share": 26,
+          "advPack": "全国一张网",
+          "stock": 12
+        },
+        {
+          "name": "昆仑能源",
+          "revenue": 180,
+          "yoy": 10,
+          "share": 12,
+          "advPack": "城市燃气/LNG",
+          "stock": 18
+        },
+        {
+          "name": "新奥股份",
+          "revenue": 150,
+          "yoy": 12,
+          "share": 10,
+          "advPack": "LNG全产业链",
+          "stock": 22
+        },
+        {
+          "name": "广汇能源",
+          "revenue": 120,
+          "yoy": 15,
+          "share": 8,
+          "advPack": "LNG接收/转运",
+          "stock": 28
+        }
+      ]
+    },
+    "downstream": [
+      {
+        "sector": "交通运输燃料",
+        "sub": "汽油",
+        "global2024": 8500,
+        "yoy": 2,
+        "cagr": 1.5,
+        "driver": "燃油车存量+新能源替代"
+      },
+      {
+        "sector": "交通运输燃料",
+        "sub": "柴油",
+        "global2024": 6500,
+        "yoy": 1,
+        "cagr": 0.5,
+        "driver": "物流/基建需求"
+      },
+      {
+        "sector": "交通运输燃料",
+        "sub": "航空煤油",
+        "global2024": 2200,
+        "yoy": 8,
+        "cagr": 5,
+        "driver": "航空业复苏+SAF替代"
+      },
+      {
+        "sector": "化工原料",
+        "sub": "乙烯",
+        "global2024": 1800,
+        "yoy": 4,
+        "cagr": 3.5,
+        "driver": "聚乙烯/乙二醇需求"
+      },
+      {
+        "sector": "化工原料",
+        "sub": "丙烯",
+        "global2024": 1200,
+        "yoy": 3,
+        "cagr": 3,
+        "driver": "聚丙烯/丙烯腈需求"
+      },
+      {
+        "sector": "化工原料",
+        "sub": "芳烃(PX/PTA)",
+        "global2024": 1500,
+        "yoy": 5,
+        "cagr": 4,
+        "driver": "聚酯产业链扩张"
+      },
+      {
+        "sector": "塑料制品",
+        "sub": "聚乙烯(PE)",
+        "global2024": 950,
+        "yoy": 3.5,
+        "cagr": 3,
+        "driver": "包装/建材需求"
+      },
+      {
+        "sector": "塑料制品",
+        "sub": "聚丙烯(PP)",
+        "global2024": 780,
+        "yoy": 3,
+        "cagr": 3,
+        "driver": "汽车/家电轻量化"
+      },
+      {
+        "sector": "化肥",
+        "sub": "氮肥(尿素)",
+        "global2024": 420,
+        "yoy": 2,
+        "cagr": 1.5,
+        "driver": "全球粮食安全需求"
+      },
+      {
+        "sector": "化肥",
+        "sub": "磷肥/钾肥",
+        "global2024": 280,
+        "yoy": 2,
+        "cagr": 2,
+        "driver": "新兴市场农业需求"
+      },
+      {
+        "sector": "润滑油",
+        "sub": "车用润滑油",
+        "global2024": 180,
+        "yoy": 1,
+        "cagr": 1,
+        "driver": "存量车+电动车减少"
+      },
+      {
+        "sector": "润滑油",
+        "sub": "工业润滑油",
+        "global2024": 120,
+        "yoy": 3,
+        "cagr": 3,
+        "driver": "制造业/风电需求"
+      },
+      {
+        "sector": "民用燃气",
+        "sub": "城市燃气",
+        "global2024": 2800,
+        "yoy": 6,
+        "cagr": 5,
+        "driver": "城镇化+煤改气"
+      },
+      {
+        "sector": "民用燃气",
+        "sub": "LNG加注",
+        "global2024": 350,
+        "yoy": 15,
+        "cagr": 18,
+        "driver": "LNG重卡/船舶"
+      }
+    ]
+  },
+  "top10": [
+    {
+      "rank": 1,
+      "name": "深海油气",
+      "global2024": 2800,
+      "yoy": 15,
+      "global2025e": 3200,
+      "cagr": 14,
+      "globalLeader": "巴西/圭亚那/墨西哥湾",
+      "chinaLeader": "中海油(陵水/荔湾)",
+      "driver": "全球深海油气产量占比升至10%+；中国南海深水开发提速；3000米级技术突破",
+      "outlook": "中海油陵水25-1投产；巴西盐下产量超400万桶/天；深海机器人技术成熟",
+      "risk": "深水开发成本高($40-60/桶盈亏平衡)；环保风险；地缘政治",
+      "priority": 5,
+      "metric": "中海油深海产量、全球深水FID数量"
+    },
+    {
+      "rank": 2,
+      "name": "页岩油气",
+      "global2024": 3500,
+      "yoy": 8,
+      "global2025e": 3700,
+      "cagr": 6,
+      "globalLeader": "美国(80%产量)",
+      "chinaLeader": "中石油(长宁/威远)",
+      "driver": "美国页岩油产量突破1300万桶/天；中国页岩气产量冲刺300亿方；技术降本",
+      "outlook": "美国页岩并购整合加速；中国页岩油商业化突破；压裂效率提升30%",
+      "risk": "资源递减快；环保/水资源压力；油价波动影响投资",
+      "priority": 5,
+      "metric": "美国DUC井数、中国页岩气产量"
+    },
+    {
+      "rank": 3,
+      "name": "LNG",
+      "global2024": 5500,
+      "yoy": 12,
+      "global2025e": 6200,
+      "cagr": 14,
+      "globalLeader": "卡塔尔/澳大利亚/美国",
+      "chinaLeader": "中海油/中石油/新奥",
+      "driver": "全球LNG贸易量突破5亿吨；中国LNG进口全球第一；浮动LNG(FLNG)技术成熟",
+      "outlook": "卡塔尔北田扩建2025投产；美国LNG出口翻倍；中国LNG接收站超30座",
+      "risk": "LNG价格波动；欧洲需求见顶；地缘政治断供风险",
+      "priority": 5,
+      "metric": "JKM/TTF价格、全球LNG贸易量"
+    },
+    {
+      "rank": 4,
+      "name": "炼化一体化",
+      "global2024": 6200,
+      "yoy": 6,
+      "global2025e": 6500,
+      "cagr": 5,
+      "globalLeader": "中国石化/恒力/荣盛",
+      "chinaLeader": "恒力石化/荣盛石化",
+      "driver": "中国民营大炼化崛起；炼化一体化降低30%成本；化工品收率从20%提至50%+",
+      "outlook": "恒力/浙石化二期满产；裕龙岛炼化投产；炼化利润中枢抬升",
+      "risk": "产能过剩风险；碳达峰政策约束；电动车冲击成品油需求",
+      "priority": 4,
+      "metric": "裂解利润价差、恒力/荣盛季度利润"
+    },
+    {
+      "rank": 5,
+      "name": "乙烯",
+      "global2024": 1800,
+      "yoy": 4,
+      "global2025e": 1900,
+      "cagr": 4,
+      "globalLeader": "埃克森美孚/中石化",
+      "chinaLeader": "万华化学/卫星化学",
+      "driver": "全球乙烯产能扩张周期；乙烷裂解成本优势；中国乙烯当量需求年增6%",
+      "outlook": "卫星化学乙烷裂解二期投产；万华化学乙烯二期；煤制乙烯竞争力下降",
+      "risk": "全球乙烯产能过剩(2026后)；乙烷原料价格波动；碳税增加成本",
+      "priority": 4,
+      "metric": "乙烯-石脑油价差、全球乙烯开工率"
+    },
+    {
+      "rank": 6,
+      "name": "高端聚烯烃",
+      "global2024": 850,
+      "yoy": 8,
+      "global2025e": 920,
+      "cagr": 9,
+      "globalLeader": "陶氏/埃克森美孚/利安德",
+      "chinaLeader": "万华化学/宝丰能源/卫星化学",
+      "driver": "POE/α-烯烃/mPE等高附加值产品国产替代；光伏胶膜/汽车轻量化需求",
+      "outlook": "万华POE量产突破；宝丰α-烯烃中试；中国高端聚烯烃自给率从40%升至55%",
+      "risk": "技术壁垒高；外资降价打压；下游验证周期长",
+      "priority": 4,
+      "metric": "POE价格走势、万华POE产能"
+    },
+    {
+      "rank": 7,
+      "name": "碳捕集CCUS",
+      "global2024": 35,
+      "yoy": 45,
+      "global2025e": 55,
+      "cagr": 40,
+      "globalLeader": "西方石油/埃克森",
+      "chinaLeader": "中石油/中石化",
+      "driver": "全球碳中和推动CCUS投资；45Q税收抵免(美国)；碳交易价格上升",
+      "outlook": "中石油吉林CCUS-EOR百万吨级项目；碳捕集成本降至$50/吨",
+      "risk": "技术成本仍高；商业模式不清晰；社会接受度低",
+      "priority": 3,
+      "metric": "全球CCUS项目数、碳捕集成本曲线"
+    },
+    {
+      "rank": 8,
+      "name": "氢能",
+      "global2024": 180,
+      "yoy": 25,
+      "global2025e": 240,
+      "cagr": 28,
+      "globalLeader": "空气化工/林德",
+      "chinaLeader": "中石化/宝丰能源",
+      "driver": "全球绿氢规划产能超千万吨；中国氢能中长期规划；灰氢向绿氢过渡",
+      "outlook": "中石化新疆库车绿氢满产；电解槽成本降至$300/kW；氢能重卡示范推广",
+      "risk": "绿氢成本仍高于灰氢(3-5倍)；储运瓶颈；终端应用不成熟",
+      "priority": 3,
+      "metric": "绿氢生产成本、电解槽出货量"
+    },
+    {
+      "rank": 9,
+      "name": "天然气发电",
+      "global2024": 2800,
+      "yoy": 5,
+      "global2025e": 2950,
+      "cagr": 5,
+      "globalLeader": "GE/西门子/三菱",
+      "chinaLeader": "华能/华电/广汇",
+      "driver": "天然气发电作为可再生能源调峰；美国/中东/东南亚气电增长；中国气电装机翻倍规划",
+      "outlook": "中国气电装机突破1.5亿千瓦；GE HA级燃机效率超64%",
+      "risk": "天然气价格波动影响经济性；可再生能源+储能竞争",
+      "priority": 3,
+      "metric": "全球气电装机增量、气电利用小时数"
+    },
+    {
+      "rank": 10,
+      "name": "油田数字化",
+      "global2024": 280,
+      "yoy": 18,
+      "global2025e": 340,
+      "cagr": 20,
+      "globalLeader": "斯伦贝谢/哈里伯顿",
+      "chinaLeader": "中海油服/杰瑞股份",
+      "driver": "AI+物联网提升采收率；数字孪生降低运维成本20%；远程作业减少人员风险",
+      "outlook": "中石油梦想云平台覆盖全油田；AI地质建模精度提升；智能钻井RSS突破",
+      "risk": "传统行业数字化转型缓慢；数据安全担忧；投入产出比待验证",
+      "priority": 3,
+      "metric": "油田数字化渗透率、智能钻井进尺占比"
+    }
+  ],
+  "stocks": [
+    {
+      "code": "601857",
+      "name": "中国石油",
+      "sector": "综合油气",
+      "market": "上交所",
+      "focus": "上游勘探开发"
+    },
+    {
+      "code": "600028",
+      "name": "中国石化",
+      "sector": "综合油气",
+      "market": "上交所",
+      "focus": "炼化+销售"
+    },
+    {
+      "code": "601808",
+      "name": "中海油服",
+      "sector": "油田服务",
+      "market": "上交所",
+      "focus": "海上钻井/物探"
+    },
+    {
+      "code": "600583",
+      "name": "海油工程",
+      "sector": "海上工程",
+      "market": "上交所",
+      "focus": "海洋平台建造安装"
+    },
+    {
+      "code": "002353",
+      "name": "杰瑞股份",
+      "sector": "油田设备",
+      "market": "深交所",
+      "focus": "压裂/固井设备"
+    },
+    {
+      "code": "603619",
+      "name": "中曼石油",
+      "sector": "钻井服务",
+      "market": "上交所",
+      "focus": "钻井工程承包"
+    },
+    {
+      "code": "600871",
+      "name": "石化油服",
+      "sector": "油田服务",
+      "market": "上交所",
+      "focus": "物探/钻井/测井"
+    },
+    {
+      "code": "600346",
+      "name": "恒力石化",
+      "sector": "炼化",
+      "market": "上交所",
+      "focus": "2000万吨炼化一体化"
+    },
+    {
+      "code": "002493",
+      "name": "荣盛石化",
+      "sector": "炼化",
+      "market": "深交所",
+      "focus": "浙石化4000万吨炼化"
+    },
+    {
+      "code": "601233",
+      "name": "桐昆股份",
+      "sector": "石化化纤",
+      "market": "上交所",
+      "focus": "涤纶长丝/PTA"
+    },
+    {
+      "code": "002648",
+      "name": "卫星化学",
+      "sector": "化工",
+      "market": "深交所",
+      "focus": "乙烷裂解/C2产业链"
+    },
+    {
+      "code": "600309",
+      "name": "万华化学",
+      "sector": "化工",
+      "market": "上交所",
+      "focus": "MDI/高端聚烯烃"
+    },
+    {
+      "code": "600989",
+      "name": "宝丰能源",
+      "sector": "煤化工",
+      "market": "上交所",
+      "focus": "煤制烯烃/绿氢"
+    },
+    {
+      "code": "600256",
+      "name": "广汇能源",
+      "sector": "天然气",
+      "market": "上交所",
+      "focus": "LNG接收/转运"
+    },
+    {
+      "code": "600803",
+      "name": "新奥股份",
+      "sector": "天然气",
+      "market": "上交所",
+      "focus": "LNG全产业链"
+    }
+  ],
+  "updated": "2026-06-29",
+  "last_updated": "2026-06-29T12:00:00.000000+08:00",
+  "update_note": "IEA 2025年世界能源展望数据，中国市场数据来自国家能源局/三桶油年报。油价参考布伦特均价。",
+  "key_metrics_2025": {
+    "global_market": "$5万亿",
+    "china_market": "$6,800亿 (全球13.6%)",
+    "brent_avg": "$75/桶",
+    "china_oil_import": "5.6亿吨 (全球第一)",
+    "key_driver": "能源安全+深海页岩开发+炼化转型升级+碳中和转型",
+    "source": "IEA World Energy Outlook 2025, NEA, 三桶油年报"
+  }
+}

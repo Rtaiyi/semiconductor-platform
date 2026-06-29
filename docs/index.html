@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>半导体全产业链动态图谱</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script src="sectors/engine.js"></script>
 <style>
 :root {
   --bg: #0a0e27;
@@ -161,28 +162,23 @@ body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; ba
 <div id="loading-overlay"><div class="spinner"></div><div class="loading-text">正在加载产业链数据...</div></div>
 <nav class="nav" id="nav">
   <span class="logo">🔬 产业链图谱</span>
-  <button class="nav-tab active" id="nav-tab-market" onclick="switchMainTab('market')">A股大盘</button>
-  <button class="nav-tab" id="nav-tab-semi" onclick="switchMainTab('semiconductor')">半导体产业链</button>
+  <button class="nav-tab active" id="nav-tab-market" onclick="switchMainTab('market')">🇨🇳 A股大盘</button>
+  <button class="nav-tab" id="nav-tab-semiconductor" onclick="switchMainTab('semiconductor')">🔬 半导体</button>
+  <button class="nav-tab" id="nav-tab-pharma" onclick="switchMainTab('pharma')">💊 创新药</button>
+  <button class="nav-tab" id="nav-tab-power" onclick="switchMainTab('power')">⚡ 电力电网</button>
+  <button class="nav-tab" id="nav-tab-metals" onclick="switchMainTab('metals')">🪙 金属</button>
+  <button class="nav-tab" id="nav-tab-newenergy" onclick="switchMainTab('newenergy')">☀️ 新能源</button>
+  <button class="nav-tab" id="nav-tab-robot" onclick="switchMainTab('robot')">🤖 机器人</button>
+  <button class="nav-tab" id="nav-tab-aerospace" onclick="switchMainTab('aerospace')">🚀 航天</button>
+  <button class="nav-tab" id="nav-tab-oilgas" onclick="switchMainTab('oilgas')">🛢️ 油气</button>
 </nav>
 
-<!-- Sidebar for Semiconductor section -->
-<div class="sidebar hidden" id="sidebar">
-  <div class="sidebar-title">📊 半导体产业链</div>
-  <a href="#overview" onclick="scrollToSection('overview')" data-section="overview">市场总览</a>
-  <a href="#chain" onclick="scrollToSection('chain')" data-section="chain">产业链图</a>
-  <a href="#upstream" onclick="scrollToSection('upstream')" data-section="upstream">上游 · 材料设备</a>
-  <a href="#midstream" onclick="scrollToSection('midstream')" data-section="midstream">中游 · 设计制造</a>
-  <a href="#downstream" onclick="scrollToSection('downstream')" data-section="downstream">下游 · 应用市场</a>
-  <a href="#top10" onclick="scrollToSection('top10')" data-section="top10">十大核心板块</a>
-  <a href="#stocks" onclick="scrollToSection('stocks')" data-section="stocks">厂商股价表现</a>
-  <a href="#realtime" onclick="scrollToSection('realtime')" data-section="realtime">实时行情</a>
-  <a href="#star-kline" onclick="scrollToSection('star-kline')" data-section="star-kline">明星个股</a>
-</div>
+<div class="sidebar hidden" id="sidebar"></div>
 
 <div class="container" id="app"></div>
 
 <script>
-/* v20260628d: fix layout overlap + chart fallback + scroll-margin */
+/* v20260629: 9-tab architecture with 7 new sectors */
 // ── DATA ──
 // ── DATA LOADING (data-driven from JSON files) ──
 let APP_DATA = null;
@@ -191,6 +187,8 @@ let QUOTE_STOCKS = [];
 let CACHED_QUOTES = null;
 let A_STOCK_DATA = null;
 let DATA_LOADED = false;
+let originalMarketHTML = '';
+let originalSemiHTML = '';
 
 async function loadAllData() {
   try {
@@ -545,6 +543,15 @@ async function render() {
       </div></div>
     </div>
   `;
+
+  // Save original HTML fragments for tab switching
+  // Market HTML: from start to <!-- Overview Section -->
+  const fullHTML = app.innerHTML;
+  const overviewIdx = fullHTML.indexOf('<!-- Overview Section -->');
+  originalMarketHTML = fullHTML.substring(0, overviewIdx);
+  // Add closing divs for market section
+  originalMarketHTML = '<div class="section" id="market">' + originalMarketHTML.split('<!-- A-Share Market Dashboard -->')[1].split('<!-- Overview Section -->')[0] + '</div>';
+  originalSemiHTML = fullHTML.substring(overviewIdx);
 
   // Render all charts
   setTimeout(() => {
@@ -944,37 +951,93 @@ function showTop10Detail(idx) {
 // ── Navigation ──
 let currentMainTab = 'market';
 
-function switchMainTab(tab) {
-  currentMainTab = tab;
+async function switchMainTab(tab) {
+  // Update all nav tab buttons
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.getElementById(`nav-tab-${tab}`);
+  if (activeBtn) activeBtn.classList.add('active');
+  
   const sidebar = document.getElementById('sidebar');
   const container = document.querySelector('.container');
   const nav = document.getElementById('nav');
+  const app = document.getElementById('app');
   
-  // Update top tab buttons
-  document.getElementById('nav-tab-market').classList.toggle('active', tab === 'market');
-  document.getElementById('nav-tab-semi').classList.toggle('active', tab === 'semiconductor');
-  
-  if (tab === 'semiconductor') {
-    sidebar.classList.remove('hidden');
-    container.classList.add('with-sidebar');
-    nav.style.left = '200px';
-    // Scroll to first semiconductor section
-    document.getElementById('overview').scrollIntoView({behavior:'smooth', block:'start'});
-    updateSidebarActive('overview');
-  } else {
+  if (tab === 'market') {
+    // A股大盘
+    currentMainTab = 'market';
     sidebar.classList.add('hidden');
     container.classList.remove('with-sidebar');
     nav.style.left = '0';
+    // Restore A-stock content
+    app.innerHTML = originalMarketHTML;
+    setTimeout(() => {
+      loadMarketDashboard();
+      chartARevenueVsMcap();
+      chartMarketPE();
+      chartIndexPE();
+      chartCapDist();
+    }, 100);
     document.getElementById('market').scrollIntoView({behavior:'smooth', block:'start'});
+    activeScrollSections = ['market'];
+    return;
   }
   
-  // Resize all charts
+  if (tab === 'semiconductor') {
+    // 半导体 - existing content
+    currentMainTab = 'semiconductor';
+    sidebar.classList.remove('hidden');
+    container.classList.add('with-sidebar');
+    nav.style.left = '200px';
+    // Restore semiconductor content
+    app.innerHTML = originalSemiHTML;
+    updateSidebarForSemi();
+    setTimeout(() => {
+      chartMarketTrend(); chartSegmentGrowth(); chartChainSankey();
+      chartUpstreamBar('materials'); chartUpstreamCompare('materials');
+      chartMidstreamPie('foundry'); chartMidstreamStock('foundry');
+      chartDownstreamBubble(); chartDownstreamCagr();
+      chartTop10Scatter(); chartTop10Radar(); chartStocksBar(); chartStocksScatter();
+      renderTop10Table(); loadRealtimeQuotes(); startAutoRefresh(); loadStarMonthlyKlines();
+    }, 150);
+    document.getElementById('overview').scrollIntoView({behavior:'smooth', block:'start'});
+    updateScrollSectionsForSemi();
+    return;
+  }
+  
+  // New sectors - use universal engine
+  currentMainTab = tab;
+  sidebar.classList.remove('hidden');
+  container.classList.add('with-sidebar');
+  nav.style.left = '200px';
+  
+  // Use the universal sector rendering
+  await switchSectorTab(tab);
+  
+  // Resize all charts after transition
   setTimeout(() => {
     document.querySelectorAll('.chart, .chart-lg').forEach(el => {
       const inst = echarts.getInstanceByDom(el);
       if (inst) inst.resize();
     });
-  }, 400);
+  }, 500);
+}
+
+function updateSidebarForSemi() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = `<div class="sidebar-title">📊 半导体产业链</div>
+    <a href="#overview" onclick="scrollToSection('overview')" data-section="overview">市场总览</a>
+    <a href="#chain" onclick="scrollToSection('chain')" data-section="chain">产业链图</a>
+    <a href="#upstream" onclick="scrollToSection('upstream')" data-section="upstream">上游 · 材料设备</a>
+    <a href="#midstream" onclick="scrollToSection('midstream')" data-section="midstream">中游 · 设计制造</a>
+    <a href="#downstream" onclick="scrollToSection('downstream')" data-section="downstream">下游 · 应用市场</a>
+    <a href="#top10" onclick="scrollToSection('top10')" data-section="top10">十大核心板块</a>
+    <a href="#stocks" onclick="scrollToSection('stocks')" data-section="stocks">厂商股价表现</a>
+    <a href="#realtime" onclick="scrollToSection('realtime')" data-section="realtime">实时行情</a>
+    <a href="#star-kline" onclick="scrollToSection('star-kline')" data-section="star-kline">明星个股</a>`;
+}
+
+function updateScrollSectionsForSemi() {
+  activeScrollSections = ['overview','chain','upstream','midstream','downstream','top10','stocks','realtime','star-kline'];
 }
 
 function updateSidebarActive(sectionId) {
@@ -1379,16 +1442,14 @@ function startAutoRefresh() {
   }, 1000);
 }
 
-// Extend scroll spy for realtime section
-const origScrollSections = ['market','overview','chain','upstream','midstream','downstream','top10','stocks','realtime','star-kline'];
+// Extend scroll spy for all sectors
 window.addEventListener('scroll', function() {
   let current = '';
-  origScrollSections.forEach(id=>{
+  (activeScrollSections||['market']).forEach(id=>{
     const el = document.getElementById(id);
     if(el && el.getBoundingClientRect().top <= 100) current = id;
   });
-  // Update sidebar active if in semiconductor mode
-  if (currentMainTab === 'semiconductor' && current) {
+  if (current && currentMainTab !== 'market') {
     updateSidebarActive(current);
   }
 });
