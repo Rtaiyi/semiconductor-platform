@@ -204,14 +204,15 @@ function chartSectorTrend(prefix, d) {
   if (!el) return;
   const ov = d.overview.globalMarket;
   const chart = echarts.init(el);
-  const years = ov.years || ['2023','2024','2025','2026E','2027E'];
+  const years = (ov.years || ['2023','2024','2025','2026E','2027E']).map(y=>String(y).includes('E')||String(y).includes('e')?y:String(y)+'年');
   const total = ov.total || [0,0,0,0,0];
+  const unit = ov.totalUnit || '亿美元';
   chart.setOption({
     tooltip: {trigger:'axis'},
     legend: {data:['总规模'], textStyle:{color:'#90a4ae'}, top:5},
     grid: {left:60, right:20, top:50, bottom:30},
-    xAxis: {type:'category', data:years.map(y=>y+'年'), axisLabel:{color:'#90a4ae'}},
-    yAxis: {type:'value', name:ov.totalUnit||'亿美元', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    xAxis: {type:'category', data:years, axisLabel:{color:'#90a4ae'}},
+    yAxis: {type:'value', name:unit, axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
     series: [{name:'总规模', type:'bar', data:total, itemStyle:{color:'#4fc3f7'}, barWidth:20,
       label:{show:true, position:'top', color:'#4fc3f7', fontSize:10, formatter:p=>'$'+fmt(p.value,0)}}]
   });
@@ -221,8 +222,15 @@ function chartSectorSegment(prefix, d) {
   const el = document.getElementById(`chart-${prefix}-segment`);
   if (!el) return;
   const chart = echarts.init(el);
-  const segNames = d.overview.segmentNames || ['品类A','品类B','品类C','品类D'];
-  const seg2024 = d.overview.segmentValues || [100,80,60,40];
+  // Extract segments from globalMarket (exclude years/total keys)
+  const gm = d.overview.globalMarket || {};
+  const segKeys = Object.keys(gm).filter(k => !['years','total','totalUnit'].includes(k) && Array.isArray(gm[k]));
+  let segNames = segKeys;
+  let seg2024 = segKeys.map(k => gm[k][2] || gm[k][1] || 0); // index 2 = 2025, fallback to 2024
+  if (!segNames.length) {
+    segNames = ['品类A','品类B','品类C','品类D'];
+    seg2024 = [100,80,60,40];
+  }
   chart.setOption({
     tooltip: {trigger:'axis'},
     grid: {left:100, right:60, top:20, bottom:30},
