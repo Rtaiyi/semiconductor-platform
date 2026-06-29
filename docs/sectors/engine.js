@@ -2,6 +2,13 @@
 // UNIVERSAL SECTOR RENDERING ENGINE
 // ══════════════════════════════════════════════════════
 
+// Helper functions (duplicated for standalone use)
+const fmt = (n, d=0) => {
+  if (n == null || isNaN(n)) return '0';
+  return n.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
+};
+const pct = (n) => (n>0?'+':'')+(n||0).toFixed(1)+'%';
+
 // Sector registry: id, name, icon, dataFile, color
 const SECTOR_REGISTRY = {
   semiconductor: { name:'半导体', icon:'🔬', dataFile:'data/market_data.json', color:'#4fc3f7', navLabel:'半导体产业链', stocksFile:'data/global_stocks.json', quotesFile:'data/stock_list.json' },
