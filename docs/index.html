@@ -1744,6 +1744,21 @@ function jsonpRequest(url) {
 }
 
 async function loadSectorFlowData() {
+  // 优先从本地 JSON 加载（GitHub Actions 定时抓取）
+  try {
+    const resp = await fetch('data/sector_flow.json');
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data.groups && data.groups.length > 0) {
+        sectorFlowData = data;
+        chartSectorFlowSankey(data);
+        loadSectorFlowTimeline(currentFlowKlt, data);
+        return;
+      }
+    }
+  } catch(e) { console.error('本地资金流向数据加载失败:', e); }
+
+  // 回退：尝试 JSONP 实时请求（本地开发环境可用）
   const codes = SECTOR_LIST.map(s=>'90.'+s.code).join(',');
   try {
     const url = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2,f3,f4,f6,f12,f14,f62,f184,f66,f69,f72,f75,f78,f81,f84,f87&secids=${codes}`;
@@ -1753,30 +1768,35 @@ async function loadSectorFlowData() {
       chartSectorFlowSankey();
       loadSectorFlowTimeline(currentFlowKlt);
     }
-  } catch(e) { console.error('板块资金流向数据加载失败:', e); }
+  } catch(e) { console.error('板块资金流向实时数据加载失败（CORS限制），请等待GitHub Actions更新本地数据:', e); }
 }
 
-function chartSectorFlowSankey() {
+function chartSectorFlowSankey(flowData) {
   const el = document.getElementById('chart-sector-flow');
-  if (!el || !sectorFlowData.length) return;
-  const chart = echartsInit(el.id);
+  if (!el) return;
 
-  // 按大类分组计算净流入
-  const groupFlow = {};
+  // 兼容两种数据格式：本地JSON(含groups) 或 实时API(diff数组)
+  let groupFlow = {};
   Object.keys(SECTOR_GROUPS).forEach(g => groupFlow[g] = 0);
   let totalInflow = 0, totalOutflow = 0;
 
-  sectorFlowData.forEach(s => {
-    const groupName = SECTOR_GROUP_MAP[s.f12];
-    if (!groupName) return;
-    const netInflow = s.f62 || 0; // 主力净流入（元）
-    groupFlow[groupName] += netInflow;
-  });
+  if (flowData && flowData.groups) {
+    // 本地JSON格式
+    flowData.groups.forEach(g => { groupFlow[g.name] = g.netInflow; });
+  } else if (sectorFlowData && sectorFlowData.length) {
+    // 实时API格式
+    sectorFlowData.forEach(s => {
+      const groupName = SECTOR_GROUP_MAP[s.f12];
+      if (!groupName) return;
+      groupFlow[groupName] += (s.f62 || 0) / 1e8;
+    });
+  }
 
-  // 转换为亿元
   const groupData = Object.entries(groupFlow).map(([name, val]) => ({
-    name, value: Math.round(val / 1e8 * 100) / 100
+    name, value: Math.round(val * 100) / 100
   }));
+
+  const chart = echartsInit(el.id);
 
   // 构建桑基图：资金来源 → 各大类 → 资金去向
   const inflowGroups = groupData.filter(g => g.value > 0).sort((a,b) => b.value - a.value);
@@ -1828,12 +1848,36 @@ function chartSectorFlowSankey() {
   }
 }
 
-async function loadSectorFlowTimeline(klt) {
+async function loadSectorFlowTimeline(klt, localData) {
   currentFlowKlt = klt;
   const el = document.getElementById('chart-sector-flow-timeline');
   if (!el) return;
 
-  // 季度和年通过月线聚合
+  // 如果有本地数据，直接使用
+  if (localData && localData.timeline) {
+    const tl = localData.timeline[klt] || localData.timeline['101'];
+    if (tl) {
+      renderFlowTimeline(el, tl.dates, tl.series, klt);
+      return;
+    }
+  }
+
+  // 否则尝试从本地JSON加载
+  if (!localData) {
+    try {
+      const resp = await fetch('data/sector_flow.json');
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.timeline && data.timeline[klt]) {
+          const tl = data.timeline[klt];
+          renderFlowTimeline(el, tl.dates, tl.series, klt);
+          return;
+        }
+      }
+    } catch(e) { console.error('时间轴数据加载失败:', e); }
+  }
+
+  // 回退：尝试 JSONP 实时请求（本地开发环境）
   const actualKlt = (klt === 'quarter' || klt === 'year') ? '103' : klt;
   const lmt = klt === '101' ? 30 : klt === '102' ? 26 : 60;
 
@@ -1929,6 +1973,40 @@ async function loadSectorFlowTimeline(klt) {
       const item = data.find(p => p.date === lastDate);
       if (item) lastTotal += item.flow;
     });
+    const periodLabel = {'101':'日','102':'周','103':'月','quarter':'季','year':'年'}[klt];
+    insightEl.innerHTML = `<span class="insight-tag insight-tag-key">${periodLabel}度资金变动</span> 截至 ${lastDate}，7大类板块合计资金变动 <strong class="${lastTotal>0?'change-up':'change-down'}">${lastTotal>0?'+':''}${fmt(lastTotal,1)}亿元</strong>。<br>
+      <hr class="insight-divider"><span class="insight-tag insight-tag-neut">使用说明</span> 堆叠柱状图展示各行业大类的资金净流入/流出趋势，正值(绿)表示资金流入，负值(红)表示流出。切换日/周/月/季/年查看不同时间维度。`;
+  }
+}
+
+function renderFlowTimeline(el, dates, seriesData, klt) {
+  const chart = echartsInit(el.id);
+  const colors = {'科技电子':'#4fc3f7','医药':'#ff5252','金融':'#ffd740','消费':'#69f0ae','周期资源':'#ffab40','地产基建':'#ce93d8','新能源':'#64b5f6'};
+  const series = Object.entries(seriesData).map(([group, vals]) => ({
+    name: group, type: 'bar', stack: 'flow',
+    data: vals, itemStyle: {color: colors[group] || '#90a4ae'}
+  }));
+
+  chart.setOption({
+    tooltip: {trigger: 'axis', formatter: p => {
+      let html = p[0].axisValue + '<br/>';
+      let total = 0;
+      p.forEach(s => { total += s.value; html += `${s.marker}${s.seriesName}: ${s.value>=0?'+':''}${fmt(s.value,1)}亿<br/>`; });
+      html += `<hr style="border-color:#333;margin:4px 0">合计: <strong>${total>=0?'+':''}${fmt(total,1)}亿元</strong>`;
+      return html;
+    }},
+    legend: {data: Object.keys(seriesData), textStyle:{color:'#90a4ae', fontSize:10}, top:0, type:'scroll'},
+    grid: {left:70, right:30, top:40, bottom:30},
+    xAxis: {type:'category', data:dates, axisLabel:{color:'#90a4ae', fontSize:10, rotate: klt==='101'?30:0}},
+    yAxis: {type:'value', name:'亿元', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    series: series
+  });
+
+  const insightEl = document.getElementById('market-insight-flow-timeline');
+  if (insightEl && dates.length > 0) {
+    const lastDate = dates[dates.length - 1];
+    let lastTotal = 0;
+    series.forEach(s => { lastTotal += s.data[s.data.length - 1] || 0; });
     const periodLabel = {'101':'日','102':'周','103':'月','quarter':'季','year':'年'}[klt];
     insightEl.innerHTML = `<span class="insight-tag insight-tag-key">${periodLabel}度资金变动</span> 截至 ${lastDate}，7大类板块合计资金变动 <strong class="${lastTotal>0?'change-up':'change-down'}">${lastTotal>0?'+':''}${fmt(lastTotal,1)}亿元</strong>。<br>
       <hr class="insight-divider"><span class="insight-tag insight-tag-neut">使用说明</span> 堆叠柱状图展示各行业大类的资金净流入/流出趋势，正值(绿)表示资金流入，负值(红)表示流出。切换日/周/月/季/年查看不同时间维度。`;
