@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-06-30T13:10:00.826117+08:00",
+  "timestamp": "2026-06-30T13:51:01.872432+08:00",
   "date": "2026-06-30",
-  "time": "13:10:00",
+  "time": "13:51:01",
   "total": 8,
   "errors": [
     {
@@ -14,45 +14,45 @@
     {
       "code": "000300",
       "name": "沪深300",
-      "price": 4974.63,
-      "change_pct": 0.97,
-      "change_amt": 47.71,
+      "price": 4963.44,
+      "change_pct": 0.74,
+      "change_amt": 36.52,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "000688",
       "name": "科创50",
-      "price": 2193.13,
-      "change_pct": 3.16,
-      "change_amt": 67.12,
+      "price": 2202.11,
+      "change_pct": 3.58,
+      "change_amt": 76.1,
       "region": "中国",
       "type": "科技"
     },
     {
       "code": "000001",
       "name": "上证指数",
-      "price": 4078.61,
-      "change_pct": 0.12,
-      "change_amt": 4.71,
+      "price": 4077.3,
+      "change_pct": 0.08,
+      "change_amt": 3.4,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "399001",
       "name": "深证成指",
-      "price": 16163.58,
-      "change_pct": 2.22,
-      "change_amt": 350.71,
+      "price": 16153.05,
+      "change_pct": 2.15,
+      "change_amt": 340.18,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "399006",
       "name": "创业板指",
-      "price": 4329.8,
-      "change_pct": 2.68,
-      "change_amt": 113.1,
+      "price": 4335.22,
+      "change_pct": 2.81,
+      "change_amt": 118.52,
       "region": "中国",
       "type": "成长"
     },
@@ -77,9 +77,12 @@
     {
       "code": "SOX",
       "name": "费城半导体指数",
+      "price": 13709.66,
+      "change_pct": 0.0,
+      "change_amt": 0.0,
       "region": "美国",
       "type": "半导体",
-      "note": "东方财富API暂不支持SOX指数，当前为缓存值。可通过Yahoo Finance手动更新。"
+      "source": "Yahoo Finance"
     }
   ]
 }
