@@ -119,6 +119,30 @@ async function render() {
         </div>
       </div>
 
+      <!-- Sector Capital Flow Analysis -->
+      <div class="section-title" style="margin-top:24px;"><span class="icon">💸</span>行业板块资金流向分析</div>
+      <div class="grid grid-2">
+        <div class="card"><h3>🔀 各板块资金流向分布</h3><div id="chart-sector-flow" class="chart-lg"></div>
+          <div class="insight-card"><div class="insight-title">💡 资金流向解读</div><div class="insight-body" id="market-insight-flow">
+            加载中...
+          </div></div>
+        </div>
+        <div class="card">
+          <h3>📅 板块资金变动时间轴</h3>
+          <div class="tabs" id="flow-timeline-tabs">
+            <button class="tab-btn active" onclick="switchFlowTimeline('101')">日</button>
+            <button class="tab-btn" onclick="switchFlowTimeline('102')">周</button>
+            <button class="tab-btn" onclick="switchFlowTimeline('103')">月</button>
+            <button class="tab-btn" onclick="switchFlowTimeline('quarter')">季</button>
+            <button class="tab-btn" onclick="switchFlowTimeline('year')">年</button>
+          </div>
+          <div id="chart-sector-flow-timeline" class="chart-lg"></div>
+          <div class="insight-card"><div class="insight-title">💡 时间维度分析</div><div class="insight-body" id="market-insight-flow-timeline">
+            加载中...
+          </div></div>
+        </div>
+      </div>
+
       <!-- A-Share Historical Statistics -->
       <div class="section-title" style="margin-top:24px;"><span class="icon">📊</span>A股历史统计分析</div>
       <div class="grid grid-2">
@@ -1509,6 +1533,7 @@ async function loadMarketDashboard() {
     loadSectorHeatmapData()
   ]);
   updateMarketTime();
+  loadSectorFlowData();
 }
 
 async function loadMarketIndices() {
@@ -1682,6 +1707,228 @@ function renderSectorHeatmap() {
 }
 
 function updateMarketTime() {
+
+// ══════════════════════════════════════════════════════
+// SECTOR CAPITAL FLOW — 行业板块资金流向分析
+// ══════════════════════════════════════════════════════
+
+// 板块大类分组映射
+const SECTOR_GROUPS = {
+  '科技电子': ['BK0489','BK0477','BK0479','BK0487','BK0438','BK0481','BK0465'],
+  '医药': ['BK0451','BK0467','BK0447','BK0480'],
+  '金融': ['BK0449','BK0473','BK0488'],
+  '消费': ['BK0445','BK0484','BK0456','BK0483'],
+  '周期资源': ['BK0493','BK0435','BK0476','BK0453','BK0442','BK0434'],
+  '地产基建': ['BK0432','BK0443'],
+  '新能源': ['BK0440','BK0448','BK0494','BK0495'],
+};
+// 反向映射：板块code → 大类
+const SECTOR_GROUP_MAP = {};
+Object.entries(SECTOR_GROUPS).forEach(([g, codes]) => codes.forEach(c => SECTOR_GROUP_MAP[c] = g));
+
+let sectorFlowData = [];
+let currentFlowKlt = '101';
+
+async function loadSectorFlowData() {
+  const codes = SECTOR_LIST.map(s=>'90.'+s.code).join(',');
+  try {
+    const url = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2,f3,f4,f6,f12,f14,f62,f184,f66,f69,f72,f75,f78,f81,f84,f87&secids=${codes}`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    if (data.data && data.data.diff) {
+      sectorFlowData = data.data.diff;
+      chartSectorFlowSankey();
+      loadSectorFlowTimeline(currentFlowKlt);
+    }
+  } catch(e) { console.error('板块资金流向数据加载失败:', e); }
+}
+
+function chartSectorFlowSankey() {
+  const el = document.getElementById('chart-sector-flow');
+  if (!el || !sectorFlowData.length) return;
+  const chart = echartsInit(el.id);
+
+  // 按大类分组计算净流入
+  const groupFlow = {};
+  Object.keys(SECTOR_GROUPS).forEach(g => groupFlow[g] = 0);
+  let totalInflow = 0, totalOutflow = 0;
+
+  sectorFlowData.forEach(s => {
+    const groupName = SECTOR_GROUP_MAP[s.f12];
+    if (!groupName) return;
+    const netInflow = s.f62 || 0; // 主力净流入（元）
+    groupFlow[groupName] += netInflow;
+  });
+
+  // 转换为亿元
+  const groupData = Object.entries(groupFlow).map(([name, val]) => ({
+    name, value: Math.round(val / 1e8 * 100) / 100
+  }));
+
+  // 构建桑基图：资金来源 → 各大类 → 资金去向
+  const inflowGroups = groupData.filter(g => g.value > 0).sort((a,b) => b.value - a.value);
+  const outflowGroups = groupData.filter(g => g.value < 0).sort((a,b) => a.value - b.value);
+
+  const nodes = [];
+  const links = [];
+
+  // 净流入节点 → 大类节点
+  nodes.push({name: '主力净流入', itemStyle: {color: '#69f0ae'}});
+  inflowGroups.forEach(g => {
+    nodes.push({name: g.name, itemStyle: {color: '#4fc3f7'}});
+    links.push({source: '主力净流入', target: g.name, value: Math.abs(g.value)});
+    totalInflow += Math.abs(g.value);
+  });
+
+  // 大类节点 → 净流出节点
+  nodes.push({name: '主力净流出', itemStyle: {color: '#ff5252'}});
+  outflowGroups.forEach(g => {
+    nodes.push({name: g.name, itemStyle: {color: '#ffab40'}});
+    links.push({source: g.name, target: '主力净流出', value: Math.abs(g.value)});
+    totalOutflow += Math.abs(g.value);
+  });
+
+  chart.setOption({
+    tooltip: {trigger: 'item', formatter: p => {
+      if (p.dataType === 'edge') return `${p.data.source} → ${p.data.target}<br/>金额: ${fmt(p.data.value,1)}亿元`;
+      return p.data.name;
+    }},
+    series: [{
+      type: 'sankey', layout: 'none', emphasis: {focus: 'adjacency'},
+      nodeAlign: 'left', nodeGap: 12, nodeWidth: 20,
+      lineStyle: {color: 'gradient', curveness: 0.5, opacity: 0.4},
+      label: {color: '#e0e0e0', fontSize: 11},
+      data: nodes, links: links
+    }]
+  });
+
+  // 更新洞察
+  const insightEl = document.getElementById('market-insight-flow');
+  if (insightEl) {
+    const topInflow = inflowGroups[0];
+    const topOutflow = outflowGroups[0];
+    const netTotal = totalInflow - totalOutflow;
+    insightEl.innerHTML = `<span class="insight-tag ${netTotal>0?'insight-tag-bull':'insight-tag-bear'}">资金总览</span> 7大类板块中，主力净流入总额 <strong class="${netTotal>0?'':'change-down'}">${netTotal>0?'+':''}${fmt(netTotal,1)}亿元</strong>。其中 ${inflowGroups.length} 类净流入、${outflowGroups.length} 类净流出。<br>
+      <hr class="insight-divider">
+      <span class="insight-tag insight-tag-bull">最大流入</span> ${topInflow ? topInflow.name + ' +' + fmt(topInflow.value,1) + '亿元' : '无'}<br>
+      <span class="insight-tag insight-tag-bear">最大流出</span> ${topOutflow ? topOutflow.name + ' ' + fmt(topOutflow.value,1) + '亿元' : '无'}`;
+  }
+}
+
+async function loadSectorFlowTimeline(klt) {
+  currentFlowKlt = klt;
+  const el = document.getElementById('chart-sector-flow-timeline');
+  if (!el) return;
+
+  // 季度和年通过月线聚合
+  const actualKlt = (klt === 'quarter' || klt === 'year') ? '103' : klt;
+  const lmt = klt === '101' ? 30 : klt === '102' ? 26 : 60;
+
+  // 获取各类别代表板块的K线数据
+  const groupReps = {
+    '科技电子': 'BK0489', '医药': 'BK0480', '金融': 'BK0488',
+    '消费': 'BK0445', '周期资源': 'BK0435', '地产基建': 'BK0432', '新能源': 'BK0494'
+  };
+
+  const promises = Object.entries(groupReps).map(([group, code]) =>
+    fetch(`https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=90.${code}&klt=${actualKlt}&fqt=1&end=20500101&lmt=${lmt}&fields1=f1,f2,f3&fields2=f51,f52,f53,f54,f55,f56,f57`)
+      .then(r => r.json())
+      .then(d => ({group, klines: d.data?.klines || []}))
+      .catch(() => ({group, klines: []}))
+  );
+
+  const results = await Promise.all(promises);
+
+  // 提取日期和收盘价，计算涨跌幅作为资金流向代理指标
+  let dates = [];
+  const groupData = {};
+
+  results.forEach(({group, klines}) => {
+    const parsed = klines.map(line => {
+      const parts = line.split(',');
+      return {date: parts[0], close: parseFloat(parts[2]), volume: parseFloat(parts[5])};
+    }).filter(p => p.close > 0);
+
+    // 计算主力净流入代理：成交量 * 涨跌幅
+    const flowData = parsed.map((p, i) => {
+      if (i === 0) return {date: p.date, flow: 0};
+      const prev = parsed[i-1];
+      const chg = (p.close - prev.close) / prev.close * 100;
+      return {date: p.date, flow: Math.round(p.volume * chg / 1e8 * 100) / 100};
+    });
+
+    groupData[group] = flowData;
+    if (flowData.length > dates.length) dates = flowData.map(p => p.date);
+  });
+
+  // 季度/年度聚合
+  if (klt === 'quarter' || klt === 'year') {
+    const period = klt === 'quarter' ? 3 : 12;
+    dates = [];
+    Object.keys(groupData).forEach(g => {
+      const aggregated = [];
+      for (let i = 0; i < groupData[g].length; i += period) {
+        const chunk = groupData[g].slice(i, i + period);
+        const sumFlow = chunk.reduce((a, b) => a + b.flow, 0);
+        const label = klt === 'quarter'
+          ? chunk[0]?.date?.substring(0,4) + 'Q' + Math.floor(parseInt(chunk[0]?.date?.substring(5,7))-1)/3+1
+          : chunk[0]?.date?.substring(0,4);
+        aggregated.push({date: label, flow: Math.round(sumFlow)});
+      }
+      groupData[g] = aggregated;
+      if (aggregated.length > dates.length) dates = aggregated.map(p => p.date);
+    });
+  }
+
+  const chart = echartsInit(el.id);
+  const series = Object.entries(groupData).map(([group, data]) => {
+    const colors = {'科技电子':'#4fc3f7','医药':'#ff5252','金融':'#ffd740','消费':'#69f0ae','周期资源':'#ffab40','地产基建':'#ce93d8','新能源':'#64b5f6'};
+    return {
+      name: group, type: 'bar', stack: 'flow',
+      data: dates.map(d => {
+        const item = data.find(p => p.date === d);
+        return item ? item.flow : 0;
+      }),
+      itemStyle: {color: colors[group] || '#90a4ae'}
+    };
+  });
+
+  chart.setOption({
+    tooltip: {trigger: 'axis', formatter: p => {
+      let html = p[0].axisValue + '<br/>';
+      let total = 0;
+      p.forEach(s => { total += s.value; html += `${s.marker}${s.seriesName}: ${s.value>=0?'+':''}${fmt(s.value,1)}亿<br/>`; });
+      html += `<hr style="border-color:#333;margin:4px 0">合计: <strong>${total>=0?'+':''}${fmt(total,1)}亿元</strong>`;
+      return html;
+    }},
+    legend: {data: Object.keys(groupData), textStyle:{color:'#90a4ae', fontSize:10}, top:0, type:'scroll'},
+    grid: {left:70, right:30, top:40, bottom:30},
+    xAxis: {type:'category', data:dates, axisLabel:{color:'#90a4ae', fontSize:10, rotate: klt==='101'?30:0}},
+    yAxis: {type:'value', name:'亿元', axisLabel:{color:'#90a4ae'}, splitLine:{lineStyle:{color:'#1e2456'}}},
+    series: series
+  });
+
+  // 更新洞察
+  const insightEl = document.getElementById('market-insight-flow-timeline');
+  if (insightEl && dates.length > 0) {
+    const lastDate = dates[dates.length - 1];
+    let lastTotal = 0;
+    Object.values(groupData).forEach(data => {
+      const item = data.find(p => p.date === lastDate);
+      if (item) lastTotal += item.flow;
+    });
+    const periodLabel = {'101':'日','102':'周','103':'月','quarter':'季','year':'年'}[klt];
+    insightEl.innerHTML = `<span class="insight-tag insight-tag-key">${periodLabel}度资金变动</span> 截至 ${lastDate}，7大类板块合计资金变动 <strong class="${lastTotal>0?'change-up':'change-down'}">${lastTotal>0?'+':''}${fmt(lastTotal,1)}亿元</strong>。<br>
+      <hr class="insight-divider"><span class="insight-tag insight-tag-neut">使用说明</span> 堆叠柱状图展示各行业大类的资金净流入/流出趋势，正值(绿)表示资金流入，负值(红)表示流出。切换日/周/月/季/年查看不同时间维度。`;
+  }
+}
+
+function switchFlowTimeline(klt) {
+  document.querySelectorAll('#flow-timeline-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  loadSectorFlowTimeline(klt);
+}
+
   const now = new Date();
   const ts = now.toLocaleTimeString('zh-CN', {hour12:false});
   const el = document.getElementById('market-time');
