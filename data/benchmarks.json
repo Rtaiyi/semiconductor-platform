@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-06-29T19:34:03.755441+08:00",
-  "date": "2026-06-29",
-  "time": "19:34:03",
+  "timestamp": "2026-06-30T13:10:00.826117+08:00",
+  "date": "2026-06-30",
+  "time": "13:10:00",
   "total": 8,
   "errors": [
     {
@@ -14,63 +14,63 @@
     {
       "code": "000300",
       "name": "沪深300",
-      "price": 4926.92,
-      "change_pct": 1.21,
-      "change_amt": 58.7,
+      "price": 4974.63,
+      "change_pct": 0.97,
+      "change_amt": 47.71,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "000688",
       "name": "科创50",
-      "price": 2126.01,
-      "change_pct": 4.61,
-      "change_amt": 93.73,
+      "price": 2193.13,
+      "change_pct": 3.16,
+      "change_amt": 67.12,
       "region": "中国",
       "type": "科技"
     },
     {
       "code": "000001",
       "name": "上证指数",
-      "price": 4073.9,
-      "change_pct": 1.16,
-      "change_amt": 46.64,
+      "price": 4078.61,
+      "change_pct": 0.12,
+      "change_amt": 4.71,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "399001",
       "name": "深证成指",
-      "price": 15812.87,
-      "change_pct": 0.19,
-      "change_amt": 30.65,
+      "price": 16163.58,
+      "change_pct": 2.22,
+      "change_amt": 350.71,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "399006",
       "name": "创业板指",
-      "price": 4216.7,
-      "change_pct": 0.54,
-      "change_amt": 22.49,
+      "price": 4329.8,
+      "change_pct": 2.68,
+      "change_amt": 113.1,
       "region": "中国",
       "type": "成长"
     },
     {
       "code": "SPX",
       "name": "标普500",
-      "price": 7354.02,
-      "change_pct": -0.05,
-      "change_amt": -3.47,
+      "price": 7440.43,
+      "change_pct": 1.18,
+      "change_amt": 86.41,
       "region": "美国",
       "type": "大盘"
     },
     {
       "code": "NDX",
       "name": "纳斯达克",
-      "price": 25297.62,
-      "change_pct": -0.24,
-      "change_amt": -60.98,
+      "price": 25820.14,
+      "change_pct": 2.07,
+      "change_amt": 522.52,
       "region": "美国",
       "type": "科技"
     },
