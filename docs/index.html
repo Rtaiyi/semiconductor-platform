@@ -88,12 +88,7 @@ async function loadAllData() {
 
 function D() { return APP_DATA; }
 
-// ── Helper ──
-const fmt = (n, d=0) => {
-  if (n == null || isNaN(n)) return '0';
-  return n.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
-};
-const pct = (n) => (n>0?'+':'')+n.toFixed(1)+'%';
+// ── Helper ── (fmt/pct defined in engine.js)
 const chgCls = (n) => n>=0?'change-up':'change-down';
 
 // ── Render App ──
