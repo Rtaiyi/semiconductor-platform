@@ -1729,13 +1729,26 @@ Object.entries(SECTOR_GROUPS).forEach(([g, codes]) => codes.forEach(c => SECTOR_
 let sectorFlowData = [];
 let currentFlowKlt = '101';
 
+// JSONP 请求工具（解决东方财富 API 跨域问题）
+function jsonpRequest(url) {
+  return new Promise((resolve, reject) => {
+    const cbName = '__jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+    const script = document.createElement('script');
+    script.src = url + (url.includes('?') ? '&' : '?') + 'cb=' + cbName;
+    script.onerror = () => { reject(new Error('JSONP request failed')); cleanup(); };
+    window[cbName] = (data) => { resolve(data); cleanup(); };
+    function cleanup() { delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); }
+    document.head.appendChild(script);
+    setTimeout(() => { reject(new Error('JSONP timeout')); cleanup(); }, 10000);
+  });
+}
+
 async function loadSectorFlowData() {
   const codes = SECTOR_LIST.map(s=>'90.'+s.code).join(',');
   try {
     const url = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2,f3,f4,f6,f12,f14,f62,f184,f66,f69,f72,f75,f78,f81,f84,f87&secids=${codes}`;
-    const resp = await fetch(url);
-    const data = await resp.json();
-    if (data.data && data.data.diff) {
+    const data = await jsonpRequest(url);
+    if (data && data.data && data.data.diff) {
       sectorFlowData = data.data.diff;
       chartSectorFlowSankey();
       loadSectorFlowTimeline(currentFlowKlt);
@@ -1831,8 +1844,7 @@ async function loadSectorFlowTimeline(klt) {
   };
 
   const promises = Object.entries(groupReps).map(([group, code]) =>
-    fetch(`https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=90.${code}&klt=${actualKlt}&fqt=1&end=20500101&lmt=${lmt}&fields1=f1,f2,f3&fields2=f51,f52,f53,f54,f55,f56,f57`)
-      .then(r => r.json())
+    jsonpRequest(`https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=90.${code}&klt=${actualKlt}&fqt=1&end=20500101&lmt=${lmt}&fields1=f1,f2,f3&fields2=f51,f52,f53,f54,f55,f56,f57`)
       .then(d => ({group, klines: d.data?.klines || []}))
       .catch(() => ({group, klines: []}))
   );
