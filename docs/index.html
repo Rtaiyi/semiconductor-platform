@@ -1707,6 +1707,11 @@ function renderSectorHeatmap() {
 }
 
 function updateMarketTime() {
+  const now = new Date();
+  const ts = now.toLocaleTimeString('zh-CN', {hour12:false});
+  const el = document.getElementById('market-time');
+  if (el) el.textContent = `更新时间: ${ts}`;
+}
 
 // ══════════════════════════════════════════════════════
 // SECTOR CAPITAL FLOW — 行业板块资金流向分析
@@ -2017,12 +2022,6 @@ function switchFlowTimeline(klt) {
   document.querySelectorAll('#flow-timeline-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
   loadSectorFlowTimeline(klt);
-}
-
-  const now = new Date();
-  const ts = now.toLocaleTimeString('zh-CN', {hour12:false});
-  const el = document.getElementById('market-time');
-  if (el) el.textContent = `更新时间: ${ts}`;
 }
 
 // ══════════════════════════════════════════════════════
