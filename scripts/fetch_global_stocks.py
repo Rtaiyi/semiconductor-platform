@@ -62,10 +62,24 @@ GLOBAL_STOCKS = [
 
 
 def is_us_market_open() -> bool:
-    """判断美股是否在交易时段（美东 9:30-16:00）"""
-    now_utc = datetime.now(timezone.utc)
-    et_offset = timedelta(hours=-4)  # EDT (夏令时)
-    now_et = now_utc + et_offset
+    """判断美股是否在交易时段（美东 9:30-16:00，自动处理夏令时/冬令时）"""
+    try:
+        from zoneinfo import ZoneInfo
+        now_et = datetime.now(ZoneInfo("America/New_York"))
+    except ImportError:
+        # zoneinfo 不可用时的回退方案
+        now_utc = datetime.now(timezone.utc)
+        # 使用 dateutil 或简单判断 DST
+        import calendar
+        year = now_utc.year
+        # US DST: 3月第二个周日 2AM → 11月第一个周日 2AM
+        mar = datetime(year, 3, 1, tzinfo=timezone.utc)
+        nov = datetime(year, 11, 1, tzinfo=timezone.utc)
+        dst_start = mar + timedelta(days=(6 - mar.weekday() + 7) % 7 + 7)  # 3月第二个周日
+        dst_end = nov + timedelta(days=(6 - nov.weekday() + 7) % 7)  # 11月第一个周日
+        is_dst = dst_start <= now_utc.replace(tzinfo=timezone.utc) < dst_end
+        et_offset = timedelta(hours=-4 if is_dst else -5)
+        now_et = now_utc + et_offset
     if now_et.weekday() >= 5:
         return False
     t = now_et.time()
@@ -201,11 +215,17 @@ def fetch_all_global() -> dict:
 
 
 def save_output(data: dict) -> None:
-    """保存输出到 JSON 文件"""
+    """保存输出到 JSON 文件（原子写入：先写临时文件，成功后再替换）"""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    stocks = data.get("stocks", [])
+    if not stocks:
+        logger.warning("数据为空，跳过写入以保留旧数据")
+        return
+    tmp_file = OUTPUT_FILE.with_suffix(".tmp")
+    with open(tmp_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    logger.info(f"数据已保存到 {OUTPUT_FILE}")
+    tmp_file.replace(OUTPUT_FILE)
+    logger.info(f"数据已保存到 {OUTPUT_FILE} ({len(stocks)} 条)")
 
 
 def main():

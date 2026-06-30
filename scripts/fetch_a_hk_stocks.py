@@ -214,11 +214,18 @@ def fetch_all_stocks(stocks: list) -> dict:
 
 
 def save_output(data: dict) -> None:
-    """保存输出到 JSON 文件"""
+    """保存输出到 JSON 文件（原子写入：先写临时文件，成功后再替换）"""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    # 验证数据有效性
+    quotes = data.get("quotes", [])
+    if not quotes:
+        logger.warning("数据为空，跳过写入以保留旧数据")
+        return
+    tmp_file = OUTPUT_FILE.with_suffix(".tmp")
+    with open(tmp_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    logger.info(f"数据已保存到 {OUTPUT_FILE}")
+    tmp_file.replace(OUTPUT_FILE)
+    logger.info(f"数据已保存到 {OUTPUT_FILE} ({len(quotes)} 条)")
 
 
 def main():

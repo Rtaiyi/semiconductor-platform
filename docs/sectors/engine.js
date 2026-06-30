@@ -26,6 +26,27 @@ const SECTOR_DATA_CACHE = {};
 let currentSector = 'market'; // 'market' = A股大盘, others = sector IDs
 let sectorCharts = {}; // Track charts per sector for resize
 
+// ── ECharts 实例管理器（防止内存泄漏）──
+const __engineCharts = {};
+function engineEchartsInit(elId, theme) {
+  if (__engineCharts[elId]) {
+    try { __engineCharts[elId].dispose(); } catch(e) {}
+  }
+  const el = document.getElementById(elId);
+  if (!el) return null;
+  __engineCharts[elId] = echarts.init(el, theme);
+  return __engineCharts[elId];
+}
+function engineEchartsDisposeAll(sectorId) {
+  // Dispose all charts for a given sector
+  Object.keys(__engineCharts).forEach(k => {
+    if (k.startsWith(sectorId + '-')) {
+      try { __engineCharts[k].dispose(); } catch(e) {}
+      delete __engineCharts[k];
+    }
+  });
+}
+
 // Build top nav tabs HTML
 function buildNavTabs() {
   let html = '';
@@ -210,7 +231,7 @@ function chartSectorTrend(prefix, d) {
   const el = document.getElementById(`chart-${prefix}-trend`);
   if (!el) return;
   const ov = d.overview.globalMarket;
-  const chart = echarts.init(el);
+  const chart = engineEchartsInit(el.id);
   const years = (ov.years || ['2023','2024','2025','2026E','2027E']).map(y=>String(y).includes('E')||String(y).includes('e')?y:String(y)+'年');
   const total = ov.total || [0,0,0,0,0];
   const unit = ov.totalUnit || '亿美元';
@@ -228,7 +249,7 @@ function chartSectorTrend(prefix, d) {
 function chartSectorSegment(prefix, d) {
   const el = document.getElementById(`chart-${prefix}-segment`);
   if (!el) return;
-  const chart = echarts.init(el);
+  const chart = engineEchartsInit(el.id);
   // Extract segments from globalMarket (exclude years/total keys)
   const gm = d.overview.globalMarket || {};
   const segKeys = Object.keys(gm).filter(k => !['years','total','totalUnit'].includes(k) && Array.isArray(gm[k]));
@@ -251,15 +272,26 @@ function chartSectorSegment(prefix, d) {
 function chartSectorSankey(prefix, d) {
   const el = document.getElementById(`chart-${prefix}-sankey`);
   if (!el) return;
-  const chart = echarts.init(el);
+  const chart = engineEchartsInit(el.id);
   const upNames = (d.chain?.upstream?.materials || []).map(m=>m.name).concat((d.chain?.upstream?.equipment || []).map(e=>e.name));
   const midNames = (d.chain?.midstream?.design || []).map(m=>m.name);
   const downNames = (d.chain?.downstream || []).map(dn=>dn.sub || dn.name);
   const nodes = [...upNames, ...midNames, '核心制造', ...downNames];
   const links = [];
-  upNames.forEach(u => links.push({source:u, target:'核心制造', value:Math.round(Math.random()*100+50)}));
-  midNames.forEach(m => links.push({source:m, target:'核心制造', value:Math.round(Math.random()*200+100)}));
-  downNames.forEach(dn => links.push({source:'核心制造', target:dn, value:Math.round(Math.random()*150+80)}));
+  // 使用实际数据中的市场规模来估算桑基图流量值，而非随机数
+  const allChainItems = [
+    ...(d.chain?.upstream?.materials || []),
+    ...(d.chain?.upstream?.equipment || []),
+    ...(d.chain?.midstream?.design || []),
+    ...(d.chain?.downstream || [])
+  ];
+  const getMarketSize = (name) => {
+    const item = allChainItems.find(i => i.name === name);
+    return item ? (item.global2024 || item.share || 50) : 50;
+  };
+  upNames.forEach(u => links.push({source:u, target:'核心制造', value:Math.round(getMarketSize(u))}));
+  midNames.forEach(m => links.push({source:m, target:'核心制造', value:Math.round(getMarketSize(m))}));
+  downNames.forEach(dn => links.push({source:'核心制造', target:dn, value:Math.round(getMarketSize(dn))}));
   chart.setOption({
     tooltip:{trigger:'item', triggerOn:'mousemove'},
     series:[{type:'sankey', layout:'none', emphasis:{focus:'adjacency'}, nodeAlign:'left', layoutIterations:0,
@@ -277,7 +309,7 @@ function chartSectorUpstream(prefix, d) {
   if (!items.length) return;
   
   if (barEl) {
-    const chart = echarts.init(barEl);
+    const chart = engineEchartsInit(barEl.id);
     chart.setOption({
       tooltip:{trigger:'axis'}, legend:{data:['全球市场(亿美元)','国产化率(%)'], textStyle:{color:'#90a4ae'}, top:5},
       grid:{left:90, right:60, top:50, bottom:30},
@@ -289,7 +321,7 @@ function chartSectorUpstream(prefix, d) {
     });
   }
   if (compEl) {
-    const chart = echarts.init(compEl);
+    const chart = engineEchartsInit(compEl.id);
     chart.setOption({
       tooltip:{trigger:'axis'}, legend:{data:['全球2024','中国2024'], textStyle:{color:'#90a4ae'}, top:5},
       grid:{left:90, right:20, top:50, bottom:30},
@@ -307,7 +339,7 @@ function chartSectorMidstream(prefix, d) {
   const foundry = d.chain?.midstream?.foundry || [];
   
   if (pieEl && foundry.length) {
-    const chart = echarts.init(pieEl);
+    const chart = engineEchartsInit(pieEl.id);
     chart.setOption({
       tooltip:{trigger:'item', formatter:'{b}: {c}%'},
       series:[{type:'pie', radius:['40%','75%'], center:['50%','50%'],
@@ -317,7 +349,7 @@ function chartSectorMidstream(prefix, d) {
     });
   }
   if (stockEl && foundry.length) {
-    const chart = echarts.init(stockEl);
+    const chart = engineEchartsInit(stockEl.id);
     const names = foundry.map(i=>i.name);
     const vals = foundry.map(i=>i.stock||0);
     chart.setOption({
@@ -337,7 +369,7 @@ function chartSectorDownstream(prefix, d) {
   if (!items.length) return;
   
   if (bubbleEl) {
-    const chart = echarts.init(bubbleEl);
+    const chart = engineEchartsInit(bubbleEl.id);
     chart.setOption({
       tooltip:{trigger:'item', formatter:p=>`${p.data[3]}<br/>规模: $${fmt(p.data[0],0)}亿<br/>YoY: +${p.data[1]}%<br/>CAGR: ${p.data[2]}%`},
       grid:{left:60, right:20, top:20, bottom:40},
@@ -350,7 +382,7 @@ function chartSectorDownstream(prefix, d) {
     });
   }
   if (cagrEl) {
-    const chart = echarts.init(cagrEl);
+    const chart = engineEchartsInit(cagrEl.id);
     const sorted = [...items].sort((a,b)=>(b.cagr||0)-(a.cagr||0));
     chart.setOption({
       tooltip:{trigger:'axis'}, grid:{left:120, right:60, top:20, bottom:30},
@@ -369,7 +401,7 @@ function chartSectorTop10(prefix, d) {
   if (!top10.length) return;
   
   if (scatterEl) {
-    const chart = echarts.init(scatterEl);
+    const chart = engineEchartsInit(scatterEl.id);
     chart.setOption({
       tooltip:{trigger:'item', formatter:p=>`${p.data[3]}<br/>规模: $${fmt(p.data[0],0)}亿<br/>CAGR: ${p.data[2]}%`},
       grid:{left:70, right:20, top:20, bottom:30},
@@ -382,7 +414,7 @@ function chartSectorTop10(prefix, d) {
     });
   }
   if (radarEl) {
-    const chart = echarts.init(radarEl);
+    const chart = engineEchartsInit(radarEl.id);
     chart.setOption({
       tooltip:{}, radar:{center:['50%','55%'], radius:'65%', indicator:top10.map(t=>({name:t.name, max:300})), axisName:{color:'#90a4ae', fontSize:9}},
       series:[{type:'radar', data:[{value:top10.map(t=>(t.yoy||0)*2), name:'增长率', areaStyle:{color:'rgba(79,195,247,0.3)'}, lineStyle:{color:'#4fc3f7'}, itemStyle:{color:'#4fc3f7'}},
@@ -398,7 +430,7 @@ function chartSectorStocks(prefix, d) {
   if (!stocks.length) return;
   
   if (barEl) {
-    const chart = echarts.init(barEl);
+    const chart = engineEchartsInit(barEl.id);
     const sorted = [...stocks].sort((a,b)=>(b.chg2024||0)-(a.chg2024||0));
     chart.setOption({
       tooltip:{trigger:'axis', formatter:p=>p[0].name+'<br/>涨跌幅: '+(p[0].value>=0?'+':'')+p[0].value.toFixed(0)+'%'},
@@ -410,7 +442,7 @@ function chartSectorStocks(prefix, d) {
     });
   }
   if (scatterEl) {
-    const chart = echarts.init(scatterEl);
+    const chart = engineEchartsInit(scatterEl.id);
     chart.setOption({
       tooltip:{trigger:'item', formatter:p=>`${p.data[3]}<br/>市值: $${fmt(p.data[0],0)}亿<br/>营收增速: +${p.data[1]}%`},
       grid:{left:70, right:20, top:20, bottom:30},

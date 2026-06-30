@@ -21,6 +21,7 @@ import subprocess
 import sys
 import time
 import traceback
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -185,19 +186,17 @@ def main():
 
     total_start = time.time()
     all_results = []
+    enabled_modules = [m for m in MODULES if m.get("enabled", True)]
 
-    for module in MODULES:
-        if not module.get("enabled", True):
-            logger.info(f"[{module['name']}] 已禁用，跳过")
-            all_results.append({
-                "module": module["name"],
-                "status": "skipped",
-                "reason": "disabled",
-            })
-            continue
+    # 并行执行所有启用的子模块
+    with ThreadPoolExecutor(max_workers=len(enabled_modules)) as executor:
+        future_map = {executor.submit(run_module, m): m for m in enabled_modules}
+        for future in as_completed(future_map):
+            result = future.result()
+            all_results.append(result)
 
-        result = run_module(module)
-        all_results.append(result)
+    # 保持模块顺序
+    all_results.sort(key=lambda r: [m["name"] for m in MODULES].index(r["module"]))
 
     total_elapsed = time.time() - total_start
 
@@ -222,11 +221,15 @@ def main():
     logger.info(f"总耗时: {total_elapsed:.1f}s")
     logger.info(f"成功: {sum(1 for r in all_results if r['status'] == 'success')}/{len(all_results)}")
 
-    # 返回退出码
+    # 返回退出码：只有全部模块失败才 exit(1)，部分成功允许提交已获取的数据
+    success_count = sum(1 for r in all_results if r["status"] == "success")
     failed = [r for r in all_results if r["status"] not in ("success", "skipped")]
-    if failed:
-        logger.warning(f"有 {len(failed)} 个模块失败")
+    if success_count == 0:
+        logger.error(f"所有 {len(MODULES)} 个模块均失败，退出")
         sys.exit(1)
+    elif failed:
+        logger.warning(f"部分成功: {success_count}/{len(MODULES)}，{len(failed)} 个模块失败")
+        logger.info("继续提交已获取的数据")
     else:
         logger.info("所有模块执行成功")
 

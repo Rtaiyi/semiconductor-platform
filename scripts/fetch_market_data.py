@@ -52,7 +52,7 @@ BENCHMARK_INDICES = [
     {"secid": "100.DJI", "code": "DJI", "name": "道琼斯", "region": "美国", "type": "大盘"},
 ]
 
-# SOX 指数（东方财富不支持，使用手动缓存）
+# SOX 指数（东方财富不支持，尝试从 Yahoo Finance 获取）
 SOX_CACHED = {
     "code": "SOX",
     "name": "费城半导体指数",
@@ -60,6 +60,79 @@ SOX_CACHED = {
     "type": "半导体",
     "note": "东方财富API暂不支持SOX指数，当前为缓存值。可通过Yahoo Finance手动更新。",
 }
+
+
+def fetch_sox_index() -> dict:
+    """尝试从 Yahoo Finance 获取 SOX 费城半导体指数实时数据
+    
+    如果获取失败，回退到上次 benchmarks.json 中的缓存值；
+    如果连缓存也没有，使用硬编码 fallback。
+    """
+    try:
+        # 使用 Yahoo Finance v8 API (免费，无需认证)
+        url = "https://query1.finance.yahoo.com/v8/finance/chart/%5ESOX"
+        params = {
+            "range": "1d",
+            "interval": "1d",
+        }
+        headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/120.0.0.0 Safari/537.36"
+            ),
+        }
+        resp = requests.get(url, params=params, headers=headers, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
+        
+        result = data.get("chart", {}).get("result", [])
+        if not result:
+            raise ValueError("Yahoo Finance 返回空数据")
+        
+        meta = result[0].get("meta", {})
+        price = meta.get("regularMarketPrice")
+        
+        if price is None:
+            raise ValueError("无法解析 SOX 价格")
+        
+        previous_close = meta.get("previousClose", price)
+        change_pct = ((price - previous_close) / previous_close * 100) if previous_close else None
+        
+        logger.info(f"成功从 Yahoo Finance 获取 SOX: {price} (涨跌: {change_pct:.2f}%)")
+        
+        return {
+            "code": "SOX",
+            "name": "费城半导体指数",
+            "price": price,
+            "change_pct": round(change_pct, 2) if change_pct is not None else None,
+            "change_amt": round(price - previous_close, 2) if previous_close else None,
+            "region": "美国",
+            "type": "半导体",
+            "source": "Yahoo Finance",
+        }
+    except Exception as e:
+        logger.warning(f"Yahoo Finance SOX 获取失败: {e}，尝试使用缓存值")
+        
+        # 回退：从上次 benchmarks.json 中读取 SOX 缓存
+        if BENCHMARKS_FILE.exists():
+            try:
+                with open(BENCHMARKS_FILE, "r", encoding="utf-8") as f:
+                    old_data = json.load(f)
+                for idx in old_data.get("indices", []):
+                    if idx.get("code") == "SOX" and idx.get("price") is not None:
+                        idx["note"] = "Yahoo Finance 获取失败，使用上次缓存值"
+                        idx["source"] = "cached"
+                        logger.info(f"使用上次缓存的 SOX 数据: {idx.get('price')}")
+                        return idx
+            except Exception:
+                pass
+        
+        # 最终 fallback：返回无价格数据的占位符
+        SOX_CACHED["note"] = f"Yahoo Finance 获取失败，暂无实时数据 ({datetime.now(TZ_BEIJING).strftime('%Y-%m-%d %H:%M')})"
+        SOX_CACHED["source"] = "unavailable"
+        logger.warning("SOX 指数无法获取，使用占位数据")
+        return dict(SOX_CACHED)
 
 
 def fetch_benchmarks() -> dict:
@@ -139,8 +212,9 @@ def fetch_benchmarks() -> dict:
         if idx["code"] not in fetched_codes:
             errors.append({"code": idx["code"], "name": idx["name"], "error": "API未返回数据"})
 
-    # 添加 SOX 缓存数据
-    indices.append(SOX_CACHED)
+    # 添加 SOX 指数（从 Yahoo Finance 动态获取，失败则回退缓存）
+    sox_data = fetch_sox_index()
+    indices.append(sox_data)
 
     return {"indices": indices, "errors": errors}
 
@@ -212,7 +286,7 @@ def main():
 
     elapsed = time.time() - start_time
     logger.info(
-        f"完成: {result['indices']} 个指数, "
+        f"完成: {len(result['indices'])} 个指数, "
         f"market_data: {md_result['status']}, "
         f"耗时 {elapsed:.1f}s"
     )

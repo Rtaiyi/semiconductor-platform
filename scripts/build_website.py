@@ -125,4 +125,3 @@ with open('/workspace/semiconductor-platform/website/index.html', 'w') as f:
 
 print(f"✅ Data-driven index.html created: {len(html)} bytes")
 print(f"   Key changes: DATA→APP_DATA (fetch), QUOTE_STOCKS→STOCK_LIST, async render")
-PYEOF
