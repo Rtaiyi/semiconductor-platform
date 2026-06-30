@@ -120,7 +120,7 @@ async function render() {
       </div>
 
       <!-- Sector Capital Flow Analysis -->
-      <div class="section-title" style="margin-top:24px;"><span class="icon">💸</span>行业板块资金流向分析</div>
+      <div class="section-title" style="margin-top:24px;"><span class="icon">💸</span>行业板块资金流向分析 <span style="font-size:12px;color:var(--text2);font-weight:400;" id="flow-update-time">加载中...</span></div>
       <div class="grid grid-2">
         <div class="card"><h3>🔀 各板块资金流向分布</h3><div id="chart-sector-flow" class="chart-lg"></div>
           <div class="insight-card"><div class="insight-title">💡 资金流向解读</div><div class="insight-body" id="market-insight-flow">
@@ -144,7 +144,7 @@ async function render() {
       </div>
 
       <!-- A-Share Historical Statistics -->
-      <div class="section-title" style="margin-top:24px;"><span class="icon">📊</span>A股历史统计分析</div>
+      <div class="section-title" style="margin-top:24px;"><span class="icon">📊</span>A股历史统计分析 <span style="font-size:12px;color:var(--text2);font-weight:400;">📊 数据更新: 2026Q2 (a_stock_data.json)</span></div>
       <div class="grid grid-2">
         <div class="card"><h3>📈 近5年A股总营收 vs 总市值趋势</h3><div id="chart-a-revenue-mcap" class="chart-lg"></div>
           <div class="insight-card"><div class="insight-title">💡 分析结论</div><div class="insight-body" id="a-insight-revenue">
@@ -175,7 +175,7 @@ async function render() {
 
     <!-- Overview Section -->
     <div class="section" id="overview">
-      <div class="section-title"><span class="icon">📊</span>全球半导体市场总览</div>
+      <div class="section-title"><span class="icon">📊</span>全球半导体市场总览 <span style="font-size:12px;color:var(--text2);font-weight:400;">📊 数据更新: ${APP_DATA.updated || (APP_DATA.last_updated ? APP_DATA.last_updated.substring(0,10) : '未知')}</span></div>
       <div class="stat-cards">
         <div class="stat-card">
           <div class="value">$${fmt(APP_DATA.overview.globalMarket.total[2],0)}亿</div>
@@ -1756,6 +1756,8 @@ async function loadSectorFlowData() {
       const data = await resp.json();
       if (data.groups && data.groups.length > 0) {
         sectorFlowData = data;
+        const flowTimeEl = document.getElementById('flow-update-time');
+        if (flowTimeEl) flowTimeEl.textContent = '📊 数据更新: ' + (data.date || data.timestamp?.substring(0,10) || '未知');
         chartSectorFlowSankey(data);
         loadSectorFlowTimeline(currentFlowKlt, data);
         return;

@@ -179,7 +179,7 @@ function buildSectorHTML(sectorId, data) {
 
   return `
     <div class="section" id="${prefix}-overview">
-      <div class="section-title"><span class="icon">${cfg.icon}</span>全球${cfg.name}市场总览</div>
+      <div class="section-title"><span class="icon">${cfg.icon}</span>全球${cfg.name}市场总览 <span style="font-size:12px;color:var(--text2);font-weight:400;">📊 数据更新: ${d.updated || (d.last_updated ? d.last_updated.substring(0,10) : '未知')}</span></div>
       ${statCards}
       <div class="grid grid-2">
         <div class="card"><h3>全球${cfg.name}市场趋势</h3><div id="chart-${prefix}-trend" class="chart"></div>
