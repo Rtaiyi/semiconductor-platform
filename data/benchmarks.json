@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-07-01T18:31:45.790662+08:00",
-  "date": "2026-07-01",
-  "time": "18:31:45",
+  "timestamp": "2026-07-02T13:03:14.822885+08:00",
+  "date": "2026-07-02",
+  "time": "13:03:14",
   "total": 8,
   "errors": [
     {
@@ -14,70 +14,70 @@
     {
       "code": "000300",
       "name": "沪深300",
-      "price": 4958.98,
-      "change_pct": -0.41,
-      "change_amt": -20.45,
+      "price": 4863.44,
+      "change_pct": -1.93,
+      "change_amt": -95.54,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "000688",
       "name": "科创50",
-      "price": 2153.04,
-      "change_pct": -2.48,
-      "change_amt": -54.82,
+      "price": 2043.14,
+      "change_pct": -5.1,
+      "change_amt": -109.9,
       "region": "中国",
       "type": "科技"
     },
     {
       "code": "000001",
       "name": "上证指数",
-      "price": 4112.45,
-      "change_pct": 0.44,
-      "change_amt": 18.05,
+      "price": 4071.0,
+      "change_pct": -1.01,
+      "change_amt": -41.45,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "399001",
       "name": "深证成指",
-      "price": 16119.17,
-      "change_pct": -0.53,
-      "change_amt": -86.39,
+      "price": 15759.31,
+      "change_pct": -2.23,
+      "change_amt": -359.86,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "399006",
       "name": "创业板指",
-      "price": 4260.72,
-      "change_pct": -1.89,
-      "change_amt": -81.99,
+      "price": 4104.5,
+      "change_pct": -3.67,
+      "change_amt": -156.22,
       "region": "中国",
       "type": "成长"
     },
     {
       "code": "SPX",
       "name": "标普500",
-      "price": 7499.36,
-      "change_pct": 0.79,
-      "change_amt": 58.93,
+      "price": 7483.23,
+      "change_pct": -0.22,
+      "change_amt": -16.13,
       "region": "美国",
       "type": "大盘"
     },
     {
       "code": "NDX",
       "name": "纳斯达克",
-      "price": 26213.72,
-      "change_pct": 1.52,
-      "change_amt": 393.58,
+      "price": 26040.03,
+      "change_pct": -0.66,
+      "change_amt": -173.69,
       "region": "美国",
       "type": "科技"
     },
     {
       "code": "SOX",
       "name": "费城半导体指数",
-      "price": 14246.961,
+      "price": 13353.279,
       "change_pct": 0.0,
       "change_amt": 0.0,
       "region": "美国",
