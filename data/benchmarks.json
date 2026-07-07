@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-07-07T13:48:53.779097+08:00",
+  "timestamp": "2026-07-07T18:08:16.207964+08:00",
   "date": "2026-07-07",
-  "time": "13:48:53",
+  "time": "18:08:16",
   "total": 8,
   "errors": [
     {
@@ -14,45 +14,45 @@
     {
       "code": "000300",
       "name": "沪深300",
-      "price": 4804.24,
-      "change_pct": -0.78,
-      "change_amt": -37.76,
+      "price": 4792.26,
+      "change_pct": -1.03,
+      "change_amt": -49.74,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "000688",
       "name": "科创50",
-      "price": 2018.22,
-      "change_pct": 1.11,
-      "change_amt": 22.12,
+      "price": 2001.59,
+      "change_pct": 0.28,
+      "change_amt": 5.49,
       "region": "中国",
       "type": "科技"
     },
     {
       "code": "000001",
       "name": "上证指数",
-      "price": 3992.27,
-      "change_pct": -1.21,
-      "change_amt": -48.97,
+      "price": 3990.24,
+      "change_pct": -1.26,
+      "change_amt": -51.0,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "399001",
       "name": "深证成指",
-      "price": 15292.43,
-      "change_pct": -0.81,
-      "change_amt": -124.37,
+      "price": 15225.11,
+      "change_pct": -1.24,
+      "change_amt": -191.69,
       "region": "中国",
       "type": "大盘"
     },
     {
       "code": "399006",
       "name": "创业板指",
-      "price": 3932.92,
-      "change_pct": -0.4,
-      "change_amt": -15.94,
+      "price": 3911.91,
+      "change_pct": -0.94,
+      "change_amt": -36.95,
       "region": "中国",
       "type": "成长"
     },

@@ -1,28 +1,30 @@
 {
-  "timestamp": "2026-07-07T13:48:53.797422+08:00",
+  "timestamp": "2026-07-07T18:08:17.616521+08:00",
   "date": "2026-07-07",
-  "time": "13:48:53",
+  "time": "18:08:17",
   "overall": "success",
   "total_modules": 3,
   "success_count": 3,
   "failed_count": 0,
-  "total_elapsed": 2.02,
+  "total_elapsed": 3.84,
   "modules": [
     {
       "module": "fetch_a_hk_stocks",
       "description": "A股+港股半导体龙头实时行情",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 1.96,
+      "elapsed": 3.84,
       "stdout_tail": "",
-      "stderr_errors": []
+      "stderr_errors": [
+        "2026-07-07 10:08:14 [WARNING] 请求失败 (attempt 1/3): ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+      ]
     },
     {
       "module": "fetch_global_stocks",
       "description": "全球半导体龙头股价",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.01,
+      "elapsed": 2.61,
       "stdout_tail": "",
       "stderr_errors": []
     },
@@ -31,28 +33,28 @@
       "description": "市场基准指数 + 行业数据",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.02,
+      "elapsed": 2.45,
       "stdout_tail": "",
       "stderr_errors": [
-        "2026-07-07 05:48:53 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
+        "2026-07-07 10:08:16 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
       ]
     }
   ],
   "output_files": {
     "realtime_quotes.json": {
       "exists": true,
-      "size_bytes": 17313,
-      "modified": "2026-07-07T13:48:53.722584+08:00"
+      "size_bytes": 17324,
+      "modified": "2026-07-07T18:08:17.597578+08:00"
     },
     "global_stocks.json": {
       "exists": true,
       "size_bytes": 8315,
-      "modified": "2026-07-07T13:48:36.793468+08:00"
+      "modified": "2026-07-07T18:07:58.719958+08:00"
     },
     "benchmarks.json": {
       "exists": true,
-      "size_bytes": 1827,
-      "modified": "2026-07-07T13:48:53.779840+08:00"
+      "size_bytes": 1826,
+      "modified": "2026-07-07T18:08:16.208662+08:00"
     }
   }
 }
