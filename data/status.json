@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-07-17T12:11:57.675003+08:00",
+  "timestamp": "2026-07-17T12:46:18.141240+08:00",
   "date": "2026-07-17",
-  "time": "12:11:57",
+  "time": "12:46:18",
   "overall": "success",
   "total_modules": 3,
   "success_count": 3,
   "failed_count": 0,
-  "total_elapsed": 2.76,
+  "total_elapsed": 20.73,
   "modules": [
     {
       "module": "fetch_a_hk_stocks",
       "description": "A股+港股半导体龙头实时行情",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.7,
+      "elapsed": 2.2,
       "stdout_tail": "",
       "stderr_errors": []
     },
@@ -22,19 +22,23 @@
       "description": "全球半导体龙头股价",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.76,
+      "elapsed": 20.72,
       "stdout_tail": "",
-      "stderr_errors": []
+      "stderr_errors": [
+        "2026-07-17 04:46:14 [WARNING] 请求失败 (attempt 2/3): 502 Server Error: Bad Gateway for url: https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2%2Cf3%2Cf4%2Cf12%2Cf14%2Cf15%2Cf16%2Cf17%2Cf18%2Cf20%2Cf21%2Cf23%2Cf8%2Cf9%2Cf5%2Cf6%2Cf62%2Cf115&secids=105.NVDA%2C105.AMD%2C105.AVGO%2C105.QCOM%2C105.MRVL%2C105.INTC%2C105.MU%2C105.SKHY%2C106.TSM%2C105.ASML%2C105.AMAT%2C105.LRCX%2C105.KLAC",
+        "2026-07-17 04:46:18 [WARNING] 请求失败 (attempt 3/3): 502 Server Error: Bad Gateway for url: https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2%2Cf3%2Cf4%2Cf12%2Cf14%2Cf15%2Cf16%2Cf17%2Cf18%2Cf20%2Cf21%2Cf23%2Cf8%2Cf9%2Cf5%2Cf6%2Cf62%2Cf115&secids=105.NVDA%2C105.AMD%2C105.AVGO%2C105.QCOM%2C105.MRVL%2C105.INTC%2C105.MU%2C105.SKHY%2C106.TSM%2C105.ASML%2C105.AMAT%2C105.LRCX%2C105.KLAC",
+        "2026-07-17 04:46:18 [WARNING] 出现 13 个错误: [{'code': 'NVDA', 'name': '英伟达', 'error': 'API未返回数据'}, {'code': 'AMD', 'name': 'AMD', 'error': 'API未返回数据'}, {'code': 'AVGO', 'name': '博通', 'error': 'API未返回数据'}, {'code': 'QCOM', 'name': '高通', 'error': 'API未返回数据'}, {'code': 'MRVL', 'name': '迈威尔', 'error': 'API未返回数据'}, {'code': 'INTC', 'name': '英特尔', 'error': 'API未返回数据'}, {'code': 'MU', 'name': '美光科技', 'error': 'API未返回数据'}, {'code': 'SKHY', 'name': 'SK海力士(ADR)', 'error': 'API未返回数据'}, {'code': 'TSM', 'name': '台积电(ADR)', 'error': 'API未返回数据'}, {'code': 'ASML', 'name': '阿斯麦', 'error': 'API未返回数据'}, {'code': 'AMAT', 'name': '应用材料', 'error': 'API未返回数据'}, {'code': 'LRCX', 'name': '拉姆研究', 'error': 'API未返回数据'}, {'code': 'KLAC', 'name': '科磊', 'error': 'API未返回数据'}]"
+      ]
     },
     {
       "module": "fetch_market_data",
       "description": "市场基准指数 + 行业数据",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.73,
+      "elapsed": 2.38,
       "stdout_tail": "",
       "stderr_errors": [
-        "2026-07-17 04:11:57 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
+        "2026-07-17 04:45:59 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
       ]
     }
   ],
@@ -42,17 +46,17 @@
     "realtime_quotes.json": {
       "exists": true,
       "size_bytes": 17369,
-      "modified": "2026-07-17T12:11:57.562592+08:00"
+      "modified": "2026-07-17T12:45:59.595366+08:00"
     },
     "global_stocks.json": {
       "exists": true,
       "size_bytes": 8315,
-      "modified": "2026-07-17T12:11:43.380248+08:00"
+      "modified": "2026-07-17T12:45:41.927627+08:00"
     },
     "benchmarks.json": {
       "exists": true,
       "size_bytes": 1834,
-      "modified": "2026-07-17T12:11:57.633739+08:00"
+      "modified": "2026-07-17T12:45:59.781688+08:00"
     }
   }
 }
