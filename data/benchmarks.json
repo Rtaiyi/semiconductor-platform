@@ -1,44 +1,9 @@
 {
-  "timestamp": "2026-07-22T12:21:23.051957+08:00",
+  "timestamp": "2026-07-22T12:50:54.507390+08:00",
   "date": "2026-07-22",
-  "time": "12:21:23",
-  "total": 1,
+  "time": "12:50:54",
+  "total": 8,
   "errors": [
-    {
-      "code": "000300",
-      "name": "沪深300",
-      "error": "API未返回数据"
-    },
-    {
-      "code": "000688",
-      "name": "科创50",
-      "error": "API未返回数据"
-    },
-    {
-      "code": "000001",
-      "name": "上证指数",
-      "error": "API未返回数据"
-    },
-    {
-      "code": "399001",
-      "name": "深证成指",
-      "error": "API未返回数据"
-    },
-    {
-      "code": "399006",
-      "name": "创业板指",
-      "error": "API未返回数据"
-    },
-    {
-      "code": "SPX",
-      "name": "标普500",
-      "error": "API未返回数据"
-    },
-    {
-      "code": "NDX",
-      "name": "纳斯达克",
-      "error": "API未返回数据"
-    },
     {
       "code": "DJI",
       "name": "道琼斯",
@@ -46,6 +11,69 @@
     }
   ],
   "indices": [
+    {
+      "code": "000300",
+      "name": "沪深300",
+      "price": 4771.1,
+      "change_pct": 0.67,
+      "change_amt": 31.87,
+      "region": "中国",
+      "type": "大盘"
+    },
+    {
+      "code": "000688",
+      "name": "科创50",
+      "price": 1932.5,
+      "change_pct": 1.54,
+      "change_amt": 29.34,
+      "region": "中国",
+      "type": "科技"
+    },
+    {
+      "code": "000001",
+      "name": "上证指数",
+      "price": 3883.58,
+      "change_pct": 0.5,
+      "change_amt": 19.21,
+      "region": "中国",
+      "type": "大盘"
+    },
+    {
+      "code": "399001",
+      "name": "深证成指",
+      "price": 14351.91,
+      "change_pct": 0.61,
+      "change_amt": 87.62,
+      "region": "中国",
+      "type": "大盘"
+    },
+    {
+      "code": "399006",
+      "name": "创业板指",
+      "price": 3681.2,
+      "change_pct": -0.13,
+      "change_amt": -4.77,
+      "region": "中国",
+      "type": "成长"
+    },
+    {
+      "code": "SPX",
+      "name": "标普500",
+      "price": 7509.2,
+      "change_pct": 0.89,
+      "change_amt": 65.92,
+      "region": "美国",
+      "type": "大盘"
+    },
+    {
+      "code": "NDX",
+      "name": "纳斯达克",
+      "price": 25837.21,
+      "change_pct": 1.29,
+      "change_amt": 329.14,
+      "region": "美国",
+      "type": "科技"
+    },
     {
       "code": "SOX",
       "name": "费城半导体指数",
