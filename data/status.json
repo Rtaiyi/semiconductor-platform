@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-08-06T12:18:28.465135+08:00",
+  "timestamp": "2026-08-06T12:47:46.557624+08:00",
   "date": "2026-08-06",
-  "time": "12:18:28",
+  "time": "12:47:46",
   "overall": "success",
   "total_modules": 3,
   "success_count": 3,
   "failed_count": 0,
-  "total_elapsed": 51.26,
+  "total_elapsed": 2.29,
   "modules": [
     {
       "module": "fetch_a_hk_stocks",
       "description": "A股+港股半导体龙头实时行情",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 18.9,
+      "elapsed": 2.19,
       "stdout_tail": "",
       "stderr_errors": []
     },
@@ -22,7 +22,7 @@
       "description": "全球半导体龙头股价",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 18.95,
+      "elapsed": 2.22,
       "stdout_tail": "",
       "stderr_errors": []
     },
@@ -31,11 +31,10 @@
       "description": "市场基准指数 + 行业数据",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 51.26,
+      "elapsed": 2.29,
       "stdout_tail": "",
       "stderr_errors": [
-        "2026-08-06 04:18:28 [WARNING] 请求失败 (attempt 3/3): 502 Server Error: Bad Gateway for url: https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2%2Cf3%2Cf4%2Cf12%2Cf14%2Cf20%2Cf5%2Cf6&secids=1.000300%2C1.000688%2C1.000001%2C0.399001%2C0.399006%2C100.SPX%2C100.NDX%2C100.DJI",
-        "2026-08-06 04:18:28 [WARNING] 指数获取错误: [{'code': '000300', 'name': '沪深300', 'error': 'API未返回数据'}, {'code': '000688', 'name': '科创50', 'error': 'API未返回数据'}, {'code': '000001', 'name': '上证指数', 'error': 'API未返回数据'}, {'code': '399001', 'name': '深证成指', 'error': 'API未返回数据'}, {'code': '399006', 'name': '创业板指', 'error': 'API未返回数据'}, {'code': 'SPX', 'name': '标普500', 'error': 'API未返回数据'}, {'code': 'NDX', 'name': '纳斯达克', 'error': 'API未返回数据'}, {'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
+        "2026-08-06 04:47:46 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
       ]
     }
   ],
@@ -43,17 +42,17 @@
     "realtime_quotes.json": {
       "exists": true,
       "size_bytes": 17282,
-      "modified": "2026-08-06T12:17:56.087836+08:00"
+      "modified": "2026-08-06T12:47:46.437690+08:00"
     },
     "global_stocks.json": {
       "exists": true,
       "size_bytes": 8315,
-      "modified": "2026-08-06T12:17:26.003279+08:00"
+      "modified": "2026-08-06T12:47:28.971629+08:00"
     },
     "benchmarks.json": {
       "exists": true,
-      "size_bytes": 1186,
-      "modified": "2026-08-06T12:18:28.441138+08:00"
+      "size_bytes": 1829,
+      "modified": "2026-08-06T12:47:46.539078+08:00"
     }
   }
 }
