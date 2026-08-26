@@ -1,40 +1,44 @@
 {
-  "timestamp": "2026-08-26T10:50:30.710994+08:00",
+  "timestamp": "2026-08-26T12:19:49.313504+08:00",
   "date": "2026-08-26",
-  "time": "10:50:30",
+  "time": "12:19:49",
   "overall": "success",
   "total_modules": 3,
   "success_count": 3,
   "failed_count": 0,
-  "total_elapsed": 2.91,
+  "total_elapsed": 8.07,
   "modules": [
     {
       "module": "fetch_a_hk_stocks",
       "description": "A股+港股半导体龙头实时行情",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.77,
+      "elapsed": 5.58,
       "stdout_tail": "",
-      "stderr_errors": []
+      "stderr_errors": [
+        "2026-08-26 04:19:46 [ERROR] 批次请求全部失败: ['1.688256', '0.002371', '1.688981']..."
+      ]
     },
     {
       "module": "fetch_global_stocks",
       "description": "全球半导体龙头股价",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.82,
+      "elapsed": 5.38,
       "stdout_tail": "",
-      "stderr_errors": []
+      "stderr_errors": [
+        "2026-08-26 04:19:46 [WARNING] 出现 13 个错误: [{'code': 'NVDA', 'name': '英伟达', 'error': 'API未返回数据'}, {'code': 'AMD', 'name': 'AMD', 'error': 'API未返回数据'}, {'code': 'AVGO', 'name': '博通', 'error': 'API未返回数据'}, {'code': 'QCOM', 'name': '高通', 'error': 'API未返回数据'}, {'code': 'MRVL', 'name': '迈威尔', 'error': 'API未返回数据'}, {'code': 'INTC', 'name': '英特尔', 'error': 'API未返回数据'}, {'code': 'MU', 'name': '美光科技', 'error': 'API未返回数据'}, {'code': 'SKHY', 'name': 'SK海力士(ADR)', 'error': 'API未返回数据'}, {'code': 'TSM', 'name': '台积电(ADR)', 'error': 'API未返回数据'}, {'code': 'ASML', 'name': '阿斯麦', 'error': 'API未返回数据'}, {'code': 'AMAT', 'name': '应用材料', 'error': 'API未返回数据'}, {'code': 'LRCX', 'name': '拉姆研究', 'error': 'API未返回数据'}, {'code': 'KLAC', 'name': '科磊', 'error': 'API未返回数据'}]"
+      ]
     },
     {
       "module": "fetch_market_data",
       "description": "市场基准指数 + 行业数据",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.91,
+      "elapsed": 8.07,
       "stdout_tail": "",
       "stderr_errors": [
-        "2026-08-26 02:50:30 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
+        "2026-08-26 04:19:49 [WARNING] 指数获取错误: [{'code': '000300', 'name': '沪深300', 'error': 'API未返回数据'}, {'code': '000688', 'name': '科创50', 'error': 'API未返回数据'}, {'code': '000001', 'name': '上证指数', 'error': 'API未返回数据'}, {'code': '399001', 'name': '深证成指', 'error': 'API未返回数据'}, {'code': '399006', 'name': '创业板指', 'error': 'API未返回数据'}, {'code': 'SPX', 'name': '标普500', 'error': 'API未返回数据'}, {'code': 'NDX', 'name': '纳斯达克', 'error': 'API未返回数据'}, {'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
       ]
     }
   ],
@@ -42,17 +46,17 @@
     "realtime_quotes.json": {
       "exists": true,
       "size_bytes": 17230,
-      "modified": "2026-08-26T10:50:30.550258+08:00"
+      "modified": "2026-08-26T12:19:27.792692+08:00"
     },
     "global_stocks.json": {
       "exists": true,
       "size_bytes": 8315,
-      "modified": "2026-08-26T10:50:14.613527+08:00"
+      "modified": "2026-08-26T12:19:27.792578+08:00"
     },
     "benchmarks.json": {
       "exists": true,
-      "size_bytes": 1818,
-      "modified": "2026-08-26T10:50:30.693259+08:00"
+      "size_bytes": 1186,
+      "modified": "2026-08-26T12:19:49.292894+08:00"
     }
   }
 }
