@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-08-31T15:34:01.138822+08:00",
+  "timestamp": "2026-08-31T23:24:33.919608+08:00",
   "date": "2026-08-31",
-  "time": "15:34:01",
+  "time": "23:24:33",
   "total": 8,
   "errors": [
     {
@@ -59,25 +59,25 @@
     {
       "code": "SPX",
       "name": "标普500",
-      "price": 7711.76,
-      "change_pct": -0.25,
-      "change_amt": -19.23,
+      "price": 7677.01,
+      "change_pct": -0.45,
+      "change_amt": -34.75,
       "region": "美国",
       "type": "大盘"
     },
     {
       "code": "NDX",
       "name": "纳斯达克",
-      "price": 26402.42,
-      "change_pct": -0.52,
-      "change_amt": -138.93,
+      "price": 26313.1,
+      "change_pct": -0.34,
+      "change_amt": -89.32,
       "region": "美国",
       "type": "科技"
     },
     {
       "code": "SOX",
       "name": "费城半导体指数",
-      "price": 11469.662,
+      "price": 11482.002,
       "change_pct": 0.0,
       "change_amt": 0.0,
       "region": "美国",
