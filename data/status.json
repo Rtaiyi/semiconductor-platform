@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-10-14T21:02:50.550792+08:00",
-  "date": "2026-10-14",
-  "time": "21:02:50",
+  "timestamp": "2026-10-15T13:43:56.228610+08:00",
+  "date": "2026-10-15",
+  "time": "13:43:56",
   "overall": "success",
   "total_modules": 3,
   "success_count": 3,
   "failed_count": 0,
-  "total_elapsed": 2.38,
+  "total_elapsed": 10.0,
   "modules": [
     {
       "module": "fetch_a_hk_stocks",
       "description": "A股+港股半导体龙头实时行情",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.09,
+      "elapsed": 2.3,
       "stdout_tail": "",
       "stderr_errors": []
     },
@@ -22,37 +22,42 @@
       "description": "全球半导体龙头股价",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.06,
+      "elapsed": 9.08,
       "stdout_tail": "",
-      "stderr_errors": []
+      "stderr_errors": [
+        "2026-10-15 05:43:48 [WARNING] 请求失败 (attempt 1/3): 502 Server Error: Bad Gateway for url: https://push2delay.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2%2Cf3%2Cf4%2Cf12%2Cf14%2Cf15%2Cf16%2Cf17%2Cf18%2Cf20%2Cf21%2Cf23%2Cf8%2Cf9%2Cf5%2Cf6%2Cf62%2Cf115&secids=105.NVDA%2C105.AMD%2C105.AVGO%2C105.QCOM%2C105.MRVL%2C105.INTC%2C105.MU%2C105.SKHY%2C106.TSM%2C105.ASML%2C105.AMAT%2C105.LRCX%2C105.KLAC",
+        "2026-10-15 05:43:50 [WARNING] 请求失败 (attempt 2/3): 502 Server Error: Bad Gateway for url: https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2%2Cf3%2Cf4%2Cf12%2Cf14%2Cf15%2Cf16%2Cf17%2Cf18%2Cf20%2Cf21%2Cf23%2Cf8%2Cf9%2Cf5%2Cf6%2Cf62%2Cf115&secids=105.NVDA%2C105.AMD%2C105.AVGO%2C105.QCOM%2C105.MRVL%2C105.INTC%2C105.MU%2C105.SKHY%2C106.TSM%2C105.ASML%2C105.AMAT%2C105.LRCX%2C105.KLAC"
+      ]
     },
     {
       "module": "fetch_market_data",
       "description": "市场基准指数 + 行业数据",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.38,
+      "elapsed": 9.99,
       "stdout_tail": "",
       "stderr_errors": [
-        "2026-10-14 13:02:50 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
+        "2026-10-15 05:43:48 [WARNING] 请求失败 (attempt 1/3): 502 Server Error: Bad Gateway for url: https://push2delay.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2%2Cf3%2Cf4%2Cf12%2Cf14%2Cf20%2Cf5%2Cf6&secids=1.000300%2C1.000688%2C1.000001%2C0.399001%2C0.399006%2C100.SPX%2C100.NDX%2C100.DJI",
+        "2026-10-15 05:43:51 [WARNING] 请求失败 (attempt 2/3): 502 Server Error: Bad Gateway for url: https://push2delay.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2%2Cf3%2Cf4%2Cf12%2Cf14%2Cf20%2Cf5%2Cf6&secids=1.000300%2C1.000688%2C1.000001%2C0.399001%2C0.399006%2C100.SPX%2C100.NDX%2C100.DJI",
+        "2026-10-15 05:43:56 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
       ]
     }
   ],
   "output_files": {
     "realtime_quotes.json": {
       "exists": true,
-      "size_bytes": 17259,
-      "modified": "2026-10-14T21:02:50.246118+08:00"
+      "size_bytes": 17271,
+      "modified": "2026-10-15T13:43:48.516917+08:00"
     },
     "global_stocks.json": {
       "exists": true,
       "size_bytes": 8315,
-      "modified": "2026-10-14T21:02:33.771943+08:00"
+      "modified": "2026-10-15T13:43:34.854604+08:00"
     },
     "benchmarks.json": {
       "exists": true,
-      "size_bytes": 1830,
-      "modified": "2026-10-14T21:02:50.527224+08:00"
+      "size_bytes": 1833,
+      "modified": "2026-10-15T13:43:56.208103+08:00"
     }
   }
 }
