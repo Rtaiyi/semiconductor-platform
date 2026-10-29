@@ -1,28 +1,32 @@
 {
-  "timestamp": "2026-10-29T14:51:57.626452+08:00",
+  "timestamp": "2026-10-29T15:39:00.871003+08:00",
   "date": "2026-10-29",
-  "time": "14:51:57",
+  "time": "15:39:00",
   "overall": "success",
   "total_modules": 3,
   "success_count": 3,
   "failed_count": 0,
-  "total_elapsed": 2.65,
+  "total_elapsed": 51.88,
   "modules": [
     {
       "module": "fetch_a_hk_stocks",
       "description": "A股+港股半导体龙头实时行情",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.57,
+      "elapsed": 51.88,
       "stdout_tail": "",
-      "stderr_errors": []
+      "stderr_errors": [
+        "2026-10-29 07:38:42 [WARNING] 请求失败 (attempt 2/3): 502 Server Error: Bad Gateway for url: https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2%2Cf3%2Cf4%2Cf12%2Cf14%2Cf15%2Cf16%2Cf17%2Cf18%2Cf20%2Cf21%2Cf23%2Cf8%2Cf9%2Cf5%2Cf6%2Cf62%2Cf115&secids=1.688256%2C0.002371%2C1.688981%2C1.603986%2C0.002049%2C1.603501%2C1.688012%2C1.688008%2C1.688126%2C0.300604%2C0.300661%2C1.688396%2C0.002185%2C0.002156%2C1.600584%2C0.300782%2C1.688036%2C0.300223%2C1.688536%2C1.688521%2C1.603160%2C0.300474%2C1.688099%2C1.688200%2C1.688019%2C0.002409%2C116.00981%2C116.01347%2C116.00085%2C116.00522%2C116.01385%2C116.02166",
+        "2026-10-29 07:39:00 [WARNING] 请求失败 (attempt 3/3): 502 Server Error: Bad Gateway for url: https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2&fields=f2%2Cf3%2Cf4%2Cf12%2Cf14%2Cf15%2Cf16%2Cf17%2Cf18%2Cf20%2Cf21%2Cf23%2Cf8%2Cf9%2Cf5%2Cf6%2Cf62%2Cf115&secids=1.688256%2C0.002371%2C1.688981%2C1.603986%2C0.002049%2C1.603501%2C1.688012%2C1.688008%2C1.688126%2C0.300604%2C0.300661%2C1.688396%2C0.002185%2C0.002156%2C1.600584%2C0.300782%2C1.688036%2C0.300223%2C1.688536%2C1.688521%2C1.603160%2C0.300474%2C1.688099%2C1.688200%2C1.688019%2C0.002409%2C116.00981%2C116.01347%2C116.00085%2C116.00522%2C116.01385%2C116.02166",
+        "2026-10-29 07:39:00 [ERROR] 批次请求全部失败: ['1.688256', '0.002371', '1.688981']..."
+      ]
     },
     {
       "module": "fetch_global_stocks",
       "description": "全球半导体龙头股价",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.63,
+      "elapsed": 18.63,
       "stdout_tail": "",
       "stderr_errors": []
     },
@@ -31,10 +35,10 @@
       "description": "市场基准指数 + 行业数据",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.64,
+      "elapsed": 18.85,
       "stdout_tail": "",
       "stderr_errors": [
-        "2026-10-29 06:51:57 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
+        "2026-10-29 07:38:27 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
       ]
     }
   ],
@@ -42,17 +46,17 @@
     "realtime_quotes.json": {
       "exists": true,
       "size_bytes": 17266,
-      "modified": "2026-10-29T14:51:57.527205+08:00"
+      "modified": "2026-10-29T15:37:54.915580+08:00"
     },
     "global_stocks.json": {
       "exists": true,
       "size_bytes": 8315,
-      "modified": "2026-10-29T14:51:43.077337+08:00"
+      "modified": "2026-10-29T15:37:54.915438+08:00"
     },
     "benchmarks.json": {
       "exists": true,
-      "size_bytes": 1826,
-      "modified": "2026-10-29T14:51:57.607650+08:00"
+      "size_bytes": 1827,
+      "modified": "2026-10-29T15:38:27.821771+08:00"
     }
   }
 }
