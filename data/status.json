@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-11-25T18:23:30.314817+08:00",
-  "date": "2026-11-25",
-  "time": "18:23:30",
+  "timestamp": "2026-11-26T17:17:52.080755+08:00",
+  "date": "2026-11-26",
+  "time": "17:17:52",
   "overall": "success",
   "total_modules": 3,
   "success_count": 3,
   "failed_count": 0,
-  "total_elapsed": 2.4,
+  "total_elapsed": 2.12,
   "modules": [
     {
       "module": "fetch_a_hk_stocks",
       "description": "A股+港股半导体龙头实时行情",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.09,
+      "elapsed": 1.96,
       "stdout_tail": "",
       "stderr_errors": []
     },
@@ -22,7 +22,7 @@
       "description": "全球半导体龙头股价",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.05,
+      "elapsed": 2.01,
       "stdout_tail": "",
       "stderr_errors": []
     },
@@ -31,28 +31,28 @@
       "description": "市场基准指数 + 行业数据",
       "status": "success",
       "exit_code": 0,
-      "elapsed": 2.4,
+      "elapsed": 2.12,
       "stdout_tail": "",
       "stderr_errors": [
-        "2026-11-25 10:23:30 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
+        "2026-11-26 09:17:52 [WARNING] 指数获取错误: [{'code': 'DJI', 'name': '道琼斯', 'error': 'API未返回数据'}]"
       ]
     }
   ],
   "output_files": {
     "realtime_quotes.json": {
       "exists": true,
-      "size_bytes": 17284,
-      "modified": "2026-11-25T18:23:29.995811+08:00"
+      "size_bytes": 17216,
+      "modified": "2026-11-26T17:17:51.904060+08:00"
     },
     "global_stocks.json": {
       "exists": true,
       "size_bytes": 8315,
-      "modified": "2026-11-25T18:23:14.852705+08:00"
+      "modified": "2026-11-26T17:17:33.546152+08:00"
     },
     "benchmarks.json": {
       "exists": true,
-      "size_bytes": 1831,
-      "modified": "2026-11-25T18:23:30.298024+08:00"
+      "size_bytes": 1821,
+      "modified": "2026-11-26T17:17:52.063423+08:00"
     }
   }
 }
